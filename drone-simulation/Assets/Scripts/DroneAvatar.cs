@@ -19,7 +19,24 @@ public class DroneAvatar : MonoBehaviour
     public int radio_control_timeout = 50;
     public double stick_strength = 0.1;
     public double stick_yaw_strength = 1.0;
-
+    private DroneInputActions inputActions;
+    private void Awake()
+    {
+        // Input Actions のインスタンスを初期化
+        inputActions = new DroneInputActions();
+    }
+    private void OnEnable()
+    {
+        Debug.Log("Enabled");
+        // Input Actions を有効化
+        inputActions.Gameplay.Enable();
+    }
+    private void OnDisable()
+    {
+        Debug.Log("Disabled");
+        // Input Actions を無効化
+        inputActions.Gameplay.Disable();
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -40,9 +57,46 @@ public class DroneAvatar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HandleKeyboardInput();
+        if (isKeyboardControl)
+        {
+            HandleKeyboardInput();
+        }
+        else
+        {
+            HandleGamePadInput();
+        }
         DroneServiceRC.Run();
     }
+    private void HandleGamePadInput()
+    {
+        Vector2 rotateInput = inputActions.Gameplay.LeftStick.ReadValue<Vector2>();
+        Vector2 moveInput = inputActions.Gameplay.RightStick.ReadValue<Vector2>();
+        float horizontal = moveInput.x; // 左右移動
+        float forward = moveInput.y;   // 前後移動
+
+        float yaw = rotateInput.x;    // ヨー回転
+        float pitch = rotateInput.y;  // 垂直移動
+        //Debug.Log($"Left Stick: X = {moveInput.x}, Y = {moveInput.y}");
+        //Debug.Log($"Right Stick: X = {rotateInput.x}, Y = {rotateInput.y}");
+        // ボタン A (例: ラジオコントロール)
+        if (inputActions.Gameplay.Xbuttonn.WasPressedThisFrame())
+        {
+            DroneServiceRC.PutRadioControlButton(0, 1);
+            Debug.Log("GamePad: Aボタン on");
+        }
+        else if (inputActions.Gameplay.Xbuttonn.WasReleasedThisFrame())
+        {
+            DroneServiceRC.PutRadioControlButton(0, 0 );
+            Debug.Log("GamePad: Aボタン off");
+        }
+
+        // ドローンサービスに入力を送る
+        DroneServiceRC.PutHorizontal(0, horizontal * stick_strength); // 横移動
+        DroneServiceRC.PutForward(0, -forward * stick_strength);     // 前後移動
+        DroneServiceRC.PutHeading(0, yaw * stick_yaw_strength);      // 水平回転 (ヨー)
+        DroneServiceRC.PutVertical(0, -pitch * stick_strength);      // 垂直移動 (ピッチ)
+    }
+
     private void FixedUpdate()
     {
         double x, y, z;
