@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using UnityEngine;
 
 namespace Hakoniwa.DroneService
 {
@@ -19,7 +20,26 @@ namespace Hakoniwa.DroneService
 
         public static int Init(string droneConfigDirPath, string customJsonPath, bool isKeyboardControl)
         {
-            return drone_service_rc_init(droneConfigDirPath, customJsonPath, isKeyboardControl ? 1 : 0);
+            try
+            {
+                Debug.Log($"Init called with: droneConfigDirPath={droneConfigDirPath}, customJsonPath={customJsonPath}, isKeyboardControl={(isKeyboardControl ? 1 : 0)}");
+                return drone_service_rc_init(droneConfigDirPath, customJsonPath, isKeyboardControl ? 1 : 0);
+            }
+            catch (DllNotFoundException e)
+            {
+                Debug.LogError($"DllNotFoundException: {e.Message}");
+                return -1;
+            }
+            catch (EntryPointNotFoundException e)
+            {
+                Debug.LogError($"EntryPointNotFoundException: {e.Message}");
+                return -1;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"Exception: {e.Message}");
+                return -1;
+            }
         }
 
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
