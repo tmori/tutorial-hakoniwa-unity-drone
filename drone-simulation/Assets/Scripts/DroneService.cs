@@ -16,14 +16,13 @@ namespace Hakoniwa.DroneService
          * Initialization and Control
          */
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int drone_service_rc_init(string drone_config_dir_path, string custom_json_path, int is_keyboard_control);
+        private static extern int drone_service_rc_init(string drone_config_dir_path);
 
-        public static int Init(string droneConfigDirPath, string customJsonPath, bool isKeyboardControl)
+        public static int Init(string droneConfigDirPath)
         {
             try
             {
-                Debug.Log($"Init called with: droneConfigDirPath={droneConfigDirPath}, customJsonPath={customJsonPath}, isKeyboardControl={(isKeyboardControl ? 1 : 0)}");
-                return drone_service_rc_init(droneConfigDirPath, customJsonPath, isKeyboardControl ? 1 : 0);
+                return drone_service_rc_init(droneConfigDirPath);
             }
             catch (DllNotFoundException e)
             {
@@ -42,13 +41,6 @@ namespace Hakoniwa.DroneService
             }
         }
 
-        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int drone_service_rc_set_pdu_id_map(int pdu_id, int channel_id);
-
-        public static int SetPduIdMap(int pduId, int channelId)
-        {
-            return drone_service_rc_set_pdu_id_map(pduId, channelId);
-        }
 
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
         private static extern int drone_service_rc_start();
