@@ -40,7 +40,31 @@ namespace Hakoniwa.DroneService
                 return -1;
             }
         }
-
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+        private static extern int drone_service_rc_init_single(string drone_config_text, string controller_config_text, int logger_enable);
+        public static int InitSingle(string droneConfigText, string controllerConfigText, bool loggerEnable)
+        {
+            try
+            {
+                int loggerFlag = loggerEnable ? 1 : 0;
+                return drone_service_rc_init_single(droneConfigText, controllerConfigText, loggerFlag);
+            }
+            catch (DllNotFoundException e)
+            {
+                Debug.LogError($"DllNotFoundException: {e.Message}");
+                return -1;
+            }
+            catch (EntryPointNotFoundException e)
+            {
+                Debug.LogError($"EntryPointNotFoundException: {e.Message}");
+                return -1;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"Exception: {e.Message}");
+                return -1;
+            }
+        }
 
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
         private static extern int drone_service_rc_start();

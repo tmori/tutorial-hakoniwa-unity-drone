@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Hakoniwa.DroneService;
-
+using System;
 
 public class DroneAvatar : MonoBehaviour
 {
@@ -37,21 +37,53 @@ public class DroneAvatar : MonoBehaviour
         // Input Actions を無効化
         inputActions.Gameplay.Disable();
     }
-    // Start is called before the first frame update
+
     void Start()
     {
-        int ret = DroneServiceRC.Init(droneConfigDirPath);
-        Debug.Log("Init: ret = " + ret);
+        // Resourcesから設定ファイルをロード
+        string droneConfigText = LoadTextFromResources("config/drone/rc/drone_config_0");
+        string controllerConfigText = LoadTextFromResources("config/controller/param-api-mixer");
+
+        // 必要なファイルがロードできなければ例外をスロー
+        if (string.IsNullOrEmpty(droneConfigText))
+        {
+            throw new Exception("Failed to load droneConfigText from Resources.");
+        }
+
+        if (string.IsNullOrEmpty(controllerConfigText))
+        {
+            throw new Exception("Failed to load controllerConfigText from Resources.");
+        }
+
+        // DroneServiceRC.InitSingleの呼び出し
+        int ret = DroneServiceRC.InitSingle(droneConfigText, controllerConfigText, loggerEnable: true);
+        Debug.Log("InitSingle: ret = " + ret);
+
         if (ret != 0)
         {
-            throw new System.Exception("Can not Initialize DroneService Rc");
+            throw new Exception("Can not Initialize DroneService RC with InitSingle");
         }
+
+        // DroneServiceRC.Startの呼び出し
         ret = DroneServiceRC.Start();
+        Debug.Log("Start: ret = " + ret);
+
         if (ret != 0)
         {
-            throw new System.Exception("Can not Start DroneService Rc");
+            throw new Exception("Can not Start DroneService RC");
         }
-        Debug.Log("Start: ret = " + ret);
+    }
+
+    /// <summary>
+    /// Resourcesフォルダから指定したパスのテキストファイルをロードします。
+    /// 拡張子は不要です（例: "config/drone/rc/drone_config_0"）。
+    /// </summary>
+    /// <param name="resourcePath">Resourcesフォルダ内の相対パス（拡張子なし）</param>
+    /// <returns>ロードしたテキストデータ</returns>
+    private string LoadTextFromResources(string resourcePath)
+    {
+        TextAsset textAsset = Resources.Load<TextAsset>(resourcePath);
+        return textAsset != null ? textAsset.text : null;
     }
 
     // Update is called once per frame
@@ -128,9 +160,9 @@ public class DroneAvatar : MonoBehaviour
         {
             // デューティレート（c1 ～ c4）に応じてプロペラを回転
             RotatePropeller(propeller1, (float)c1);
-            RotatePropeller(propeller2, (float)c2);
+            RotatePropeller(propeller2, -(float)c2);
             RotatePropeller(propeller3, (float)c3);
-            RotatePropeller(propeller4, (float)c4);
+            RotatePropeller(propeller4, -(float)c4);
             if (propeller5)
             {
                 RotatePropeller(propeller5, (float)c1);
