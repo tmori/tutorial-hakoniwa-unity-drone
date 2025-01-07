@@ -15,31 +15,34 @@ public class DroneAvatar : MonoBehaviour
     public GameObject propeller5;
     public GameObject propeller6;
     public float maxRotationSpeed = 1f; // 最大回転速度（度/秒）
-    private int radio_control_count = 0;
+
     public int radio_control_timeout = 50;
     public double stick_strength = 0.1;
     public double stick_yaw_strength = 1.0;
     private DroneInputActions inputActions;
+
     private void Awake()
     {
         // Input Actions のインスタンスを初期化
-        inputActions = new DroneInputActions();
+        //inputActions = new DroneInputActions();
     }
     private void OnEnable()
     {
         Debug.Log("Enabled");
         // Input Actions を有効化
-        inputActions.Gameplay.Enable();
+        //inputActions.Gameplay.Enable();
     }
     private void OnDisable()
     {
         Debug.Log("Disabled");
         // Input Actions を無効化
-        inputActions.Gameplay.Disable();
+        //inputActions.Gameplay.Disable();
     }
+
 
     void Start()
     {
+
         // Resourcesから設定ファイルをロード
         string droneConfigText = LoadTextFromResources("config/drone/rc/drone_config_0");
         string controllerConfigText = LoadTextFromResources("config/controller/param-api-mixer");
@@ -56,7 +59,7 @@ public class DroneAvatar : MonoBehaviour
         }
 
         // DroneServiceRC.InitSingleの呼び出し
-        int ret = DroneServiceRC.InitSingle(droneConfigText, controllerConfigText, loggerEnable: true);
+        int ret = DroneServiceRC.InitSingle(droneConfigText, controllerConfigText, loggerEnable: false);
         Debug.Log("InitSingle: ret = " + ret);
 
         if (ret != 0)
@@ -89,7 +92,44 @@ public class DroneAvatar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HandleGamePadInput();
+        //HandleGamePadInput();
+        HandleXrInput();
+    }
+    private void HandleXrInput()
+    {
+        // 左スティックの入力取得 (OVRInput.RawAxis2D.LThumbstick)
+        Vector2 leftStick = OVRInput.Get(OVRInput.RawAxis2D.LThumbstick);
+        // 右スティックの入力取得 (OVRInput.RawAxis2D.RThumbstick)
+        Vector2 rightStick = OVRInput.Get(OVRInput.RawAxis2D.RThumbstick);
+        float horizontal = rightStick.x; // 左右移動
+        float forward = rightStick.y;   // 前後移動
+
+        float yaw = leftStick.x;      // ヨー回転
+        float pitch = leftStick.y;    // 垂直移動
+
+        // Debug表示 (必要に応じて)
+        if (leftStick != Vector2.zero)
+            Debug.Log($"左スティック: X={leftStick.x}, Y={leftStick.y}");
+        if (rightStick != Vector2.zero)
+            Debug.Log($"右スティック: X={rightStick.x}, Y={rightStick.y}");
+
+        // ボタンAの入力取得
+        if (OVRInput.GetDown(OVRInput.RawButton.A))
+        {
+            DroneServiceRC.PutRadioControlButton(0, 1); // ボタンONを送信
+            Debug.Log("AボタンDOWN");
+        }
+        else if (OVRInput.GetUp(OVRInput.RawButton.A))
+        {
+            DroneServiceRC.PutRadioControlButton(0, 0); // ボタンOFFを送信
+            Debug.Log("AボタンUP");
+        }
+
+        // ドローンサービスに入力を送る
+        DroneServiceRC.PutHorizontal(0, horizontal * stick_strength);  // 横移動
+        DroneServiceRC.PutForward(0, -forward * stick_strength);       // 前後移動
+        DroneServiceRC.PutHeading(0, yaw * stick_yaw_strength);        // 水平回転 (ヨー)
+        DroneServiceRC.PutVertical(0, -pitch * stick_strength);        // 垂直移動 (ピッチ)
     }
     private void HandleGamePadInput()
     {
