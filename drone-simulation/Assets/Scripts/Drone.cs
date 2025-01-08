@@ -4,9 +4,8 @@ using UnityEngine;
 using Hakoniwa.DroneService;
 using System;
 
-public class DroneAvatar : MonoBehaviour
+public class Drone : MonoBehaviour
 {
-    public string droneConfigDirPath;
     public GameObject body;
     public GameObject propeller1; // プロペラ1
     public GameObject propeller2; // プロペラ2
@@ -15,6 +14,8 @@ public class DroneAvatar : MonoBehaviour
     public GameObject propeller5;
     public GameObject propeller6;
     public float maxRotationSpeed = 1f; // 最大回転速度（度/秒）
+    public bool xr;
+    private DroneCollision my_collision;
 
     public int radio_control_timeout = 50;
     public double stick_strength = 0.1;
@@ -24,25 +25,30 @@ public class DroneAvatar : MonoBehaviour
     private void Awake()
     {
         // Input Actions のインスタンスを初期化
-        //inputActions = new DroneInputActions();
+        if (!xr)
+            inputActions = new DroneInputActions();
     }
     private void OnEnable()
     {
         Debug.Log("Enabled");
         // Input Actions を有効化
-        //inputActions.Gameplay.Enable();
+        if (!xr)
+            inputActions.Gameplay.Enable();
     }
     private void OnDisable()
     {
         Debug.Log("Disabled");
         // Input Actions を無効化
-        //inputActions.Gameplay.Disable();
+        if (!xr)
+            inputActions.Gameplay.Disable();
     }
-
-
     void Start()
     {
-
+        my_collision = this.GetComponentInChildren<DroneCollision>();
+        if (my_collision == null) {
+            throw new Exception("Can not found collision");
+        }
+        my_collision.SetIndex(0);
         // Resourcesから設定ファイルをロード
         string droneConfigText = LoadTextFromResources("config/drone/rc/drone_config_0");
         string controllerConfigText = LoadTextFromResources("config/controller/param-api-mixer");
@@ -92,8 +98,14 @@ public class DroneAvatar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //HandleGamePadInput();
-        HandleXrInput();
+        if (xr)
+        {
+            HandleXrInput();
+        }
+        else
+        {
+            HandleGamePadInput();
+        }
     }
     private void HandleXrInput()
     {
@@ -163,6 +175,7 @@ public class DroneAvatar : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // 現在位置を記録
         for (int i = 0; i < 20; i++)
         {
             DroneServiceRC.Run();
