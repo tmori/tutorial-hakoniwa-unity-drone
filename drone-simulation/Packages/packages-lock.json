@@ -7,6 +7,25 @@
       "dependencies": {},
       "hash": "b0d01ca75fc890b76e81202d655d17c1f4214a18"
     },
+    "com.hakoniwa-lab.hakoniwa-pdu": {
+      "version": "https://github.com/toppers/hakoniwa-pdu-csharp.git#main",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.0.2"
+      },
+      "hash": "cd8cef8f2b13e8214f13742da14e662f299de89a"
+    },
+    "com.hakoniwa-lab.hakoniwa-sim": {
+      "version": "https://github.com/toppers/hakoniwa-sim-csharp.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.0.2",
+        "com.hakoniwa-lab.hakoniwa-pdu": "https://github.com/toppers/hakoniwa-pdu-csharp.git"
+      },
+      "hash": "002d9ba254dd9e0166f025cd73617ce3ac9c66bd"
+    },
     "com.meta.xr.mrutilitykit": {
       "version": "71.0.0",
       "depth": 1,
@@ -184,7 +203,7 @@
     },
     "com.unity.nuget.newtonsoft-json": {
       "version": "3.2.1",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
