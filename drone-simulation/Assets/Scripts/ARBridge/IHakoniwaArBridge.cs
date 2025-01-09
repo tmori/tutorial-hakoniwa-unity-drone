@@ -36,6 +36,7 @@ namespace hakoniwa.ar.bridge
          * Deviceの場合のみ、コールバックされる
          */
         void SetBasePosition(HakoVector3 position, HakoVector3 rotation);
+        void setPositioningSpeed(float rotation, float move);
         /*
          * Localの場合のみ、コールバックされる
          */

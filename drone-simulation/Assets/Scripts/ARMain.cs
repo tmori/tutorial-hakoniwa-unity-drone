@@ -16,6 +16,12 @@ public class ARMain : MonoBehaviour, IHakoniwaArBridgePlayer
     // 回転速度（度/s）
     public float rotationSpeed = 1.0f;
 
+    public void setPositioningSpeed(float rotation, float move)
+    {
+        moveSpeed = move;
+        rotationSpeed = rotation;
+    }
+
     public void GetBasePosition(out HakoVector3 position, out HakoVector3 rotation)
     {
         position = new HakoVector3(
@@ -145,4 +151,5 @@ public class ARMain : MonoBehaviour, IHakoniwaArBridgePlayer
         base_rot.y = rotation.Y;
         base_rot.z = rotation.Z;
     }
+
 }

@@ -32,7 +32,6 @@ namespace hakoniwa.ar.bridge
                 }
             }
         }
-
         public HakoniwaArBridgeDevice()
         {
             state_manager = new HakoniwaArBridgeStateManager();
@@ -86,6 +85,7 @@ namespace hakoniwa.ar.bridge
                             (float)latestHeartbeatData.SavedPosition.Orientation["z"]
                             );
                         player.SetBasePosition(pos, rot);
+                        player.setPositioningSpeed(latestHeartbeatData.positioning_speed.rotation, latestHeartbeatData.positioning_speed.move);
                         isStartedWebSocket = true;
                     }
                     catch (Exception ex)

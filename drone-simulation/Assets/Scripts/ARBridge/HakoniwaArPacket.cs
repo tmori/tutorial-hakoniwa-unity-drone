@@ -151,6 +151,15 @@ namespace hakoniwa.ar.bridge
 
     }
 
+    public class PositioningSpeedData
+    {
+        [JsonProperty("rotation")]
+        public float rotation { get; set; }
+
+        [JsonProperty("move")]
+        public float move { get; set; }
+    }
+
     // HeartBeatRequestの内部データ構造
     public class HeartBeatRequestData
     {
@@ -162,6 +171,9 @@ namespace hakoniwa.ar.bridge
 
         [JsonProperty("saved_position")]
         public PositioningRequestData SavedPosition { get; set; }
+
+        [JsonProperty("positioning_speed")]
+        public PositioningSpeedData positioning_speed { get; set; }
     }
 
     // PositioningRequestの内部データ構造
