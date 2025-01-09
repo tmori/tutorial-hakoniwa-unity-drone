@@ -147,11 +147,24 @@ namespace hakoniwa.ar.bridge
             udp_service.ClearBuffers();
             state_manager.EventReset();
         }
+        private void SendCurrentBasePosition()
+        {
+            if (latestHeartbeatData == null)
+            {
+                return;
+            }
+            HakoVector3 position;
+            HakoVector3 rotation;
+            player.GetBasePosition(out position, out rotation);
+            PositioningRequest pos_req = new PositioningRequest("unity", position, rotation);
+            udp_service.SendPacket(pos_req);
+        }
         public void Run()
         {
             HeartBeatCheck();
             if (state_manager.GetState() == BridgeState.POSITIONING) {
                 RunPositioning();
+                SendCurrentBasePosition();
             }
             player.UpdateAvatars();
         }
@@ -189,7 +202,8 @@ namespace hakoniwa.ar.bridge
         {
             if (latestHeartbeatData != null)
             {
-                //TODO send udp packet
+                BasePacket packet = new BasePacket("event", null, "play_start");
+                udp_service.SendPacket(packet);
             }
             state_manager.EventPlayStart();
         }
@@ -197,7 +211,8 @@ namespace hakoniwa.ar.bridge
         {
             if (latestHeartbeatData != null)
             {
-                //TODO send udp packet
+                BasePacket packet = new BasePacket("event", null, "reset");
+                udp_service.SendPacket(packet);
             }
             ResetEvent();
         }

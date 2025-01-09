@@ -86,8 +86,13 @@ namespace hakoniwa.ar.bridge
     }
     public class PositioningRequest : BasePacket
     {
+        [JsonIgnore]
         public string FrameType { get; set; }
+
+        [JsonIgnore]
         public Dictionary<string, double> Position { get; set; }
+
+        [JsonIgnore]
         public Dictionary<string, double> Orientation { get; set; }
 
         public PositioningRequest(string frameType, Dictionary<string, double> position, Dictionary<string, double> orientation)
@@ -96,6 +101,32 @@ namespace hakoniwa.ar.bridge
             FrameType = frameType;
             Position = position;
             Orientation = orientation;
+
+            Data["frame_type"] = frameType;
+            Data["position"] = position;
+            Data["orientation"] = orientation;
+
+        }
+        public PositioningRequest(string frameType, HakoVector3 position, HakoVector3 orientation)
+            : base("data", "position")
+        {
+            FrameType = frameType;
+            Position = new Dictionary<string, double>
+            {
+                { "x", position.X },
+                { "y", position.Y },
+                { "z", position.Z }
+            };
+            Orientation = new Dictionary<string, double>
+            {
+                { "x", orientation.X },
+                { "y", orientation.Y },
+                { "z", orientation.Z }
+            };
+            Data["frame_type"] = FrameType;
+            Data["position"] = Position;
+            Data["orientation"] = Orientation;
+
         }
 
         // BasePacketからPositioningRequestに変換するためのメソッド
