@@ -75,6 +75,17 @@ namespace hakoniwa.ar.bridge
                     {
                         udp_service.SetSendPort(latestHeartbeatData.ServerUdpPort);
                         player.StartService(serverUri);
+                        HakoVector3 pos = new HakoVector3(
+                            (float)latestHeartbeatData.SavedPosition.Position["x"],
+                            (float)latestHeartbeatData.SavedPosition.Position["y"],
+                            (float)latestHeartbeatData.SavedPosition.Position["z"]
+                            );
+                        HakoVector3 rot = new HakoVector3(
+                            (float)latestHeartbeatData.SavedPosition.Orientation["x"],
+                            (float)latestHeartbeatData.SavedPosition.Orientation["y"],
+                            (float)latestHeartbeatData.SavedPosition.Orientation["z"]
+                            );
+                        player.SetBasePosition(pos, rot);
                         isStartedWebSocket = true;
                     }
                     catch (Exception ex)
@@ -128,6 +139,7 @@ namespace hakoniwa.ar.bridge
                 player.ResetPostion();
                 player.StopService();
                 isStartedWebSocket = false;
+                latestHeartbeatData = null;
             }
             else {
                 //nothing to do
@@ -175,12 +187,18 @@ namespace hakoniwa.ar.bridge
 
         public void DevicePlayStartEvent()
         {
-            //TODO send udp packet
+            if (latestHeartbeatData != null)
+            {
+                //TODO send udp packet
+            }
             state_manager.EventPlayStart();
         }
         public void DeviceResetEvent()
         {
-            //TODO send udp packet
+            if (latestHeartbeatData != null)
+            {
+                //TODO send udp packet
+            }
             ResetEvent();
         }
     }

@@ -10,8 +10,6 @@ public class ARMain : MonoBehaviour, IHakoniwaArBridgePlayer
     private HakoDroneXrInputManager xr_drone_input;
     private Vector3 base_pos;
     private Vector3 base_rot;
-    private Vector3 local_pos;
-    private Vector3 local_rot;
     public bool xr = false;
     // 移動速度（m/s）
     public float moveSpeed =  0.1f;
@@ -21,14 +19,14 @@ public class ARMain : MonoBehaviour, IHakoniwaArBridgePlayer
     public void GetBasePosition(out HakoVector3 position, out HakoVector3 rotation)
     {
         position = new HakoVector3(
-            base_pos.x + local_pos.x,
-            base_pos.y + local_pos.y,
-            base_pos.z + local_pos.z
+            base_pos.x,
+            base_pos.y,
+            base_pos.z
             );
         rotation = new HakoVector3(
-            base_rot.x + local_rot.x,
-            base_rot.y + local_rot.y,
-            base_rot.z + local_rot.z
+            base_rot.x,
+            base_rot.y,
+            base_rot.z
             );
     }
 
@@ -130,11 +128,21 @@ public class ARMain : MonoBehaviour, IHakoniwaArBridgePlayer
 
     void FixedUpdate()
     {
-        Debug.Log("STATE: " + bridge.GetState());
+        //Debug.Log("STATE: " + bridge.GetState());
         bridge.Run();
     }
     void OnApplicationQuit()
     {
         bridge.Stop();
+    }
+
+    public void SetBasePosition(HakoVector3 position, HakoVector3 rotation)
+    {
+        base_pos.x = position.X;
+        base_pos.y = position.Y;
+        base_pos.z = position.Z;
+        base_rot.x = rotation.X;
+        base_rot.y = rotation.Y;
+        base_rot.z = rotation.Z;
     }
 }

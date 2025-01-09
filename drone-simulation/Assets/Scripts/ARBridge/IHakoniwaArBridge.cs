@@ -24,13 +24,18 @@ namespace hakoniwa.ar.bridge
         /*
          * position, rotationは、LocalとDeviceとで意味が変わる
          * Local  : 最新のベース位置情報
-         * Device : ローカルに保存されているベース位置情報
+         * Device : always zeros
          */
         void UpdatePosition(HakoVector3 position, HakoVector3 rotation);
         /*
          * Device側で保持している最新のベース位置情報を取得する
          */
         void GetBasePosition(out HakoVector3 position, out HakoVector3 rotation);
+
+        /*
+         * Deviceの場合のみ、コールバックされる
+         */
+        void SetBasePosition(HakoVector3 position, HakoVector3 rotation);
         /*
          * Localの場合のみ、コールバックされる
          */
