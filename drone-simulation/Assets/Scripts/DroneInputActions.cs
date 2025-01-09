@@ -46,10 +46,28 @@ public partial class @DroneInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Xbuttonn"",
+                    ""name"": ""Xbutton"",
                     ""type"": ""Button"",
                     ""id"": ""64a82727-ab4e-4e47-8c87-05d4e07b552e"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Obutton"",
+                    ""type"": ""Button"",
+                    ""id"": ""165c1695-b82f-4cd9-8754-40c904830e38"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Rbutton"",
+                    ""type"": ""Button"",
+                    ""id"": ""7767db18-4516-4b91-a150-ebabbc521d9d"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -85,7 +103,29 @@ public partial class @DroneInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Xbuttonn"",
+                    ""action"": ""Xbutton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a6c6087b-8d91-4112-ae08-6b21082ac843"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Obutton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""43f25580-2312-490c-9903-af936e5d847f"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rbutton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -98,7 +138,9 @@ public partial class @DroneInputActions: IInputActionCollection2, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_LeftStick = m_Gameplay.FindAction("LeftStick", throwIfNotFound: true);
         m_Gameplay_RightStick = m_Gameplay.FindAction("RightStick", throwIfNotFound: true);
-        m_Gameplay_Xbuttonn = m_Gameplay.FindAction("Xbuttonn", throwIfNotFound: true);
+        m_Gameplay_Xbutton = m_Gameplay.FindAction("Xbutton", throwIfNotFound: true);
+        m_Gameplay_Obutton = m_Gameplay.FindAction("Obutton", throwIfNotFound: true);
+        m_Gameplay_Rbutton = m_Gameplay.FindAction("Rbutton", throwIfNotFound: true);
     }
 
     ~@DroneInputActions()
@@ -167,14 +209,18 @@ public partial class @DroneInputActions: IInputActionCollection2, IDisposable
     private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
     private readonly InputAction m_Gameplay_LeftStick;
     private readonly InputAction m_Gameplay_RightStick;
-    private readonly InputAction m_Gameplay_Xbuttonn;
+    private readonly InputAction m_Gameplay_Xbutton;
+    private readonly InputAction m_Gameplay_Obutton;
+    private readonly InputAction m_Gameplay_Rbutton;
     public struct GameplayActions
     {
         private @DroneInputActions m_Wrapper;
         public GameplayActions(@DroneInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @LeftStick => m_Wrapper.m_Gameplay_LeftStick;
         public InputAction @RightStick => m_Wrapper.m_Gameplay_RightStick;
-        public InputAction @Xbuttonn => m_Wrapper.m_Gameplay_Xbuttonn;
+        public InputAction @Xbutton => m_Wrapper.m_Gameplay_Xbutton;
+        public InputAction @Obutton => m_Wrapper.m_Gameplay_Obutton;
+        public InputAction @Rbutton => m_Wrapper.m_Gameplay_Rbutton;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -190,9 +236,15 @@ public partial class @DroneInputActions: IInputActionCollection2, IDisposable
             @RightStick.started += instance.OnRightStick;
             @RightStick.performed += instance.OnRightStick;
             @RightStick.canceled += instance.OnRightStick;
-            @Xbuttonn.started += instance.OnXbuttonn;
-            @Xbuttonn.performed += instance.OnXbuttonn;
-            @Xbuttonn.canceled += instance.OnXbuttonn;
+            @Xbutton.started += instance.OnXbutton;
+            @Xbutton.performed += instance.OnXbutton;
+            @Xbutton.canceled += instance.OnXbutton;
+            @Obutton.started += instance.OnObutton;
+            @Obutton.performed += instance.OnObutton;
+            @Obutton.canceled += instance.OnObutton;
+            @Rbutton.started += instance.OnRbutton;
+            @Rbutton.performed += instance.OnRbutton;
+            @Rbutton.canceled += instance.OnRbutton;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -203,9 +255,15 @@ public partial class @DroneInputActions: IInputActionCollection2, IDisposable
             @RightStick.started -= instance.OnRightStick;
             @RightStick.performed -= instance.OnRightStick;
             @RightStick.canceled -= instance.OnRightStick;
-            @Xbuttonn.started -= instance.OnXbuttonn;
-            @Xbuttonn.performed -= instance.OnXbuttonn;
-            @Xbuttonn.canceled -= instance.OnXbuttonn;
+            @Xbutton.started -= instance.OnXbutton;
+            @Xbutton.performed -= instance.OnXbutton;
+            @Xbutton.canceled -= instance.OnXbutton;
+            @Obutton.started -= instance.OnObutton;
+            @Obutton.performed -= instance.OnObutton;
+            @Obutton.canceled -= instance.OnObutton;
+            @Rbutton.started -= instance.OnRbutton;
+            @Rbutton.performed -= instance.OnRbutton;
+            @Rbutton.canceled -= instance.OnRbutton;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -227,6 +285,8 @@ public partial class @DroneInputActions: IInputActionCollection2, IDisposable
     {
         void OnLeftStick(InputAction.CallbackContext context);
         void OnRightStick(InputAction.CallbackContext context);
-        void OnXbuttonn(InputAction.CallbackContext context);
+        void OnXbutton(InputAction.CallbackContext context);
+        void OnObutton(InputAction.CallbackContext context);
+        void OnRbutton(InputAction.CallbackContext context);
     }
 }

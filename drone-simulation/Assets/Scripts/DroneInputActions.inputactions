@@ -24,10 +24,28 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Xbuttonn",
+                    "name": "Xbutton",
                     "type": "Button",
                     "id": "64a82727-ab4e-4e47-8c87-05d4e07b552e",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Obutton",
+                    "type": "Button",
+                    "id": "165c1695-b82f-4cd9-8754-40c904830e38",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Rbutton",
+                    "type": "Button",
+                    "id": "7767db18-4516-4b91-a150-ebabbc521d9d",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -63,7 +81,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Xbuttonn",
+                    "action": "Xbutton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a6c6087b-8d91-4112-ae08-6b21082ac843",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Obutton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "43f25580-2312-490c-9903-af936e5d847f",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rbutton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

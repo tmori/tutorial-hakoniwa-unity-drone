@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Hakoniwa.DroneService;
 using System;
+using hakoniwa.ar.bridge;
 
 public class Drone : MonoBehaviour
 {
@@ -20,30 +21,22 @@ public class Drone : MonoBehaviour
     public int radio_control_timeout = 50;
     public double stick_strength = 0.1;
     public double stick_yaw_strength = 1.0;
-    private DroneInputActions inputActions;
 
-    private void Awake()
-    {
-        // Input Actions のインスタンスを初期化
-        if (!xr)
-            inputActions = new DroneInputActions();
-    }
-    private void OnEnable()
-    {
-        Debug.Log("Enabled");
-        // Input Actions を有効化
-        if (!xr)
-            inputActions.Gameplay.Enable();
-    }
-    private void OnDisable()
-    {
-        Debug.Log("Disabled");
-        // Input Actions を無効化
-        if (!xr)
-            inputActions.Gameplay.Disable();
-    }
+    private HakoDroneInputManager drone_input;
+    private HakoDroneXrInputManager xr_drone_input;
+    private IHakoniwaArBridge ibridge;
+
     void Start()
     {
+        ibridge = HakoniwaArBridgeDevice.Instance;
+        if (xr)
+        {
+            xr_drone_input = HakoDroneXrInputManager.Instance;
+        }
+        else
+        {
+            drone_input = HakoDroneInputManager.Instance;
+        }
         my_collision = this.GetComponentInChildren<DroneCollision>();
         if (my_collision == null) {
             throw new Exception("Can not found collision");
@@ -98,6 +91,10 @@ public class Drone : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (ibridge.GetState() == BridgeState.POSITIONING)
+        {
+            return;
+        }
         if (xr)
         {
             HandleXrInput();
@@ -110,9 +107,9 @@ public class Drone : MonoBehaviour
     private void HandleXrInput()
     {
         // 左スティックの入力取得 (OVRInput.RawAxis2D.LThumbstick)
-        Vector2 leftStick = OVRInput.Get(OVRInput.RawAxis2D.LThumbstick);
+        Vector2 leftStick = xr_drone_input.GetLeftStickInput();//OVRInput.Get(OVRInput.RawAxis2D.LThumbstick);
         // 右スティックの入力取得 (OVRInput.RawAxis2D.RThumbstick)
-        Vector2 rightStick = OVRInput.Get(OVRInput.RawAxis2D.RThumbstick);
+        Vector2 rightStick = xr_drone_input.GetRightStickInput();//OVRInput.Get(OVRInput.RawAxis2D.RThumbstick);
         float horizontal = rightStick.x; // 左右移動
         float forward = rightStick.y;   // 前後移動
 
@@ -126,12 +123,14 @@ public class Drone : MonoBehaviour
             Debug.Log($"右スティック: X={rightStick.x}, Y={rightStick.y}");
 
         // ボタンAの入力取得
-        if (OVRInput.GetDown(OVRInput.RawButton.A))
+        //if (OVRInput.GetDown(OVRInput.RawButton.A))
+        if (xr_drone_input.IsXButtonPressed())
         {
             DroneServiceRC.PutRadioControlButton(0, 1); // ボタンONを送信
             Debug.Log("AボタンDOWN");
         }
-        else if (OVRInput.GetUp(OVRInput.RawButton.A))
+        //else if (OVRInput.GetUp(OVRInput.RawButton.A))
+        else if (xr_drone_input.IsXButtonReleased())
         {
             DroneServiceRC.PutRadioControlButton(0, 0); // ボタンOFFを送信
             Debug.Log("AボタンUP");
@@ -145,8 +144,8 @@ public class Drone : MonoBehaviour
     }
     private void HandleGamePadInput()
     {
-        Vector2 rotateInput = inputActions.Gameplay.LeftStick.ReadValue<Vector2>();
-        Vector2 moveInput = inputActions.Gameplay.RightStick.ReadValue<Vector2>();
+        Vector2 rotateInput = drone_input.GetLeftStickInput(); //inputActions.Gameplay.LeftStick.ReadValue<Vector2>();
+        Vector2 moveInput = drone_input.GetRightStickInput(); //inputActions.Gameplay.RightStick.ReadValue<Vector2>();
         float horizontal = moveInput.x; // 左右移動
         float forward = moveInput.y;   // 前後移動
 
@@ -155,12 +154,14 @@ public class Drone : MonoBehaviour
         //Debug.Log($"Left Stick: X = {moveInput.x}, Y = {moveInput.y}");
         //Debug.Log($"Right Stick: X = {rotateInput.x}, Y = {rotateInput.y}");
         // ボタン A (例: ラジオコントロール)
-        if (inputActions.Gameplay.Xbuttonn.WasPressedThisFrame())
+        //if (inputActions.Gameplay.Xbuttonn.WasPressedThisFrame())
+        if (drone_input.IsXButtonPressed())
         {
             DroneServiceRC.PutRadioControlButton(0, 1);
             Debug.Log("GamePad: Aボタン on");
         }
-        else if (inputActions.Gameplay.Xbuttonn.WasReleasedThisFrame())
+        //else if (inputActions.Gameplay.Xbuttonn.WasReleasedThisFrame())
+        else if (drone_input.IsXButtonReleased())
         {
             DroneServiceRC.PutRadioControlButton(0, 0 );
             Debug.Log("GamePad: Aボタン off");
