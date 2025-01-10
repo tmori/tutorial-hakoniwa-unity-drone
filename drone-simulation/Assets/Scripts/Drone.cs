@@ -25,7 +25,12 @@ public class Drone : MonoBehaviour
     private HakoDroneInputManager drone_input;
     private HakoDroneXrInputManager xr_drone_input;
     private IHakoniwaArBridge ibridge;
-
+    private AudioSource audioSource;
+    public string audio_path;
+    private bool enableAudio;
+    public Camera target_camera;
+    public float maxDistance = 5.0f;
+    public float minDistance = 0.0f;
     void Start()
     {
         ibridge = HakoniwaArBridgeDevice.Instance;
@@ -74,8 +79,47 @@ public class Drone : MonoBehaviour
         {
             throw new Exception("Can not Start DroneService RC");
         }
-    }
 
+        audioSource = GetComponent<AudioSource>();
+        LoadAudio();
+    }
+    void LoadAudio()
+    {
+        AudioClip clip = Resources.Load<AudioClip>(this.audio_path);
+        if (clip != null)
+        {
+            Debug.Log("audio found: " + audio_path);
+            audioSource.clip = clip;
+            audioSource.Stop();
+            enableAudio = true;
+        }
+        else
+        {
+            Debug.LogWarning("audio not found: " + audio_path);
+        }
+    }
+    void PlayAudio(float my_controls)
+    {
+        // Calculate distance to the target camera
+        float distance = Vector3.Distance(target_camera.transform.position, transform.position);
+
+        // Map the distance to volume level
+        float volume = 1.0f - Mathf.Clamp01((distance - minDistance) / (maxDistance - minDistance));
+
+        if (audioSource.isPlaying == false && my_controls > 0)
+        {
+            audioSource.Play();
+        }
+        else if (audioSource.isPlaying == true && my_controls == 0)
+        {
+            audioSource.Stop();
+        }
+
+        if (audioSource.isPlaying)
+        {
+            audioSource.volume = volume;
+        }
+    }
     /// <summary>
     /// Resourcesフォルダから指定したパスのテキストファイルをロードします。
     /// 拡張子は不要です（例: "config/drone/rc/drone_config_0"）。
@@ -124,13 +168,13 @@ public class Drone : MonoBehaviour
 
         // ボタンAの入力取得
         //if (OVRInput.GetDown(OVRInput.RawButton.A))
-        if (xr_drone_input.IsXButtonPressed())
+        if (xr_drone_input.IsAButtonPressed())
         {
             DroneServiceRC.PutRadioControlButton(0, 1); // ボタンONを送信
             Debug.Log("AボタンDOWN");
         }
         //else if (OVRInput.GetUp(OVRInput.RawButton.A))
-        else if (xr_drone_input.IsXButtonReleased())
+        else if (xr_drone_input.IsAButtonReleased())
         {
             DroneServiceRC.PutRadioControlButton(0, 0); // ボタンOFFを送信
             Debug.Log("AボタンUP");
@@ -225,6 +269,7 @@ public class Drone : MonoBehaviour
             {
                 RotatePropeller(propeller6, (float)c2);
             }
+            PlayAudio((float)c1);
         }
     }
     private void RotatePropeller(GameObject propeller, float dutyRate)
