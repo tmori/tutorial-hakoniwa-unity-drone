@@ -123,7 +123,6 @@ namespace hakoniwa.ar.bridge
         private void ResetEvent()
         {
             if (state_manager.GetState() == BridgeState.PLAYING) {
-                player.ResetPostion();
                 player.StopService();
                 isStartedWebSocket = false;
             }
@@ -138,9 +137,6 @@ namespace hakoniwa.ar.bridge
             var event_packet = udp_service.GetLatestPacket("reset");
             if (event_packet != null) {
                 ResetEvent();
-            }
-            else {
-                player.UpdateAvatars();
             }
         }
         public void Run()

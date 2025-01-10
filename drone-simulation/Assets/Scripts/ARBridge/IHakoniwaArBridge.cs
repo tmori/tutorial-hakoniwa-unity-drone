@@ -37,14 +37,6 @@ namespace hakoniwa.ar.bridge
          */
         void SetBasePosition(HakoVector3 position, HakoVector3 rotation);
         void setPositioningSpeed(float rotation, float move);
-        /*
-         * Localの場合のみ、コールバックされる
-         */
-        void ResetPostion();
-        /*
-         * Avatarsの位置情報更新タイミングでコールバックされる
-         */
-        void UpdateAvatars();
     }
     public enum BridgeState
     {

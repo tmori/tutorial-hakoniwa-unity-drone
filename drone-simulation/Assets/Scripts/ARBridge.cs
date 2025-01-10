@@ -1,19 +1,46 @@
 using System.Threading.Tasks;
 using hakoniwa.ar.bridge;
+using hakoniwa.environment.impl;
+using hakoniwa.environment.interfaces;
+using hakoniwa.pdu.core;
+using hakoniwa.pdu.interfaces;
 using UnityEngine;
 
-public class ARBridge : MonoBehaviour, IHakoniwaArBridgePlayer
+public class ARBridge : MonoBehaviour, IHakoniwaArBridgePlayer, IHakoPduInstance
 {
+    public static IHakoPduInstance Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // シーンをまたいで保持
+        }
+        else if (!ReferenceEquals(Instance, this)) // Unity 特有の比較の警告を避ける
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private HakoniwaArBridgeDevice bridge;
     public GameObject base_object;
     private IDroneInput drone_input;
     private Vector3 base_pos;
     private Vector3 base_rot;
+
+    public GameObject player;
+    private IPduManager mgr = null;
+    private IEnvironmentService service;
+
     public bool xr = false;
-    // 移動速度（m/s）
     public float moveSpeed =  0.1f;
-    // 回転速度（度/s）
     public float rotationSpeed = 1.0f;
+
+    public IPduManager Get()
+    {
+        return mgr;
+    }
 
     public void setPositioningSpeed(float rotation, float move)
     {
@@ -35,26 +62,22 @@ public class ARBridge : MonoBehaviour, IHakoniwaArBridgePlayer
             );
     }
 
-    public void ResetPostion()
-    {
-        //TODO
-    }
-
     public Task<bool> StartService(string serverUri)
     {
-        //TODO
-        return Task.FromResult<bool>(true);
+        service = EnvironmentServiceFactory.Create("websocket_dotnet", "unity", ".");
+        mgr = new PduManager(service, ".");
+        var ret = mgr.StartService(serverUri);
+        return ret;
     }
 
     public bool StopService()
     {
-        //TODO Websocket
+        if (mgr != null)
+        {
+            mgr.StopService();
+            mgr = null;
+        }
         return true;
-    }
-
-    public void UpdateAvatars()
-    {
-        //TODO
     }
 
     public void UpdatePosition(HakoVector3 position, HakoVector3 rotation)

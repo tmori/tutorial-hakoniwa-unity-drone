@@ -73,20 +73,23 @@ namespace hakoniwa.ar.bridge
                     try
                     {
                         udp_service.SetSendPort(latestHeartbeatData.ServerUdpPort);
-                        player.StartService(serverUri);
-                        HakoVector3 pos = new HakoVector3(
-                            (float)latestHeartbeatData.SavedPosition.Position["x"],
-                            (float)latestHeartbeatData.SavedPosition.Position["y"],
-                            (float)latestHeartbeatData.SavedPosition.Position["z"]
-                            );
-                        HakoVector3 rot = new HakoVector3(
-                            (float)latestHeartbeatData.SavedPosition.Orientation["x"],
-                            (float)latestHeartbeatData.SavedPosition.Orientation["y"],
-                            (float)latestHeartbeatData.SavedPosition.Orientation["z"]
-                            );
-                        player.SetBasePosition(pos, rot);
-                        player.setPositioningSpeed(latestHeartbeatData.positioning_speed.rotation, latestHeartbeatData.positioning_speed.move);
-                        isStartedWebSocket = true;
+                        var ret = player.StartService(serverUri);
+                        if (ret.Result.Equals(true))
+                        {
+                            HakoVector3 pos = new HakoVector3(
+                                (float)latestHeartbeatData.SavedPosition.Position["x"],
+                                (float)latestHeartbeatData.SavedPosition.Position["y"],
+                                (float)latestHeartbeatData.SavedPosition.Position["z"]
+                                );
+                            HakoVector3 rot = new HakoVector3(
+                                (float)latestHeartbeatData.SavedPosition.Orientation["x"],
+                                (float)latestHeartbeatData.SavedPosition.Orientation["y"],
+                                (float)latestHeartbeatData.SavedPosition.Orientation["z"]
+                                );
+                            player.SetBasePosition(pos, rot);
+                            player.setPositioningSpeed(latestHeartbeatData.positioning_speed.rotation, latestHeartbeatData.positioning_speed.move);
+                            isStartedWebSocket = true;
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -136,7 +139,6 @@ namespace hakoniwa.ar.bridge
         private void ResetEvent()
         {
             if (state_manager.GetState() == BridgeState.PLAYING) {
-                player.ResetPostion();
                 player.StopService();
                 isStartedWebSocket = false;
                 latestHeartbeatData = null;
@@ -166,7 +168,6 @@ namespace hakoniwa.ar.bridge
                 RunPositioning();
                 SendCurrentBasePosition();
             }
-            player.UpdateAvatars();
         }
 
         public bool Start()
