@@ -2,12 +2,11 @@ using System.Threading.Tasks;
 using hakoniwa.ar.bridge;
 using UnityEngine;
 
-public class ARMain : MonoBehaviour, IHakoniwaArBridgePlayer
+public class ARBridge : MonoBehaviour, IHakoniwaArBridgePlayer
 {
     private HakoniwaArBridgeDevice bridge;
     public GameObject base_object;
-    private HakoDroneInputManager drone_input;
-    private HakoDroneXrInputManager xr_drone_input;
+    private IDroneInput drone_input;
     private Vector3 base_pos;
     private Vector3 base_rot;
     public bool xr = false;
@@ -62,19 +61,9 @@ public class ARMain : MonoBehaviour, IHakoniwaArBridgePlayer
     {
         Vector2 left_value;
         Vector2 right_value;
-        if (xr)
-        {
-            left_value = xr_drone_input.GetLeftStickInput();
-            right_value = xr_drone_input.GetRightStickInput();
-        }
-        else
-        {
-            left_value = drone_input.GetLeftStickInput();
-            right_value = drone_input.GetRightStickInput();
-        }
-        //Debug.Log("left_value: " + left_value);
-        //Debug.Log("Right_value: " + right_value);
-        // 時間を考慮して位置と回転を更新
+        left_value = drone_input.GetLeftStickInput();
+        right_value = drone_input.GetRightStickInput();
+
         float deltaTime = Time.fixedDeltaTime;
 
         // 移動計算（速度を考慮）
@@ -93,7 +82,7 @@ public class ARMain : MonoBehaviour, IHakoniwaArBridgePlayer
     {
         if (xr)
         {
-            xr_drone_input = HakoDroneXrInputManager.Instance;
+            drone_input = HakoDroneXrInputManager.Instance;
         }
         else
         {
@@ -109,16 +98,8 @@ public class ARMain : MonoBehaviour, IHakoniwaArBridgePlayer
     {
         bool o_button_off = false;
         bool r_button_off = false;
-        if (xr)
-        {
-            o_button_off = xr_drone_input.IsXButtonPressed();
-            r_button_off = xr_drone_input.IsYButtonPressed();
-        }
-        else
-        {
-            o_button_off = drone_input.IsOButtonReleased();
-            r_button_off = drone_input.IsRButtonReleased();
-        }
+        o_button_off = drone_input.IsXButtonPressed();
+        r_button_off = drone_input.IsYButtonPressed();
         if (bridge.GetState() == BridgeState.POSITIONING && o_button_off)
         {
             Debug.Log("o_button_off: " + o_button_off);

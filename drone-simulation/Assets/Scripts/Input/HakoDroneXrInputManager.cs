@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HakoDroneXrInputManager : MonoBehaviour
+public class HakoDroneXrInputManager : MonoBehaviour, IDroneInput
 {
     public static HakoDroneXrInputManager Instance { get; private set; }
 

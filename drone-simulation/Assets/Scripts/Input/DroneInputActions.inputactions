@@ -24,7 +24,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Xbutton",
+                    "name": "Sbutton",
                     "type": "Button",
                     "id": "64a82727-ab4e-4e47-8c87-05d4e07b552e",
                     "expectedControlType": "",
@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Obutton",
+                    "name": "Ebutton",
                     "type": "Button",
                     "id": "165c1695-b82f-4cd9-8754-40c904830e38",
                     "expectedControlType": "",
@@ -42,9 +42,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Rbutton",
+                    "name": "Nbutton",
                     "type": "Button",
                     "id": "7767db18-4516-4b91-a150-ebabbc521d9d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Wbutton",
+                    "type": "Button",
+                    "id": "a109d297-f731-4761-9285-96c60434c8fc",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -81,7 +90,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Xbutton",
+                    "action": "Sbutton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -92,7 +101,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Obutton",
+                    "action": "Ebutton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -103,7 +112,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Rbutton",
+                    "action": "Nbutton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "60a56008-09e3-409f-bcc4-314a7d2589b1",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Wbutton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

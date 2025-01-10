@@ -8,50 +8,34 @@ using hakoniwa.ar.bridge;
 public class Drone : MonoBehaviour
 {
     public GameObject body;
-    public GameObject propeller1; // プロペラ1
-    public GameObject propeller2; // プロペラ2
-    public GameObject propeller3; // プロペラ3
-    public GameObject propeller4; // プロペラ4
-    public GameObject propeller5;
-    public GameObject propeller6;
-    public float maxRotationSpeed = 1f; // 最大回転速度（度/秒）
-    public bool xr;
     private DroneCollision my_collision;
-
-    public int radio_control_timeout = 50;
-    public double stick_strength = 0.1;
-    public double stick_yaw_strength = 1.0;
-
-    private HakoDroneInputManager drone_input;
-    private HakoDroneXrInputManager xr_drone_input;
+    private DroneControl drone_control;
+    private DronePropeller drone_propeller;
     private IHakoniwaArBridge ibridge;
-    private AudioSource audioSource;
-    public string audio_path;
-    private bool enableAudio;
-    public Camera target_camera;
-    public float maxDistance = 5.0f;
-    public float minDistance = 0.0f;
+    public int radio_control_timeout = 50;
+
     void Start()
     {
         ibridge = HakoniwaArBridgeDevice.Instance;
-        if (xr)
-        {
-            xr_drone_input = HakoDroneXrInputManager.Instance;
-        }
-        else
-        {
-            drone_input = HakoDroneInputManager.Instance;
-        }
         my_collision = this.GetComponentInChildren<DroneCollision>();
         if (my_collision == null) {
             throw new Exception("Can not found collision");
         }
+        drone_control = this.GetComponentInChildren<DroneControl>();
+        if (drone_control == null)
+        {
+            throw new Exception("Can not found drone control");
+        }
+        drone_propeller = this.GetComponentInChildren<DronePropeller>();
+        if (drone_propeller == null)
+        {
+            throw new Exception("Can not found drone propeller");
+        }
         my_collision.SetIndex(0);
-        // Resourcesから設定ファイルをロード
+
         string droneConfigText = LoadTextFromResources("config/drone/rc/drone_config_0");
         string controllerConfigText = LoadTextFromResources("config/controller/param-api-mixer");
 
-        // 必要なファイルがロードできなければ例外をスロー
         if (string.IsNullOrEmpty(droneConfigText))
         {
             throw new Exception("Failed to load droneConfigText from Resources.");
@@ -62,7 +46,6 @@ public class Drone : MonoBehaviour
             throw new Exception("Failed to load controllerConfigText from Resources.");
         }
 
-        // DroneServiceRC.InitSingleの呼び出し
         int ret = DroneServiceRC.InitSingle(droneConfigText, controllerConfigText, loggerEnable: false);
         Debug.Log("InitSingle: ret = " + ret);
 
@@ -79,53 +62,8 @@ public class Drone : MonoBehaviour
         {
             throw new Exception("Can not Start DroneService RC");
         }
-
-        audioSource = GetComponent<AudioSource>();
-        LoadAudio();
     }
-    void LoadAudio()
-    {
-        AudioClip clip = Resources.Load<AudioClip>(this.audio_path);
-        if (clip != null)
-        {
-            Debug.Log("audio found: " + audio_path);
-            audioSource.clip = clip;
-            audioSource.Stop();
-            enableAudio = true;
-        }
-        else
-        {
-            Debug.LogWarning("audio not found: " + audio_path);
-        }
-    }
-    void PlayAudio(float my_controls)
-    {
-        // Calculate distance to the target camera
-        float distance = Vector3.Distance(target_camera.transform.position, transform.position);
 
-        // Map the distance to volume level
-        float volume = 1.0f - Mathf.Clamp01((distance - minDistance) / (maxDistance - minDistance));
-
-        if (audioSource.isPlaying == false && my_controls > 0)
-        {
-            audioSource.Play();
-        }
-        else if (audioSource.isPlaying == true && my_controls == 0)
-        {
-            audioSource.Stop();
-        }
-
-        if (audioSource.isPlaying)
-        {
-            audioSource.volume = volume;
-        }
-    }
-    /// <summary>
-    /// Resourcesフォルダから指定したパスのテキストファイルをロードします。
-    /// 拡張子は不要です（例: "config/drone/rc/drone_config_0"）。
-    /// </summary>
-    /// <param name="resourcePath">Resourcesフォルダ内の相対パス（拡張子なし）</param>
-    /// <returns>ロードしたテキストデータ</returns>
     private string LoadTextFromResources(string resourcePath)
     {
         TextAsset textAsset = Resources.Load<TextAsset>(resourcePath);
@@ -139,83 +77,7 @@ public class Drone : MonoBehaviour
         {
             return;
         }
-        if (xr)
-        {
-            HandleXrInput();
-        }
-        else
-        {
-            HandleGamePadInput();
-        }
-    }
-    private void HandleXrInput()
-    {
-        // 左スティックの入力取得 (OVRInput.RawAxis2D.LThumbstick)
-        Vector2 leftStick = xr_drone_input.GetLeftStickInput();//OVRInput.Get(OVRInput.RawAxis2D.LThumbstick);
-        // 右スティックの入力取得 (OVRInput.RawAxis2D.RThumbstick)
-        Vector2 rightStick = xr_drone_input.GetRightStickInput();//OVRInput.Get(OVRInput.RawAxis2D.RThumbstick);
-        float horizontal = rightStick.x; // 左右移動
-        float forward = rightStick.y;   // 前後移動
-
-        float yaw = leftStick.x;      // ヨー回転
-        float pitch = leftStick.y;    // 垂直移動
-
-        // Debug表示 (必要に応じて)
-        if (leftStick != Vector2.zero)
-            Debug.Log($"左スティック: X={leftStick.x}, Y={leftStick.y}");
-        if (rightStick != Vector2.zero)
-            Debug.Log($"右スティック: X={rightStick.x}, Y={rightStick.y}");
-
-        // ボタンAの入力取得
-        //if (OVRInput.GetDown(OVRInput.RawButton.A))
-        if (xr_drone_input.IsAButtonPressed())
-        {
-            DroneServiceRC.PutRadioControlButton(0, 1); // ボタンONを送信
-            Debug.Log("AボタンDOWN");
-        }
-        //else if (OVRInput.GetUp(OVRInput.RawButton.A))
-        else if (xr_drone_input.IsAButtonReleased())
-        {
-            DroneServiceRC.PutRadioControlButton(0, 0); // ボタンOFFを送信
-            Debug.Log("AボタンUP");
-        }
-
-        // ドローンサービスに入力を送る
-        DroneServiceRC.PutHorizontal(0, horizontal * stick_strength);  // 横移動
-        DroneServiceRC.PutForward(0, -forward * stick_strength);       // 前後移動
-        DroneServiceRC.PutHeading(0, yaw * stick_yaw_strength);        // 水平回転 (ヨー)
-        DroneServiceRC.PutVertical(0, -pitch * stick_strength);        // 垂直移動 (ピッチ)
-    }
-    private void HandleGamePadInput()
-    {
-        Vector2 rotateInput = drone_input.GetLeftStickInput(); //inputActions.Gameplay.LeftStick.ReadValue<Vector2>();
-        Vector2 moveInput = drone_input.GetRightStickInput(); //inputActions.Gameplay.RightStick.ReadValue<Vector2>();
-        float horizontal = moveInput.x; // 左右移動
-        float forward = moveInput.y;   // 前後移動
-
-        float yaw = rotateInput.x;    // ヨー回転
-        float pitch = rotateInput.y;  // 垂直移動
-        //Debug.Log($"Left Stick: X = {moveInput.x}, Y = {moveInput.y}");
-        //Debug.Log($"Right Stick: X = {rotateInput.x}, Y = {rotateInput.y}");
-        // ボタン A (例: ラジオコントロール)
-        //if (inputActions.Gameplay.Xbuttonn.WasPressedThisFrame())
-        if (drone_input.IsXButtonPressed())
-        {
-            DroneServiceRC.PutRadioControlButton(0, 1);
-            Debug.Log("GamePad: Aボタン on");
-        }
-        //else if (inputActions.Gameplay.Xbuttonn.WasReleasedThisFrame())
-        else if (drone_input.IsXButtonReleased())
-        {
-            DroneServiceRC.PutRadioControlButton(0, 0 );
-            Debug.Log("GamePad: Aボタン off");
-        }
-
-        // ドローンサービスに入力を送る
-        DroneServiceRC.PutHorizontal(0, horizontal * stick_strength); // 横移動
-        DroneServiceRC.PutForward(0, -forward * stick_strength);     // 前後移動
-        DroneServiceRC.PutHeading(0, yaw * stick_yaw_strength);      // 水平回転 (ヨー)
-        DroneServiceRC.PutVertical(0, -pitch * stick_strength);      // 垂直移動 (ピッチ)
+        drone_control.HandleInput();
     }
 
     private void FixedUpdate()
@@ -241,46 +103,20 @@ public class Drone : MonoBehaviour
         ret = DroneServiceRC.GetAttitude(0, out roll, out pitch, out yaw);
         if (ret == 0)
         {
-            // オイラー角をラジアンから度に変換
             float rollDegrees = Mathf.Rad2Deg * (float)roll;
             float pitchDegrees = Mathf.Rad2Deg * (float)pitch;
             float yawDegrees = Mathf.Rad2Deg * (float)yaw;
 
-            // Unityの回転に適用（Quaternionを使用）
             Quaternion rotation = Quaternion.Euler(pitchDegrees, -yawDegrees, -rollDegrees);
             body.transform.rotation = rotation;
         }
-        // ドローンサービスからコントロールデータを取得
+
         double c1, c2, c3, c4, c5, c6, c7, c8;
         ret = DroneServiceRC.GetControls(0, out c1, out c2, out c3, out c4, out c5, out c6, out c7, out c8);
-
         if (ret == 0)
         {
-            // デューティレート（c1 ～ c4）に応じてプロペラを回転
-            RotatePropeller(propeller1, (float)c1);
-            RotatePropeller(propeller2, -(float)c2);
-            RotatePropeller(propeller3, (float)c3);
-            RotatePropeller(propeller4, -(float)c4);
-            if (propeller5)
-            {
-                RotatePropeller(propeller5, (float)c1);
-            }
-            if (propeller6)
-            {
-                RotatePropeller(propeller6, (float)c2);
-            }
-            PlayAudio((float)c1);
+            drone_propeller.Rotate((float)c1, (float)c2, (float)c3, (float)c4);
         }
-    }
-    private void RotatePropeller(GameObject propeller, float dutyRate)
-    {
-        if (propeller == null) return;
-
-        // デューティレートを回転速度に変換
-        float rotationSpeed = maxRotationSpeed * dutyRate;
-
-        // プロペラをY軸回転（必要に応じて軸を変更）
-        propeller.transform.Rotate(0f, rotationSpeed * Time.deltaTime, 0f);
     }
 
     private void OnApplicationQuit()
