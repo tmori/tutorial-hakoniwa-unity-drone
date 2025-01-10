@@ -26,14 +26,23 @@ public class HakoDroneXrInputManager : MonoBehaviour
         return OVRInput.Get(OVRInput.RawAxis2D.RThumbstick);
     }
 
-    public bool IsXButtonPressed()
+    public bool IsOButtonPressed()
     {
         return OVRInput.GetDown(OVRInput.RawButton.A);
     }
 
-    public bool IsXButtonReleased()
+    public bool IsOButtonReleased()
     {
         return OVRInput.GetUp(OVRInput.RawButton.A);
+    }
+    public bool IsRButtonPressed()
+    {
+        return OVRInput.GetDown(OVRInput.RawButton.B);
+    }
+
+    public bool IsRButtonReleased()
+    {
+        return OVRInput.GetUp(OVRInput.RawButton.B);
     }
 
     private void OnDestroy()

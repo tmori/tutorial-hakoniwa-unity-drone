@@ -111,8 +111,8 @@ public class ARMain : MonoBehaviour, IHakoniwaArBridgePlayer
         bool r_button_off = false;
         if (xr)
         {
-            o_button_off = xr_drone_input.IsXButtonPressed();
-            //TODO
+            o_button_off = xr_drone_input.IsOButtonPressed();
+            r_button_off = xr_drone_input.IsRButtonPressed();
         }
         else
         {
