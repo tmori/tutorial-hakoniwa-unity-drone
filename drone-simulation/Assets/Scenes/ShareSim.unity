@@ -226,9 +226,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   currentMode: 0
-  wheelSpeed: 1
-  moveSpeed: 1
-  rotateSpeed: 1
+  wheelSpeed: 0.1
+  moveSpeed: 0.1
+  rotateSpeed: 0.1
   useGimbal: 1
   gimbalSmoothSpeed: 2
   fixedDistance: {x: 0, y: 2, z: -7}

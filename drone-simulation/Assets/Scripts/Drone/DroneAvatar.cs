@@ -31,22 +31,22 @@ public class DroneAvatar : MonoBehaviour, IHakoObject
 
         hakoPdu = HakoAsset.GetHakoPdu();
         /*
+         * Position
+         */
+        var ret = hakoPdu.DeclarePduForRead(robotName, pdu_name_pos);
+        if (ret == false)
+        {
+            throw new ArgumentException($"Can not declare pdu for read: {robotName} {pdu_name_pos}");
+        }
+        /*
          * Propeller
          */
-        var ret = hakoPdu.DeclarePduForRead(robotName, pdu_name_propeller);
+        ret = hakoPdu.DeclarePduForRead(robotName, pdu_name_propeller);
         if (ret == false)
         {
             throw new ArgumentException($"Can not declare pdu for read: {robotName} {pdu_name_propeller}");
         }
 
-        /*
-         * Position
-         */
-        ret = hakoPdu.DeclarePduForRead(robotName, pdu_name_pos);
-        if (ret == false)
-        {
-            throw new ArgumentException($"Can not declare pdu for read: {robotName} {pdu_name_pos}");
-        }
     }
 
     public void EventReset()
@@ -67,6 +67,10 @@ public class DroneAvatar : MonoBehaviour, IHakoObject
     public void EventTick()
     {
         var pduManager = hakoPdu.GetPduManager();
+        if (pduManager == null)
+        {
+            return;
+        }
 
         /*
          * Position
@@ -80,6 +84,7 @@ public class DroneAvatar : MonoBehaviour, IHakoObject
          */
         IPdu pdu_propeller = pduManager.ReadPdu(robotName, pdu_name_propeller);
         HakoHilActuatorControls propeller = new HakoHilActuatorControls(pdu_propeller);
+        //Debug.Log("c1: " + propeller.controls[0]);
         drone_propeller.Rotate((float)propeller.controls[0], (float)propeller.controls[1], (float)propeller.controls[2], (float)propeller.controls[3]);
     }
 
