@@ -4,6 +4,9 @@ using UnityEngine;
 using Hakoniwa.DroneService;
 using System;
 using hakoniwa.ar.bridge;
+using hakoniwa.pdu.interfaces;
+using hakoniwa.pdu.msgs.geometry_msgs;
+using hakoniwa.pdu.msgs.hako_mavlink_msgs;
 
 public class DronePlayer : MonoBehaviour
 {
@@ -14,6 +17,68 @@ public class DronePlayer : MonoBehaviour
     private IHakoniwaArBridge ibridge;
     public int radio_control_timeout = 50;
 
+    public string robotName = "DroneTransporter";
+    public string pdu_name_propeller = "drone_motor";
+    public string pdu_name_pos = "drone_pos";
+    private void SetPosition(Twist pos, UnityEngine.Vector3 unity_pos)
+    {
+        pos.linear.x = unity_pos.z;
+        pos.linear.y = -unity_pos.x;
+        pos.linear.z = unity_pos.y;
+
+        UnityEngine.Vector3 unity_rot = body.transform.localEulerAngles;
+        pos.angular.x = -Mathf.Deg2Rad * unity_rot.z;
+        pos.angular.y = Mathf.Deg2Rad * unity_rot.x;
+        pos.angular.z = -Mathf.Deg2Rad * unity_rot.y;
+    }
+
+    private async void FlushPduPos(UnityEngine.Vector3 unity_pos)
+    {
+        var pdu_manager = ARBridge.Instance.Get();
+        if (pdu_manager == null)
+        {
+            return;
+        }
+        /*
+         * Position
+         */
+        INamedPdu npdu_pos = pdu_manager.CreateNamedPdu(robotName, pdu_name_pos);
+        if (npdu_pos == null || npdu_pos.Pdu == null)
+        {
+            throw new Exception($"Can not find npdu: {robotName} {pdu_name_pos}");
+        }
+        Twist pos = new Twist(npdu_pos.Pdu);
+        SetPosition(pos, unity_pos);
+        pdu_manager.WriteNamedPdu(npdu_pos);
+        var ret = await pdu_manager.FlushNamedPdu(npdu_pos);
+        Debug.Log("Flush result: " + ret);
+    }
+    private async void FlushPduPropeller(float c1, float c2, float c3, float c4)
+    {
+        var pdu_manager = ARBridge.Instance.Get();
+        if (pdu_manager == null)
+        {
+            return;
+        }
+        /*
+         * Position
+         */
+        INamedPdu npdu = pdu_manager.CreateNamedPdu(robotName, pdu_name_propeller);
+        if (npdu == null || npdu.Pdu == null)
+        {
+            throw new Exception($"Can not find npdu: {robotName} {pdu_name_propeller}");
+        }
+
+        HakoHilActuatorControls actuator = new HakoHilActuatorControls(npdu.Pdu);
+        actuator.controls[0] = c1;
+        actuator.controls[1] = c2;
+        actuator.controls[2] = c3;
+        actuator.controls[3] = c4;
+        pdu_manager.WriteNamedPdu(npdu);
+        var ret = await pdu_manager.FlushNamedPdu(npdu);
+        //Debug.Log("Flush result: " + ret);
+
+    }
     void Start()
     {
         ibridge = HakoniwaArBridgeDevice.Instance;
@@ -92,12 +157,12 @@ public class DronePlayer : MonoBehaviour
         int ret = DroneServiceRC.GetPosition(0, out x, out y, out z);
         if (ret == 0)
         {
-            Vector3 unity_pos = new Vector3();
+            UnityEngine.Vector3 unity_pos = new UnityEngine.Vector3();
             unity_pos.z = (float)x;
             unity_pos.x = -(float)y;
             unity_pos.y = (float)z;
             body.transform.position = unity_pos;
-
+            FlushPduPos(unity_pos);
         }
         double roll, pitch, yaw;
         ret = DroneServiceRC.GetAttitude(0, out roll, out pitch, out yaw);
@@ -107,7 +172,7 @@ public class DronePlayer : MonoBehaviour
             float pitchDegrees = Mathf.Rad2Deg * (float)pitch;
             float yawDegrees = Mathf.Rad2Deg * (float)yaw;
 
-            Quaternion rotation = Quaternion.Euler(pitchDegrees, -yawDegrees, -rollDegrees);
+            UnityEngine.Quaternion rotation = UnityEngine.Quaternion.Euler(pitchDegrees, -yawDegrees, -rollDegrees);
             body.transform.rotation = rotation;
         }
 
@@ -116,6 +181,7 @@ public class DronePlayer : MonoBehaviour
         if (ret == 0)
         {
             drone_propeller.Rotate((float)c1, (float)c2, (float)c3, (float)c4);
+            FlushPduPropeller((float)c1, (float)c2, (float)c3, (float)c4);
         }
     }
 

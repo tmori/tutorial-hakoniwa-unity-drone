@@ -56,7 +56,7 @@ namespace hakoniwa.ar.bridge
             return true;
         }
 
-        private void HeartBeatCheck()
+        private async void HeartBeatCheck()
         {
             var packet = udp_service.GetLatestPacket("heartbeat_request");
 
@@ -73,8 +73,8 @@ namespace hakoniwa.ar.bridge
                     try
                     {
                         udp_service.SetSendPort(latestHeartbeatData.ServerUdpPort);
-                        var ret = player.StartService(serverUri);
-                        if (ret.Result.Equals(true))
+                        var ret = await player.StartService(serverUri);
+                        if (ret)
                         {
                             HakoVector3 pos = new HakoVector3(
                                 (float)latestHeartbeatData.SavedPosition.Position["x"],
@@ -93,7 +93,7 @@ namespace hakoniwa.ar.bridge
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Error starting player service: {ex.Message}");
+                        throw new Exception($"Error starting player service: {ex.Message}");
                     }
                 }
 

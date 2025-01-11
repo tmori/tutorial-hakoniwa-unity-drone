@@ -142,7 +142,8 @@ PlayerSettings:
   tvOSBundleVersion: 1.0
   bundleVersion: 0.1
   preloadedAssets:
-  - {fileID: 11400000, guid: c68a9533d13b0894aacd0bf4943cbfdf, type: 2}
+  - {fileID: 0}
+  - {fileID: 11400000, guid: 9b6938d7ddd6f4ee9b98499dcf93e4ae, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -591,7 +592,8 @@ PlayerSettings:
   enableCrashReportAPI: 0
   cameraUsageDescription: 
   locationUsageDescription: 
-  microphoneUsageDescription: 
+  microphoneUsageDescription: This app uses the microphone for voice input during
+    gameplay.
   bluetoothUsageDescription: 
   macOSTargetOSVersion: 11.0
   switchNMETAOverride: 
@@ -962,7 +964,7 @@ PlayerSettings:
   qnxGraphicConfPath: 
   apiCompatibilityLevel: 6
   captureStartupLogs: {}
-  activeInputHandler: 1
+  activeInputHandler: 2
   windowsGamepadBackendHint: 0
   cloudProjectId: aea882a7-2e9e-4070-b2dc-e0f144407e74
   framebufferDepthMemorylessMode: 0

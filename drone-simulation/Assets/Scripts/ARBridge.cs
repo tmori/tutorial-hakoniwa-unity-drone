@@ -39,6 +39,15 @@ public class ARBridge : MonoBehaviour, IHakoniwaArBridgePlayer, IHakoPduInstance
 
     public IPduManager Get()
     {
+        if (mgr == null)
+        {
+            return null;
+        }
+        if (mgr.IsServiceEnabled() == false)
+        {
+            Debug.Log("SERVER IS NOT ENABLED");
+            return null;
+        }
         return mgr;
     }
 
@@ -66,8 +75,12 @@ public class ARBridge : MonoBehaviour, IHakoniwaArBridgePlayer, IHakoPduInstance
     {
         service = EnvironmentServiceFactory.Create("websocket_dotnet", "unity", ".");
         mgr = new PduManager(service, ".");
+        Debug.Log("Start Service!! " + serverUri);
         var ret = mgr.StartService(serverUri);
+        //bool ret = true;
+        Debug.Log("Start Service!! " + serverUri + " ret: " + ret);
         return ret;
+        //return Task<bool>.FromResult(ret);
     }
 
     public bool StopService()

@@ -205,13 +205,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 217868563}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.010060607, y: 0.97169274, z: -10.023812}
+  m_LocalRotation: {x: -0, y: 0.35924268, z: -0, w: 0.93324417}
+  m_LocalPosition: {x: -0.44, y: 0.11, z: -0.494}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 498527485}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 42.107, z: 0}
 --- !u!114 &217868567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,9 +226,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   currentMode: 0
-  wheelSpeed: 8
-  moveSpeed: 8
-  rotateSpeed: 8
+  wheelSpeed: 1
+  moveSpeed: 1
+  rotateSpeed: 1
   useGimbal: 1
   gimbalSmoothSpeed: 2
   fixedDistance: {x: 0, y: 2, z: -7}
@@ -633,8 +633,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   assetName: UnityAsset
   pduConfigPath: .
-  useConductor: 1
-  maxDelayTimeMsec: 100
   hakoObjects:
   - {fileID: 550187967}
   _state: 0
