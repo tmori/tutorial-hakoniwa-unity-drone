@@ -51,7 +51,7 @@ public class DronePlayer : MonoBehaviour
         SetPosition(pos, unity_pos);
         pdu_manager.WriteNamedPdu(npdu_pos);
         var ret = await pdu_manager.FlushNamedPdu(npdu_pos);
-        Debug.Log("Flush result: " + ret);
+        //Debug.Log("Flush result: " + ret);
     }
     private async void FlushPduPropeller(float c1, float c2, float c3, float c4)
     {
@@ -70,10 +70,16 @@ public class DronePlayer : MonoBehaviour
         }
 
         HakoHilActuatorControls actuator = new HakoHilActuatorControls(npdu.Pdu);
-        actuator.controls[0] = c1;
-        actuator.controls[1] = c2;
-        actuator.controls[2] = c3;
-        actuator.controls[3] = c4;
+        float[] controls = new float[16];
+        controls[0] = c1;
+        controls[1] = c2;
+        controls[2] = c3;
+        controls[3] = c4;
+        actuator.controls = controls;
+        //float[] temp = npdu.Pdu.GetDataArray<float>("controls");
+        //Debug.Log("size: " + temp.Length);
+        //Debug.Log("controls[0]: " + temp[0]);
+
         pdu_manager.WriteNamedPdu(npdu);
         var ret = await pdu_manager.FlushNamedPdu(npdu);
         //Debug.Log("Flush result: " + ret);
