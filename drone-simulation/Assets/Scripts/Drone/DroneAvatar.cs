@@ -76,16 +76,31 @@ public class DroneAvatar : MonoBehaviour, IHakoObject
          * Position
          */
         IPdu pdu_pos = pduManager.ReadPdu(robotName, pdu_name_pos);
-        Twist pos = new Twist(pdu_pos);
-        UpdatePosition(pos);
+        if (pdu_pos == null)
+        {
+            Debug.Log("Can not get pdu of pos");
+        }
+        else
+        {
+            Twist pos = new Twist(pdu_pos);
+            //Debug.Log($"Twist ({pos.linear.x} {pos.linear.y} {pos.linear.z})");
+            UpdatePosition(pos);
+        }
 
         /*
          * Propeller
          */
         IPdu pdu_propeller = pduManager.ReadPdu(robotName, pdu_name_propeller);
-        HakoHilActuatorControls propeller = new HakoHilActuatorControls(pdu_propeller);
-        //Debug.Log("c1: " + propeller.controls[0]);
-        drone_propeller.Rotate((float)propeller.controls[0], (float)propeller.controls[1], (float)propeller.controls[2], (float)propeller.controls[3]);
+        if (pdu_propeller == null)
+        {
+            Debug.Log("Can not get pdu of propeller");
+        }
+        else
+        {
+            HakoHilActuatorControls propeller = new HakoHilActuatorControls(pdu_propeller);
+            //Debug.Log("c1: " + propeller.controls[0]);
+            drone_propeller.Rotate((float)propeller.controls[0], (float)propeller.controls[1], (float)propeller.controls[2], (float)propeller.controls[3]);
+        }
     }
 
     private void UpdatePosition(Twist pos)
@@ -95,6 +110,7 @@ public class DroneAvatar : MonoBehaviour, IHakoObject
         unity_pos.x = -(float)pos.linear.y;
         unity_pos.y = (float)pos.linear.z;
         body.transform.position = unity_pos;
+        //Debug.Log("pos: " + body.transform.position);
 
         float rollDegrees = Mathf.Rad2Deg * (float)pos.angular.x;
         float pitchDegrees = Mathf.Rad2Deg * (float)pos.angular.y;
