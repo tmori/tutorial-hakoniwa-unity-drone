@@ -72,6 +72,7 @@ namespace hakoniwa.ar.bridge
                 {
                     try
                     {
+                        state_manager.EventReset();
                         udp_service.SetSendPort(latestHeartbeatData.ServerUdpPort);
                         var ret = await player.StartService(serverUri);
                         if (ret)
