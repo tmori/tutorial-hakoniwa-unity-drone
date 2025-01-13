@@ -38,7 +38,6 @@ public class DronePlayer : MonoBehaviour, IHakoniwaArObject
         {
             return;
         }
-
         /*
          * Position
          */
