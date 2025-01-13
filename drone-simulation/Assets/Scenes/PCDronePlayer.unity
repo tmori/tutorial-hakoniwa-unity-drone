@@ -244,7 +244,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   base_object: {fileID: 963194225}
   player_obj: {fileID: 400762681}
-  avatar_objs: []
+  avatar_objs:
+  - {fileID: 3195031721793619710}
   xr: 0
   moveSpeed: 0.1
   rotationSpeed: 10
@@ -1290,6 +1291,68 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &3195031721793619710 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7616432273264441056, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+  m_PrefabInstance: {fileID: 8627938420023900253}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8627938420023900253
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1500464970693132519, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.776
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500464970693132519, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500464970693132519, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500464970693132519, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500464970693132519, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500464970693132519, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500464970693132519, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500464970693132519, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500464970693132519, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500464970693132519, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7616432273264441056, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+      propertyPath: m_Name
+      value: DroneAvatarDevice2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
 --- !u!1001 &8635361309597439299
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1300,7 +1363,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 164460975858354045, guid: 1a347f00505d148f6b58b76a7a4ad0f4, type: 3}
       propertyPath: m_Name
-      value: DroneTransporter
+      value: DronePlayer1
       objectReference: {fileID: 0}
     - target: {fileID: 1172791302435086947, guid: 1a347f00505d148f6b58b76a7a4ad0f4, type: 3}
       propertyPath: robotName
@@ -1372,4 +1435,5 @@ SceneRoots:
   - {fileID: 705507995}
   - {fileID: 1227225203}
   - {fileID: 8635361309597439299}
+  - {fileID: 8627938420023900253}
   - {fileID: 205908293}

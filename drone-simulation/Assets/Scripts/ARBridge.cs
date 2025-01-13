@@ -121,6 +121,20 @@ public class ARBridge : MonoBehaviour, IHakoniwaArBridgePlayer, IHakoPduInstance
     void Start()
     {
         ar_player = player_obj.GetComponentInChildren<IHakoniwaArObject>();
+        if (ar_player == null)
+        {
+            throw new System.Exception("Can not find Player ar obj");
+        }
+        ar_avatars = new List<IHakoniwaArObject>();
+        foreach (var entry in avatar_objs)
+        {
+            var e = entry.GetComponentInChildren<IHakoniwaArObject>();
+            if (e == null)
+            {
+                throw new System.Exception("Can not find Avatar ar obj");
+            }
+            ar_avatars.Add(e);
+        }
         if (xr)
         {
             drone_input = HakoDroneXrInputManager.Instance;
@@ -177,10 +191,18 @@ public class ARBridge : MonoBehaviour, IHakoniwaArBridgePlayer, IHakoPduInstance
     public async Task InitializeAsync(PlayerData player, List<AvatarData> avatars)
     {
         Debug.Log("Player: " + player.Name);
+        if (avatars.Count != ar_avatars.Count)
+        {
+            throw new System.Exception("Avatar size is invalid...");
+        }
+
         await ar_player.DeclarePduAsync(player.Type, player.Name);
+        int index = 0;
         foreach (var avatar in avatars)
         {
             Debug.Log("avatar: " + avatar.Name);
+            await this.ar_avatars[index].DeclarePduAsync(avatar.Type, avatar.Name);
+            index++;
         }
     }
 }

@@ -1,10 +1,12 @@
 using System;
+using System.Threading.Tasks;
+using hakoniwa.ar.bridge;
 using hakoniwa.pdu.interfaces;
 using hakoniwa.pdu.msgs.geometry_msgs;
 using hakoniwa.pdu.msgs.hako_mavlink_msgs;
 using UnityEngine;
 
-public class DroneAvatarDevice : MonoBehaviour
+public class DroneAvatarDevice : MonoBehaviour, IHakoniwaArObject
 {
     public string robotName = "DroneTransporter";
     public string pdu_name_propeller = "drone_motor";
@@ -78,5 +80,19 @@ public class DroneAvatarDevice : MonoBehaviour
 
         UnityEngine.Quaternion rotation = UnityEngine.Quaternion.Euler(pitchDegrees, -yawDegrees, -rollDegrees);
         body.transform.rotation = rotation;
+    }
+
+    public async Task DeclarePduAsync(string type_name, string robot_name)
+    {
+        var pdu_manager = ARBridge.Instance.Get();
+        if (pdu_manager == null)
+        {
+            throw new Exception("Can not get Pdu Manager");
+        }
+        this.robotName = robot_name;
+        var ret = await pdu_manager.DeclarePduForRead(robotName, pdu_name_pos);
+        Debug.Log("declare pdu pos: " + ret);
+        ret = await pdu_manager.DeclarePduForRead(robotName, pdu_name_propeller);
+        Debug.Log("declare pdu propeller: " + ret);
     }
 }
