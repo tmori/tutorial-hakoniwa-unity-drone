@@ -70,6 +70,7 @@ namespace hakoniwa.ar.bridge
                 serverUri = $"ws://{ipAddress}:8765";
                 if (isStartedWebSocket == false)
                 {
+                    isStartedWebSocket = true;
                     try
                     {
                         state_manager.EventReset();
@@ -89,11 +90,11 @@ namespace hakoniwa.ar.bridge
                                 );
                             player.SetBasePosition(pos, rot);
                             player.setPositioningSpeed(latestHeartbeatData.positioning_speed.rotation, latestHeartbeatData.positioning_speed.move);
-                            isStartedWebSocket = true;
                         }
                     }
                     catch (Exception ex)
                     {
+                        isStartedWebSocket = false;
                         throw new Exception($"Error starting player service: {ex.Message}");
                     }
                 }

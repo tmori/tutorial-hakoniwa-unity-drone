@@ -16,6 +16,8 @@ public class DronePlayer : MonoBehaviour
     private DronePropeller drone_propeller;
     private IHakoniwaArBridge ibridge;
     public int radio_control_timeout = 50;
+    private bool is_declared_pos = false;
+    private bool is_declared_propeller = false;
 
     public string robotName = "DroneTransporter";
     public string pdu_name_propeller = "drone_motor";
@@ -39,6 +41,19 @@ public class DronePlayer : MonoBehaviour
         {
             return;
         }
+        if (is_declared_pos == false)
+        {
+            var dec_ret = await pdu_manager.DeclarePduForWrite(robotName, pdu_name_pos);
+            Debug.Log("declare pdu pos: " + dec_ret);
+            if (dec_ret == true)
+            {
+                is_declared_pos = true;
+            }
+            else
+            {
+                return;
+            }
+        }
         /*
          * Position
          */
@@ -60,8 +75,22 @@ public class DronePlayer : MonoBehaviour
         {
             return;
         }
+        if (is_declared_propeller == false)
+        {
+            var dec_ret = await pdu_manager.DeclarePduForWrite(robotName, pdu_name_propeller);
+            Debug.Log("declare pdu propeller: " + dec_ret);
+            if (dec_ret == true)
+            {
+                is_declared_propeller = true;
+            }
+            else
+            {
+                return;
+            }
+        }
+
         /*
-         * Position
+         * Propeller
          */
         INamedPdu npdu = pdu_manager.CreateNamedPdu(robotName, pdu_name_propeller);
         if (npdu == null || npdu.Pdu == null)
