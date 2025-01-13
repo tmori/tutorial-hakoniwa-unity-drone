@@ -2530,7 +2530,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   base_object: {fileID: 23304603}
-  player: {fileID: 8635361309597439300}
+  player_obj: {fileID: 0}
+  avatar_objs: []
   xr: 1
   moveSpeed: 0.1
   rotationSpeed: 10
@@ -21938,6 +21939,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DroneTransporter
       objectReference: {fileID: 0}
+    - target: {fileID: 1172791302435086947, guid: 1a347f00505d148f6b58b76a7a4ad0f4, type: 3}
+      propertyPath: robotName
+      value: Drone1
+      objectReference: {fileID: 0}
     - target: {fileID: 2116656261730524738, guid: 1a347f00505d148f6b58b76a7a4ad0f4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -21987,11 +21992,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a347f00505d148f6b58b76a7a4ad0f4, type: 3}
---- !u!1 &8635361309597439300 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 164460975858354045, guid: 1a347f00505d148f6b58b76a7a4ad0f4, type: 3}
-  m_PrefabInstance: {fileID: 8635361309597439299}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9095771239375087184 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2116656261730524738, guid: 1a347f00505d148f6b58b76a7a4ad0f4, type: 3}

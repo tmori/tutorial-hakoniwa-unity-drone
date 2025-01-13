@@ -673,7 +673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb6f125ad8ade40608187c6be7757c31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  robotName: DroneTransporter
+  robotName: Drone1
   pdu_name_propeller: drone_motor
   pdu_name_pos: drone_pos
   body: {fileID: 550187967}

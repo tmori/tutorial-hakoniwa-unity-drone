@@ -1302,6 +1302,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DroneTransporter
       objectReference: {fileID: 0}
+    - target: {fileID: 1172791302435086947, guid: 1a347f00505d148f6b58b76a7a4ad0f4, type: 3}
+      propertyPath: robotName
+      value: Drone1
+      objectReference: {fileID: 0}
     - target: {fileID: 2116656261730524738, guid: 1a347f00505d148f6b58b76a7a4ad0f4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
