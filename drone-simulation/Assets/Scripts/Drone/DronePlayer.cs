@@ -43,13 +43,9 @@ public class DronePlayer : MonoBehaviour
         }
         if (is_declared_pos == false)
         {
-            var dec_ret = await pdu_manager.DeclarePduForWrite(robotName, pdu_name_pos);
-            Debug.Log("declare pdu pos: " + dec_ret);
-            if (dec_ret == true)
-            {
-                is_declared_pos = true;
-            }
-            else
+            is_declared_pos = await pdu_manager.DeclarePduForWrite(robotName, pdu_name_pos);
+            Debug.Log("declare pdu pos: " + is_declared_pos);
+            if (is_declared_pos == false)
             {
                 return;
             }
@@ -77,13 +73,9 @@ public class DronePlayer : MonoBehaviour
         }
         if (is_declared_propeller == false)
         {
-            var dec_ret = await pdu_manager.DeclarePduForWrite(robotName, pdu_name_propeller);
-            Debug.Log("declare pdu propeller: " + dec_ret);
-            if (dec_ret == true)
-            {
-                is_declared_propeller = true;
-            }
-            else
+            is_declared_propeller = await pdu_manager.DeclarePduForWrite(robotName, pdu_name_propeller);
+            Debug.Log("declare pdu propeller: " + is_declared_propeller);
+            if (is_declared_propeller == false)
             {
                 return;
             }
