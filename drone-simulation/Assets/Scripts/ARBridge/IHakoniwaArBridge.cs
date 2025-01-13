@@ -17,6 +17,11 @@ namespace hakoniwa.ar.bridge
             Z = z;
         }
     }
+    public interface IHakoniwaArObject
+    {
+        Task DeclarePduAsync(string type_name, string robot_name);
+    }
+
     public interface IHakoniwaArBridgePlayer
     {
         Task<bool> StartService(string serverUri);
@@ -35,6 +40,7 @@ namespace hakoniwa.ar.bridge
         /*
          * Deviceの場合のみ、コールバックされる
          */
+        Task InitializeAsync(PlayerData player, List<AvatarData> avatars);
         void SetBasePosition(HakoVector3 position, HakoVector3 rotation);
         void setPositioningSpeed(float rotation, float move);
     }

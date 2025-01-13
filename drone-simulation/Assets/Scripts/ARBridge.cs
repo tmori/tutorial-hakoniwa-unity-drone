@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using hakoniwa.ar.bridge;
 using hakoniwa.environment.impl;
@@ -29,7 +30,10 @@ public class ARBridge : MonoBehaviour, IHakoniwaArBridgePlayer, IHakoPduInstance
     private Vector3 base_pos;
     private Vector3 base_rot;
 
-    public GameObject player;
+    public GameObject player_obj;
+    public List<GameObject> avatar_objs;
+    private IHakoniwaArObject ar_player;
+    private List<IHakoniwaArObject> ar_avatars;
     private IPduManager mgr = null;
     private IEnvironmentService service;
 
@@ -116,6 +120,7 @@ public class ARBridge : MonoBehaviour, IHakoniwaArBridgePlayer, IHakoPduInstance
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        ar_player = player_obj.GetComponentInChildren<IHakoniwaArObject>();
         if (xr)
         {
             drone_input = HakoDroneXrInputManager.Instance;
@@ -169,4 +174,13 @@ public class ARBridge : MonoBehaviour, IHakoniwaArBridgePlayer, IHakoPduInstance
         base_rot.z = rotation.Z;
     }
 
+    public async Task InitializeAsync(PlayerData player, List<AvatarData> avatars)
+    {
+        Debug.Log("Player: " + player.Name);
+        await ar_player.DeclarePduAsync(player.Type, player.Name);
+        foreach (var avatar in avatars)
+        {
+            Debug.Log("avatar: " + avatar.Name);
+        }
+    }
 }

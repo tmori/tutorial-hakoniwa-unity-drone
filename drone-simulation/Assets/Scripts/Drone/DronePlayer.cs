@@ -1,14 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Hakoniwa.DroneService;
 using System;
-using hakoniwa.ar.bridge;
 using hakoniwa.pdu.interfaces;
 using hakoniwa.pdu.msgs.geometry_msgs;
 using hakoniwa.pdu.msgs.hako_mavlink_msgs;
+using hakoniwa.ar.bridge;
+using System.Threading.Tasks;
 
-public class DronePlayer : MonoBehaviour
+public class DronePlayer : MonoBehaviour, IHakoniwaArObject
 {
     public GameObject body;
     private DroneCollision my_collision;
@@ -16,8 +15,6 @@ public class DronePlayer : MonoBehaviour
     private DronePropeller drone_propeller;
     private IHakoniwaArBridge ibridge;
     public int radio_control_timeout = 50;
-    private bool is_declared_pos = false;
-    private bool is_declared_propeller = false;
 
     public string robotName = "DroneTransporter";
     public string pdu_name_propeller = "drone_motor";
@@ -41,19 +38,7 @@ public class DronePlayer : MonoBehaviour
         {
             return;
         }
-        if (is_declared_pos == false)
-        {
-            var dec_ret = await pdu_manager.DeclarePduForWrite(robotName, pdu_name_pos);
-            Debug.Log("declare pdu pos: " + dec_ret);
-            if (dec_ret == true)
-            {
-                is_declared_pos = true;
-            }
-            else
-            {
-                return;
-            }
-        }
+
         /*
          * Position
          */
@@ -74,19 +59,6 @@ public class DronePlayer : MonoBehaviour
         if (pdu_manager == null)
         {
             return;
-        }
-        if (is_declared_propeller == false)
-        {
-            var dec_ret = await pdu_manager.DeclarePduForWrite(robotName, pdu_name_propeller);
-            Debug.Log("declare pdu propeller: " + dec_ret);
-            if (dec_ret == true)
-            {
-                is_declared_propeller = true;
-            }
-            else
-            {
-                return;
-            }
         }
 
         /*
@@ -112,8 +84,21 @@ public class DronePlayer : MonoBehaviour
         pdu_manager.WriteNamedPdu(npdu);
         var ret = await pdu_manager.FlushNamedPdu(npdu);
         //Debug.Log("Flush result: " + ret);
-
     }
+    public async Task DeclarePduAsync(string type_name, string robot_name)
+    {
+        var pdu_manager = ARBridge.Instance.Get();
+        if (pdu_manager == null)
+        {
+            throw new Exception("Can not get Pdu Manager");
+        }
+        this.robotName = robot_name;
+        var ret = await pdu_manager.DeclarePduForWrite(robotName, pdu_name_pos);
+        Debug.Log("declare pdu pos: " + ret);
+        ret = await pdu_manager.DeclarePduForWrite(robotName, pdu_name_propeller);
+        Debug.Log("declare pdu propeller: " + ret);
+    }
+
     void Start()
     {
         ibridge = HakoniwaArBridgeDevice.Instance;
@@ -225,4 +210,5 @@ public class DronePlayer : MonoBehaviour
         int ret = DroneServiceRC.Stop();
         Debug.Log("Stop: ret = " + ret);
     }
+
 }

@@ -173,7 +173,31 @@ namespace hakoniwa.ar.bridge
         public PositioningRequestData SavedPosition { get; set; }
 
         [JsonProperty("positioning_speed")]
-        public PositioningSpeedData positioning_speed { get; set; }
+        public PositioningSpeedData PositioningSpeed { get; set; }
+
+        [JsonProperty("player")]
+        public PlayerData Player { get; set; } // プレイヤーデータを追加
+
+        [JsonProperty("avatars")]
+        public List<AvatarData> Avatars { get; set; } // アバターリストを追加
+    }
+
+    public class PlayerData
+    {
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+    }
+
+    public class AvatarData
+    {
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
     }
 
     // PositioningRequestの内部データ構造
