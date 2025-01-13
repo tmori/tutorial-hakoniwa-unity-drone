@@ -243,7 +243,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   base_object: {fileID: 963194225}
-  player: {fileID: 400762681}
+  player_obj: {fileID: 400762681}
+  avatar_objs: []
   xr: 0
   moveSpeed: 0.1
   rotationSpeed: 10
