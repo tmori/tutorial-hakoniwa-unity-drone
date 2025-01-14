@@ -25,7 +25,9 @@ public class DroneAvatarDevice : MonoBehaviour, IHakoniwaArObject
         {
             throw new Exception("Can not found drone propeller");
         }
+        Debug.Log("max rotation : " + drone_propeller.maxRotationSpeed);
     }
+    private float[] prev_controls = new float[4];
     void FixedUpdate()
     {
         var pduManager = ARBridge.Instance.Get();
@@ -55,12 +57,17 @@ public class DroneAvatarDevice : MonoBehaviour, IHakoniwaArObject
         IPdu pdu_propeller = pduManager.ReadPdu(robotName, pdu_name_propeller);
         if (pdu_propeller == null)
         {
-            Debug.Log("Can not get pdu of propeller");
+            //Debug.Log("Can not get pdu of propeller");
+            drone_propeller.Rotate(prev_controls[0], prev_controls[1], prev_controls[2], prev_controls[3]);
         }
         else
         {
             HakoHilActuatorControls propeller = new HakoHilActuatorControls(pdu_propeller);
-            //Debug.Log("c1: " + propeller.controls[0]);
+            for (int i = 0; i < 4; i++)
+            {
+                prev_controls[i] = propeller.controls[i];
+            }
+            //Debug.Log($"c1: {propeller.controls[0]} c2: {propeller.controls[1]} c3: {propeller.controls[2]} c4: {propeller.controls[3]}");
             drone_propeller.Rotate((float)propeller.controls[0], (float)propeller.controls[1], (float)propeller.controls[2], (float)propeller.controls[3]);
         }
     }

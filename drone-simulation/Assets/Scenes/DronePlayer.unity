@@ -2530,8 +2530,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   base_object: {fileID: 23304603}
-  player_obj: {fileID: 0}
-  avatar_objs: []
+  player_obj: {fileID: 8635361309597439300}
+  avatar_objs:
+  - {fileID: 452729060}
   xr: 1
   moveSpeed: 0.1
   rotationSpeed: 10
@@ -4516,7 +4517,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &439418158
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4637,6 +4638,68 @@ Transform:
   m_Children: []
   m_Father: {fileID: 205743530}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &452729059
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1500464970693132519, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.776
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500464970693132519, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500464970693132519, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500464970693132519, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500464970693132519, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500464970693132519, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500464970693132519, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500464970693132519, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500464970693132519, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500464970693132519, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7616432273264441056, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+      propertyPath: m_Name
+      value: Drone2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+--- !u!1 &452729060 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7616432273264441056, guid: 0072644ecd1b247b6bde57242b02cbb7, type: 3}
+  m_PrefabInstance: {fileID: 452729059}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &453246773
 GameObject:
   m_ObjectHideFlags: 0
@@ -9260,7 +9323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cc5c234723e3a54d8dd09b131117743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _meshType: 1
+  _meshType: 5
 --- !u!114 &892481467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9291,7 +9354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2609c54f376cffc4da1ab9401cc1a36f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skeletonType: 1
+  _skeletonType: 5
   _updateRootPose: 0
   _updateRootScale: 1
   _enablePhysicsCapsules: 0
@@ -14385,7 +14448,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cc5c234723e3a54d8dd09b131117743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _meshType: 0
+  _meshType: 4
 --- !u!114 &1310193411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14416,7 +14479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2609c54f376cffc4da1ab9401cc1a36f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skeletonType: 0
+  _skeletonType: 4
   _updateRootPose: 0
   _updateRootScale: 1
   _enablePhysicsCapsules: 0
@@ -21937,7 +22000,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 164460975858354045, guid: 1a347f00505d148f6b58b76a7a4ad0f4, type: 3}
       propertyPath: m_Name
-      value: DroneTransporter
+      value: Drone1
       objectReference: {fileID: 0}
     - target: {fileID: 1172791302435086947, guid: 1a347f00505d148f6b58b76a7a4ad0f4, type: 3}
       propertyPath: robotName
@@ -21992,6 +22055,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a347f00505d148f6b58b76a7a4ad0f4, type: 3}
+--- !u!1 &8635361309597439300 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 164460975858354045, guid: 1a347f00505d148f6b58b76a7a4ad0f4, type: 3}
+  m_PrefabInstance: {fileID: 8635361309597439299}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9095771239375087184 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2116656261730524738, guid: 1a347f00505d148f6b58b76a7a4ad0f4, type: 3}
@@ -22005,6 +22073,7 @@ SceneRoots:
   - {fileID: 705507995}
   - {fileID: 1227225203}
   - {fileID: 8635361309597439299}
+  - {fileID: 452729059}
   - {fileID: 205908293}
   - {fileID: 23304608}
   - {fileID: 1578641475}
