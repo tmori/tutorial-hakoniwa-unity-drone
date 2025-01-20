@@ -26,6 +26,11 @@ public class DroneCollision : MonoBehaviour
         if (IsLayerInMask(other.gameObject.layer, collisionLayer))
         {
             HandleTriggerCollision(other);
+            TargetColliderdInfo info = TargetColliderdInfo.GetInfo(other);
+            if (info != null)
+            {
+                Debug.Log("Info: " + this.transform.parent.name + " collided with " + info.GetName());
+            }
         }
     }
 

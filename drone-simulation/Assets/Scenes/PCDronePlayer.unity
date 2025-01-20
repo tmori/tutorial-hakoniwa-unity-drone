@@ -286,6 +286,7 @@ GameObject:
   - component: {fileID: 299783929}
   - component: {fileID: 299783928}
   - component: {fileID: 299783932}
+  - component: {fileID: 299783933}
   m_Layer: 0
   m_Name: Cylinder (1)
   m_TagString: Untagged
@@ -411,6 +412,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &299783933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299783927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f3ac439b40fe4125b98a1b9f55d9b32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsStatic: 0
+  Position: {x: 0, y: 0, z: 0}
+  Rotation: {x: 0, y: 0, z: 0, w: 0}
+  Velocity: {x: 0, y: 0, z: 0}
+  AngularVelocity: {x: 0, y: 0, z: 0}
+  Inertia: {x: 1, y: 1, z: 1}
+  Mass: 1
+  RestitutionCoefficient: 0.5
+  rb: {fileID: 0}
+  collider_obj: {fileID: 0}
 --- !u!1 &404593565
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,6 +555,7 @@ GameObject:
   - component: {fileID: 653806936}
   - component: {fileID: 653806935}
   - component: {fileID: 653806934}
+  - component: {fileID: 653806937}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -628,6 +652,28 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 653806932}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &653806937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653806932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f3ac439b40fe4125b98a1b9f55d9b32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsStatic: 0
+  Position: {x: 0, y: 0, z: 0}
+  Rotation: {x: 0, y: 0, z: 0, w: 0}
+  Velocity: {x: 0, y: 0, z: 0}
+  AngularVelocity: {x: 0, y: 0, z: 0}
+  Inertia: {x: 1, y: 1, z: 1}
+  Mass: 1
+  RestitutionCoefficient: 0.5
+  rb: {fileID: 0}
+  collider_obj: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -852,6 +898,7 @@ GameObject:
   - component: {fileID: 1012219382}
   - component: {fileID: 1012219381}
   - component: {fileID: 1012219385}
+  - component: {fileID: 1012219386}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -977,6 +1024,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1012219386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012219380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f3ac439b40fe4125b98a1b9f55d9b32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsStatic: 0
+  Position: {x: 0, y: 0, z: 0}
+  Rotation: {x: 0, y: 0, z: 0, w: 0}
+  Velocity: {x: 0, y: 0, z: 0}
+  AngularVelocity: {x: 0, y: 0, z: 0}
+  Inertia: {x: 1, y: 1, z: 1}
+  Mass: 1
+  RestitutionCoefficient: 0.5
+  rb: {fileID: 0}
+  collider_obj: {fileID: 0}
 --- !u!1 &1081649304
 GameObject:
   m_ObjectHideFlags: 0
@@ -990,6 +1059,7 @@ GameObject:
   - component: {fileID: 1081649307}
   - component: {fileID: 1081649306}
   - component: {fileID: 1081649309}
+  - component: {fileID: 1081649310}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -1113,6 +1183,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1081649310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1081649304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f3ac439b40fe4125b98a1b9f55d9b32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsStatic: 0
+  Position: {x: 0, y: 0, z: 0}
+  Rotation: {x: 0, y: 0, z: 0, w: 0}
+  Velocity: {x: 0, y: 0, z: 0}
+  AngularVelocity: {x: 0, y: 0, z: 0}
+  Inertia: {x: 1, y: 1, z: 1}
+  Mass: 1
+  RestitutionCoefficient: 0.5
+  rb: {fileID: 0}
+  collider_obj: {fileID: 0}
 --- !u!1 &1227225202
 GameObject:
   m_ObjectHideFlags: 0
@@ -1128,7 +1220,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1227225203
 Transform:
   m_ObjectHideFlags: 0
@@ -1163,6 +1255,7 @@ GameObject:
   - component: {fileID: 1397633810}
   - component: {fileID: 1397633809}
   - component: {fileID: 1397633812}
+  - component: {fileID: 1397633813}
   m_Layer: 0
   m_Name: Sphere (1)
   m_TagString: Untagged
@@ -1286,6 +1379,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1397633813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397633807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f3ac439b40fe4125b98a1b9f55d9b32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsStatic: 0
+  Position: {x: 0, y: 0, z: 0}
+  Rotation: {x: 0, y: 0, z: 0, w: 0}
+  Velocity: {x: 0, y: 0, z: 0}
+  AngularVelocity: {x: 0, y: 0, z: 0}
+  Inertia: {x: 1, y: 1, z: 1}
+  Mass: 1
+  RestitutionCoefficient: 0.5
+  rb: {fileID: 0}
+  collider_obj: {fileID: 0}
 --- !u!1001 &1422299132
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1357,11 +1472,46 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 164460975858354045, guid: 74ae49ccc4a0e441487ee2583c0bc6ca, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 1422299140}
   m_SourcePrefab: {fileID: 100100000, guid: 74ae49ccc4a0e441487ee2583c0bc6ca, type: 3}
 --- !u!1 &1422299133 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 164460975858354045, guid: 74ae49ccc4a0e441487ee2583c0bc6ca, type: 3}
+  m_PrefabInstance: {fileID: 1422299132}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &1422299137 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 3643127368195758807, guid: 74ae49ccc4a0e441487ee2583c0bc6ca, type: 3}
+  m_PrefabInstance: {fileID: 1422299132}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1422299140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1422299133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f3ac439b40fe4125b98a1b9f55d9b32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsStatic: 0
+  Position: {x: 0, y: 0, z: 0}
+  Rotation: {x: 0, y: 0, z: 0, w: 0}
+  Velocity: {x: 0, y: 0, z: 0}
+  AngularVelocity: {x: 0, y: 0, z: 0}
+  Inertia: {x: 0.0061, y: 0.00653, z: 0.0116}
+  Mass: 0.71
+  RestitutionCoefficient: 0.5
+  rb: {fileID: 1422299137}
+  collider_obj: {fileID: 1447194655}
+--- !u!65 &1447194655 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 6160882569441988144, guid: 74ae49ccc4a0e441487ee2583c0bc6ca, type: 3}
   m_PrefabInstance: {fileID: 1422299132}
   m_PrefabAsset: {fileID: 0}
 --- !u!23 &11291055289960876
@@ -1612,6 +1762,7 @@ GameObject:
   - component: {fileID: 3643127369271610110}
   - component: {fileID: 2947694062415918116}
   - component: {fileID: 3643127369271610111}
+  - component: {fileID: 3643127369271610112}
   m_Layer: 0
   m_Name: DroneAvatar1
   m_TagString: Untagged
@@ -6847,21 +6998,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2753176767984147539
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8343269715095475654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb90cbf9f0d3649ab8bdd87aa6af9210, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collisionLayer:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!33 &2754664265188407100
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -8771,6 +8907,28 @@ MonoBehaviour:
   pdu_name_propeller: drone_motor
   pdu_name_pos: drone_pos
   body: {fileID: 164460974782043988}
+--- !u!114 &3643127369271610112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164460974782043988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f3ac439b40fe4125b98a1b9f55d9b32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsStatic: 0
+  Position: {x: 0, y: 0, z: 0}
+  Rotation: {x: 0, y: 0, z: 0, w: 0}
+  Velocity: {x: 0, y: 0, z: 0}
+  AngularVelocity: {x: 0, y: 0, z: 0}
+  Inertia: {x: 0.0061, y: 0.00653, z: 0.0116}
+  Mass: 0.71
+  RestitutionCoefficient: 0.5
+  rb: {fileID: 3643127369271610110}
+  collider_obj: {fileID: 6160882570512014873}
 --- !u!33 &3649869532549440889
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -16619,7 +16777,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6572619517963615854}
-  - component: {fileID: 2753176767984147539}
   - component: {fileID: 6160882570512014873}
   m_Layer: 0
   m_Name: Collision

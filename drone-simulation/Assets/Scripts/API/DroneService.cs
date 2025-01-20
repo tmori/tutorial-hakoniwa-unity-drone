@@ -196,7 +196,73 @@ namespace Hakoniwa.DroneService
         {
             return drone_service_rc_put_collision(index, contactPositionX, contactPositionY, contactPositionZ, restitutionCoefficient);
         }
+        /*
+         * Collision Impulse
+         */
+        [StructLayout(LayoutKind.Sequential)]
+        public struct HakoVectorType
+        {
+            public double x;
+            public double y;
+            public double z;
+        }
 
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+        private static extern int drone_service_rc_put_impulse_by_collision(
+            int index,
+            int is_target_static,
+            HakoVectorType target_velocity,
+            HakoVectorType target_angular_velocity,
+            HakoVectorType self_contact_vector,
+            HakoVectorType target_contact_vector,
+            HakoVectorType target_inertia,
+            HakoVectorType normal,
+            double target_mass,
+            double restitution_coefficient);
+
+        public static int PutImpulseByCollision(
+            int index,
+            bool isTargetStatic,
+            HakoVectorType targetVelocity,
+            HakoVectorType targetAngularVelocity,
+            HakoVectorType selfContactVector,
+            HakoVectorType targetContactVector,
+            HakoVectorType targetInertia,
+            HakoVectorType normal,
+            double targetMass,
+            double restitutionCoefficient)
+        {
+            try
+            {
+                int isTargetStaticInt = isTargetStatic ? 1 : 0;
+                return drone_service_rc_put_impulse_by_collision(
+                    index,
+                    isTargetStaticInt,
+                    targetVelocity,
+                    targetAngularVelocity,
+                    selfContactVector,
+                    targetContactVector,
+                    targetInertia,
+                    normal,
+                    targetMass,
+                    restitutionCoefficient);
+            }
+            catch (DllNotFoundException e)
+            {
+                Debug.LogError($"DllNotFoundException: {e.Message}");
+                return -1;
+            }
+            catch (EntryPointNotFoundException e)
+            {
+                Debug.LogError($"EntryPointNotFoundException: {e.Message}");
+                return -1;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"Exception: {e.Message}");
+                return -1;
+            }
+        }
         /*
          * Miscellaneous
          */
