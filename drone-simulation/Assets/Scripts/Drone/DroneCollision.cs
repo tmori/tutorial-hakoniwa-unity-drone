@@ -71,11 +71,14 @@ public class DroneCollision : MonoBehaviour
         // Calculate TargetAngularVelocity
         Vector3 targetAngularVelocity = info.AngularVelocity;
 
+        Vector3 targetEuler = Vector3.zero;
+
         DroneServiceRC.PutImpulseByCollision(
             this.index,
             info.IsStatic,
-            ConvertToRosVector(info.Velocity),
-            ConvertToRosAngular(info.AngularVelocity),
+            ConvertToRosVector(targetVelocity),
+            ConvertToRosAngular(targetAngularVelocity),
+            ConvertToRosAngular(targetEuler),
             ConvertToRosVector(selfContactVector),
             ConvertToRosVector(targetContactVector),
             info.Inertia,

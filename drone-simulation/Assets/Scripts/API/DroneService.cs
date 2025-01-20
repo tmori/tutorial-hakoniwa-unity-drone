@@ -220,6 +220,7 @@ namespace Hakoniwa.DroneService
             bool isTargetStatic,
             Vector3 targetVelocity,
             Vector3 targetAngularVelocity,
+            Vector3 targetEuler,
             Vector3 selfContactVector,
             Vector3 targetContactVector,
             Vector3 targetInertia,
@@ -229,6 +230,7 @@ namespace Hakoniwa.DroneService
         {
             HakoVectorType hakoTargetVelocity = ConvertToHakoVectorType(targetVelocity);
             HakoVectorType hakoTargetAngularVelocity = ConvertToHakoVectorType(targetAngularVelocity);
+            HakoVectorType hakoTargetEuler = ConvertToHakoVectorType(targetEuler);
             HakoVectorType hakoSelfContactVector = ConvertToHakoVectorType(selfContactVector);
             HakoVectorType hakoTargetContactVector = ConvertToHakoVectorType(targetContactVector);
             HakoVectorType hakoTargetInertia = ConvertToHakoVectorType(targetInertia);
@@ -240,6 +242,7 @@ namespace Hakoniwa.DroneService
                 isTargetStatic,
                 hakoTargetVelocity,
                 hakoTargetAngularVelocity,
+                hakoTargetEuler,
                 hakoSelfContactVector,
                 hakoTargetContactVector,
                 hakoTargetInertia,
@@ -254,6 +257,7 @@ namespace Hakoniwa.DroneService
             int is_target_static,
             HakoVectorType target_velocity,
             HakoVectorType target_angular_velocity,
+            HakoVectorType target_euler,
             HakoVectorType self_contact_vector,
             HakoVectorType target_contact_vector,
             HakoVectorType target_inertia,
@@ -266,6 +270,7 @@ namespace Hakoniwa.DroneService
             bool isTargetStatic,
             HakoVectorType targetVelocity,
             HakoVectorType targetAngularVelocity,
+            HakoVectorType target_euler,
             HakoVectorType selfContactVector,
             HakoVectorType targetContactVector,
             HakoVectorType targetInertia,
@@ -281,6 +286,7 @@ namespace Hakoniwa.DroneService
                     isTargetStaticInt,
                     targetVelocity,
                     targetAngularVelocity,
+                    target_euler,
                     selfContactVector,
                     targetContactVector,
                     targetInertia,
