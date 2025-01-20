@@ -206,6 +206,47 @@ namespace Hakoniwa.DroneService
             public double y;
             public double z;
         }
+        private static HakoVectorType ConvertToHakoVectorType(Vector3 vector)
+        {
+            return new HakoVectorType
+            {
+                x = vector.x,
+                y = vector.y,
+                z = vector.z
+            };
+        }
+        public static int PutImpulseByCollision(
+            int index,
+            bool isTargetStatic,
+            Vector3 targetVelocity,
+            Vector3 targetAngularVelocity,
+            Vector3 selfContactVector,
+            Vector3 targetContactVector,
+            Vector3 targetInertia,
+            Vector3 normal,
+            double targetMass,
+            double restitutionCoefficient)
+        {
+            HakoVectorType hakoTargetVelocity = ConvertToHakoVectorType(targetVelocity);
+            HakoVectorType hakoTargetAngularVelocity = ConvertToHakoVectorType(targetAngularVelocity);
+            HakoVectorType hakoSelfContactVector = ConvertToHakoVectorType(selfContactVector);
+            HakoVectorType hakoTargetContactVector = ConvertToHakoVectorType(targetContactVector);
+            HakoVectorType hakoTargetInertia = ConvertToHakoVectorType(targetInertia);
+            HakoVectorType hakoNormal = ConvertToHakoVectorType(normal);
+
+            // 既存のメソッド呼び出し
+            return OriginalPutImpulseByCollision(
+                index,
+                isTargetStatic,
+                hakoTargetVelocity,
+                hakoTargetAngularVelocity,
+                hakoSelfContactVector,
+                hakoTargetContactVector,
+                hakoTargetInertia,
+                hakoNormal,
+                targetMass,
+                restitutionCoefficient);
+        }
 
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
         private static extern int drone_service_rc_put_impulse_by_collision(
@@ -220,7 +261,7 @@ namespace Hakoniwa.DroneService
             double target_mass,
             double restitution_coefficient);
 
-        public static int PutImpulseByCollision(
+        public static int OriginalPutImpulseByCollision(
             int index,
             bool isTargetStatic,
             HakoVectorType targetVelocity,

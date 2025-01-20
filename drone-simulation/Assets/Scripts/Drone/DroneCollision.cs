@@ -30,8 +30,61 @@ public class DroneCollision : MonoBehaviour
             if (info != null)
             {
                 Debug.Log("Info: " + this.transform.parent.name + " collided with " + info.GetName());
+                HandleTriggerImpulseCollision(info, other);
             }
         }
+    }
+    private Vector3 ConvertToRosVector(Vector3 unityVector)
+    {
+        return new Vector3(
+            unityVector.z,
+            -unityVector.x,
+            unityVector.y
+        );
+    }
+
+    private Vector3 ConvertToRosAngular(Vector3 unityAngular)
+    {
+        return new Vector3(
+            -unityAngular.z,
+            unityAngular.x,
+            -unityAngular.y
+        );
+    }
+
+
+    private void HandleTriggerImpulseCollision(TargetColliderdInfo info, Collider other)
+    {
+        // Calculate Contact point in world frame
+        Vector3 contactPoint = other.ClosestPoint(transform.position);
+
+        // Calculate collision relative vector 
+        Vector3 selfContactVector = contactPoint - transform.position;
+        Vector3 targetContactVector = contactPoint - info.Position;
+
+        // Calculate normal
+        Vector3 normal = info.GetNormal(contactPoint);
+
+        // Calculate TargetVelocity
+        Vector3 targetVelocity = info.Velocity;
+
+        // Calculate TargetAngularVelocity
+        Vector3 targetAngularVelocity = info.AngularVelocity;
+
+        DroneServiceRC.PutImpulseByCollision(
+            this.index,
+            info.IsStatic,
+            ConvertToRosVector(info.Velocity),
+            ConvertToRosAngular(info.AngularVelocity),
+            ConvertToRosVector(selfContactVector),
+            ConvertToRosVector(targetContactVector),
+            info.Inertia,
+            ConvertToRosVector(normal),
+            info.Mass,
+            info.RestitutionCoefficient
+        );
+
+        Debug.Log($"Impulse collision handled with {other.name}");
     }
 
     private void HandleTriggerCollision(Collider other)
@@ -54,6 +107,7 @@ public class DroneCollision : MonoBehaviour
         // デバッグ表示 (衝突点を緑のラインで表示)
         Debug.DrawRay(contactPoint, Vector3.up * 0.5f, Color.green, 1.0f, false);
     }
+    
 
     private bool IsLayerInMask(int layer, LayerMask layerMask)
     {

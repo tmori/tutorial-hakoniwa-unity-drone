@@ -43,6 +43,11 @@ public class TargetColliderdInfo : MonoBehaviour
     {
         return this.name;
     }
+    public Vector3 GetNormal(Vector3 contactPoint)
+    {
+        Vector3 normal = (contactPoint - this.Position).normalized;
+        return normal;
+    }
 
     private void Awake()
     {
