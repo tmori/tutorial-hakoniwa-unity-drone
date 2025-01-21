@@ -36,7 +36,7 @@ public class DroneCollision : MonoBehaviour
             if (info != null)
             {
                 Debug.Log("Info: " + this.pos_obj.name + " collided with " + info.GetName());
-                HandleTriggerImpulseCollision(info, other);
+               HandleTriggerImpulseCollision(info, other);
             }
         }
     }
@@ -69,11 +69,20 @@ public class DroneCollision : MonoBehaviour
         Vector3 selfContactVector = contactPoint - this.pos_obj.transform.position;
         Debug.Log($"Center of Drone: {this.pos_obj.transform.position}");
         Debug.Log($"Collision Relative Vector: {selfContactVector}");
+        float epsilon = 0.0001f;
+
+        if (Mathf.Abs(selfContactVector.x) < epsilon &&
+            Mathf.Abs(selfContactVector.y) < epsilon &&
+            Mathf.Abs(selfContactVector.z) < epsilon)
+        {
+            Debug.Log("Invalid conditions");
+            return;
+        }
         Vector3 targetContactVector = contactPoint - info.Position;
 
         // Calculate normal
         //Vector3 normal = info.GetNormal(contactPoint);
-        Vector3 normal = info.GetNormal(this.pos_obj.transform.position);
+        Vector3 normal = info.GetNormalSphere(this.pos_obj.transform.position);
 
         // Calculate TargetVelocity
         Vector3 targetVelocity = info.Velocity;

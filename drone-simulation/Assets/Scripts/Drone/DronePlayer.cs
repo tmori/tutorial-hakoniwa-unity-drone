@@ -130,13 +130,23 @@ public class DronePlayer : MonoBehaviour, IHakoniwaArObject
         {
             throw new Exception("Failed to load controllerConfigText from Resources.");
         }
+        int ret = -1;
+        if (debug_logpath.Length == 0)
+        {
+            ret = DroneServiceRC.InitSingle(droneConfigText, controllerConfigText, loggerEnable: false, null);
 
-        int ret = DroneServiceRC.InitSingle(droneConfigText, controllerConfigText, loggerEnable: false, debug_logpath);
+        }
+        else
+        {
+            ret = DroneServiceRC.InitSingle(droneConfigText, controllerConfigText, loggerEnable: false, debug_logpath);
+
+        }
+
         Debug.Log("InitSingle: ret = " + ret);
 
         if (ret != 0)
         {
-            throw new Exception("Can not Initialize DroneService RC with InitSingle");
+            throw new Exception("Can not Initialize DroneService RC with InitSingle: debug_logpath= " + debug_logpath);
         }
 
         // DroneServiceRC.Startの呼び出し

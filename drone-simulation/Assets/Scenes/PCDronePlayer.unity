@@ -879,7 +879,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.348, y: 0.064, z: 0.011}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1598,7 +1598,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1172791302435086947, guid: 74ae49ccc4a0e441487ee2583c0bc6ca, type: 3}
       propertyPath: debug_logpath
-      value: ./debug.txt
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2116656261730524738, guid: 74ae49ccc4a0e441487ee2583c0bc6ca, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9115,7 +9115,7 @@ MonoBehaviour:
   Euler: {x: 0, y: 0, z: 0}
   Inertia: {x: 0.0061, y: 0.00653, z: 0.0116}
   Mass: 0.71
-  RestitutionCoefficient: 0.5
+  RestitutionCoefficient: 1
   rb: {fileID: 3643127369271610110}
   collider_obj: {fileID: 6160882570512014873}
 --- !u!33 &3649869532549440889

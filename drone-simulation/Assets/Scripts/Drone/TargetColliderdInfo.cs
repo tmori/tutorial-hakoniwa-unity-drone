@@ -44,19 +44,23 @@ public class TargetColliderdInfo : MonoBehaviour
     {
         return this.name;
     }
-    public Vector3 GetNormal(Vector3 contactPoint)
+    public Vector3 GetNormal(Vector3 contactedTartgetCenterPoint)
     {
         if (collider_obj is BoxCollider)
         {
-            return GetNormalBoxCollider(contactPoint);
+            return GetNormalBoxCollider(contactedTartgetCenterPoint);
         }
         else
         {
-            Vector3 normal = (contactPoint - this.Position).normalized;
-            return normal;
+            return GetNormalSphere(contactedTartgetCenterPoint);
         }
     }
-    private Vector3 GetNormalBoxCollider(Vector3 contactPoint)
+    public Vector3 GetNormalSphere(Vector3 contactedTartgetCenterPoint)
+    {
+        Vector3 normal = (contactedTartgetCenterPoint - this.Position).normalized;
+        return normal;
+    }
+    private Vector3 GetNormalBoxCollider(Vector3 contactedTartgetCenterPoint)
     {
         Debug.Log("BoxCollider");
 
@@ -69,8 +73,8 @@ public class TargetColliderdInfo : MonoBehaviour
         Debug.Log($"Box Center: {center}");
 
         // ワールド座標系の接触点をローカル座標系に変換
-        Vector3 localPoint = Quaternion.Inverse(collider_obj.transform.rotation) * (contactPoint - center);
-        Debug.Log($"Contact Point (World): {contactPoint}");
+        Vector3 localPoint = Quaternion.Inverse(collider_obj.transform.rotation) * (contactedTartgetCenterPoint - center);
+        Debug.Log($"Contact Point (World): {contactedTartgetCenterPoint}");
         Debug.Log($"Contact Point (Local): {localPoint}");
 
         // 各軸の絶対値を比較して最も近い面を判定
