@@ -28,6 +28,7 @@ public class TargetColliderdInfo : MonoBehaviour
     public Quaternion Rotation = new Quaternion(0, 0, 0, 0);
     public Vector3 Velocity = new Vector3(0, 0, 0);
     public Vector3 AngularVelocity = new Vector3(0, 0, 0);
+    public Vector3 Euler = new Vector3(0, 0, 0);
 
     [Header("Physical Properties")]
     public Vector3 Inertia = new Vector3(1.0f, 1.0f, 1.0f); // 慣性テンソル
@@ -45,9 +46,65 @@ public class TargetColliderdInfo : MonoBehaviour
     }
     public Vector3 GetNormal(Vector3 contactPoint)
     {
-        Vector3 normal = (contactPoint - this.Position).normalized;
-        return normal;
+        if (collider_obj is BoxCollider)
+        {
+            return GetNormalBoxCollider(contactPoint);
+        }
+        else
+        {
+            Vector3 normal = (contactPoint - this.Position).normalized;
+            return normal;
+        }
     }
+    private Vector3 GetNormalBoxCollider(Vector3 contactPoint)
+    {
+        Debug.Log("BoxCollider");
+
+        // ボックスの半径（ローカル座標系の範囲）
+        Vector3 halfSize = collider_obj.bounds.size / 2f;
+        Debug.Log($"Half Size: {halfSize}");
+
+        // ボックスの中心位置
+        Vector3 center = collider_obj.bounds.center;
+        Debug.Log($"Box Center: {center}");
+
+        // ワールド座標系の接触点をローカル座標系に変換
+        Vector3 localPoint = Quaternion.Inverse(collider_obj.transform.rotation) * (contactPoint - center);
+        Debug.Log($"Contact Point (World): {contactPoint}");
+        Debug.Log($"Contact Point (Local): {localPoint}");
+
+        // 各軸の絶対値を比較して最も近い面を判定
+        float absX = Mathf.Abs(localPoint.x);
+        float absY = Mathf.Abs(localPoint.y);
+        float absZ = Mathf.Abs(localPoint.z);
+        Debug.Log($"Absolute Differences: X={absX}, Y={absY}, Z={absZ}");
+
+        Vector3 localNormal;
+
+        if (absX > absY && absX > absZ)
+        {
+            localNormal = new Vector3(Mathf.Sign(localPoint.x), 0, 0); // X軸の面
+            Debug.Log($"Closest Axis: X, Normal: {localNormal}");
+        }
+        else if (absY > absX && absY > absZ)
+        {
+            localNormal = new Vector3(0, Mathf.Sign(localPoint.y), 0); // Y軸の面
+            Debug.Log($"Closest Axis: Y, Normal: {localNormal}");
+        }
+        else
+        {
+            localNormal = new Vector3(0, 0, Mathf.Sign(localPoint.z)); // Z軸の面
+            Debug.Log($"Closest Axis: Z, Normal: {localNormal}");
+        }
+
+        // ローカル座標系の法線をワールド座標系に変換
+        Vector3 worldNormal = collider_obj.transform.rotation * localNormal;
+        Debug.Log($"World Normal: {worldNormal}");
+
+        return worldNormal;
+    }
+
+
 
     private void Awake()
     {
@@ -84,7 +141,7 @@ public class TargetColliderdInfo : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (IsStatic) return;
+        //if (IsStatic) return;
         UpdatePosition();
         UpdateVelocity();
         UpdateAngularVelocity();
@@ -95,6 +152,7 @@ public class TargetColliderdInfo : MonoBehaviour
         {
             Position = rb.position;
             Rotation = rb.rotation;
+            Euler = rb.rotation.eulerAngles;
         }
     }
 

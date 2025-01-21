@@ -7,6 +7,8 @@ public class DroneCollision : MonoBehaviour
     [SerializeField]
     private LayerMask collisionLayer; // 衝突を検出するレイヤー
 
+    public GameObject pos_obj;
+
     private int index;
     public void SetIndex(int inx)
     {
@@ -18,6 +20,10 @@ public class DroneCollision : MonoBehaviour
         // BoxCollider をトリガーとして設定
         BoxCollider boxCollider = GetComponent<BoxCollider>();
         boxCollider.isTrigger = true;
+        if (pos_obj == null)
+        {
+            pos_obj = this.gameObject;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -25,11 +31,11 @@ public class DroneCollision : MonoBehaviour
         // レイヤーマスクに基づいて対象をフィルタリング
         if (IsLayerInMask(other.gameObject.layer, collisionLayer))
         {
-            HandleTriggerCollision(other);
+            //HandleTriggerCollision(other);
             TargetColliderdInfo info = TargetColliderdInfo.GetInfo(other);
             if (info != null)
             {
-                Debug.Log("Info: " + this.transform.parent.name + " collided with " + info.GetName());
+                Debug.Log("Info: " + this.pos_obj.name + " collided with " + info.GetName());
                 HandleTriggerImpulseCollision(info, other);
             }
         }
@@ -56,14 +62,18 @@ public class DroneCollision : MonoBehaviour
     private void HandleTriggerImpulseCollision(TargetColliderdInfo info, Collider other)
     {
         // Calculate Contact point in world frame
-        Vector3 contactPoint = other.ClosestPoint(transform.position);
+        Vector3 contactPoint = other.ClosestPoint(this.pos_obj.transform.position);
+        Debug.Log($"Contact Point (World Frame): {contactPoint}");
 
-        // Calculate collision relative vector 
-        Vector3 selfContactVector = contactPoint - transform.position;
+        // Calculate collision relative vector
+        Vector3 selfContactVector = contactPoint - this.pos_obj.transform.position;
+        Debug.Log($"Center of Drone: {this.pos_obj.transform.position}");
+        Debug.Log($"Collision Relative Vector: {selfContactVector}");
         Vector3 targetContactVector = contactPoint - info.Position;
 
         // Calculate normal
-        Vector3 normal = info.GetNormal(contactPoint);
+        //Vector3 normal = info.GetNormal(contactPoint);
+        Vector3 normal = info.GetNormal(this.pos_obj.transform.position);
 
         // Calculate TargetVelocity
         Vector3 targetVelocity = info.Velocity;
@@ -93,7 +103,7 @@ public class DroneCollision : MonoBehaviour
     private void HandleTriggerCollision(Collider other)
     {
         // コライダーの最も近いポイントを取得
-        Vector3 contactPoint = other.ClosestPoint(transform.position);
+        Vector3 contactPoint = other.ClosestPoint(this.pos_obj.transform.position);
         Debug.Log($"Collision detected with {other.name} at {contactPoint}");
 
         // ワールド座標を ROS 座標に変換

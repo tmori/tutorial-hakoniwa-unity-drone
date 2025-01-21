@@ -14,7 +14,8 @@ public class DronePlayer : MonoBehaviour, IHakoniwaArObject
     private DroneControl drone_control;
     private DronePropeller drone_propeller;
     private IHakoniwaArBridge ibridge;
-    public int radio_control_timeout = 50;
+
+    public string debug_logpath = null;
 
     public string robotName = "DroneTransporter";
     public string pdu_name_propeller = "drone_motor";
@@ -130,7 +131,7 @@ public class DronePlayer : MonoBehaviour, IHakoniwaArObject
             throw new Exception("Failed to load controllerConfigText from Resources.");
         }
 
-        int ret = DroneServiceRC.InitSingle(droneConfigText, controllerConfigText, loggerEnable: false);
+        int ret = DroneServiceRC.InitSingle(droneConfigText, controllerConfigText, loggerEnable: false, debug_logpath);
         Debug.Log("InitSingle: ret = " + ret);
 
         if (ret != 0)

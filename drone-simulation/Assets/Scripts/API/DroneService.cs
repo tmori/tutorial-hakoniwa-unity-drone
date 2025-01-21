@@ -16,13 +16,18 @@ namespace Hakoniwa.DroneService
          * Initialization and Control
          */
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int drone_service_rc_init(string drone_config_dir_path);
+        private static extern int drone_service_rc_init(string drone_config_dir_path, string debug_logpath);
 
         public static int Init(string droneConfigDirPath)
         {
+            return Init(droneConfigDirPath, null);
+        }
+
+        public static int Init(string droneConfigDirPath, string debugLogPath)
+        {
             try
             {
-                return drone_service_rc_init(droneConfigDirPath);
+                return drone_service_rc_init(droneConfigDirPath, debugLogPath);
             }
             catch (DllNotFoundException e)
             {
@@ -41,13 +46,13 @@ namespace Hakoniwa.DroneService
             }
         }
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int drone_service_rc_init_single(string drone_config_text, string controller_config_text, int logger_enable);
-        public static int InitSingle(string droneConfigText, string controllerConfigText, bool loggerEnable)
+        private static extern int drone_service_rc_init_single(string drone_config_text, string controller_config_text, int logger_enable, string debug_logpath);
+        public static int InitSingle(string droneConfigText, string controllerConfigText, bool loggerEnable, string debug_logpath)
         {
             try
             {
                 int loggerFlag = loggerEnable ? 1 : 0;
-                return drone_service_rc_init_single(droneConfigText, controllerConfigText, loggerFlag);
+                return drone_service_rc_init_single(droneConfigText, controllerConfigText, loggerFlag, debug_logpath);
             }
             catch (DllNotFoundException e)
             {
