@@ -78,18 +78,19 @@ public class DroneCollision : MonoBehaviour
             Debug.Log("Invalid conditions");
             return;
         }
-        Vector3 targetContactVector = contactPoint - info.Position;
-
-        // Calculate normal
-        //Vector3 normal = info.GetNormal(contactPoint, this.pos_obj.transform.position);
-        //Vector3 normal = info.GetNormalSphere(this.pos_obj.transform.position);
-        Vector3 normal = (-selfContactVector).normalized;
-
         // Calculate TargetVelocity
         Vector3 targetVelocity = info.Velocity;
 
         // Calculate TargetAngularVelocity
         Vector3 targetAngularVelocity = info.AngularVelocity;
+
+        Vector3 targetContactVector = contactPoint - info.Position;
+        // Calculate normal
+        //Vector3 normal = info.GetNormal(contactPoint, this.pos_obj.transform.position);
+        //Vector3 normal = info.GetNormalSphere(this.pos_obj.transform.position);
+        //Vector3 normal = (-selfContactVector).normalized;
+        Vector3 normal = (targetVelocity - selfContactVector).normalized;
+
 
         Vector3 targetEuler = Vector3.zero;
 
