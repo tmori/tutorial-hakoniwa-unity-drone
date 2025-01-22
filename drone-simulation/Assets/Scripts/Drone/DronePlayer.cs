@@ -15,6 +15,7 @@ public class DronePlayer : MonoBehaviour, IHakoniwaArObject
     private DronePropeller drone_propeller;
     private IHakoniwaArBridge ibridge;
 
+    public bool enable_data_logger = false;
     public string debug_logpath = null;
 
     public string robotName = "DroneTransporter";
@@ -133,12 +134,12 @@ public class DronePlayer : MonoBehaviour, IHakoniwaArObject
         int ret = -1;
         if (debug_logpath.Length == 0)
         {
-            ret = DroneServiceRC.InitSingle(droneConfigText, controllerConfigText, loggerEnable: false, null);
+            ret = DroneServiceRC.InitSingle(droneConfigText, controllerConfigText, enable_data_logger, null);
 
         }
         else
         {
-            ret = DroneServiceRC.InitSingle(droneConfigText, controllerConfigText, loggerEnable: false, debug_logpath);
+            ret = DroneServiceRC.InitSingle(droneConfigText, controllerConfigText, enable_data_logger, debug_logpath);
 
         }
 
