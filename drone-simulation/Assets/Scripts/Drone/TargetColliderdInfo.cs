@@ -44,11 +44,11 @@ public class TargetColliderdInfo : MonoBehaviour
     {
         return this.name;
     }
-    public Vector3 GetNormal(Vector3 contactedTartgetCenterPoint)
+    public Vector3 GetNormal(Vector3 contactPoint, Vector3 contactedTartgetCenterPoint)
     {
         if (collider_obj is BoxCollider)
         {
-            return GetNormalBoxCollider(contactedTartgetCenterPoint);
+            return GetNormalBoxCollider(contactPoint, contactedTartgetCenterPoint);
         }
         else
         {
@@ -60,7 +60,7 @@ public class TargetColliderdInfo : MonoBehaviour
         Vector3 normal = (contactedTartgetCenterPoint - this.Position).normalized;
         return normal;
     }
-    private Vector3 GetNormalBoxCollider(Vector3 contactedTartgetCenterPoint)
+    private Vector3 GetNormalBoxCollider(Vector3 contactPoint, Vector3 contactedTartgetCenterPoint)
     {
         Debug.Log("BoxCollider");
 
@@ -138,9 +138,10 @@ public class TargetColliderdInfo : MonoBehaviour
     }
     private void OnDestroy()
     {
-        if (GetComponent<Collider>() != null)
+        if (collider_obj!= null)
         {
-            colliderInfoMap.Remove(GetComponent<Collider>());
+            colliderInfoMap.Remove(collider_obj);
+            collider_obj = null;
         }
     }
     private void FixedUpdate()

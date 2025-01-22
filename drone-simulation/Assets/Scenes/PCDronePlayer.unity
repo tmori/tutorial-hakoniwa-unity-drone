@@ -432,7 +432,7 @@ MonoBehaviour:
   Euler: {x: 0, y: 0, z: 0}
   Inertia: {x: 1, y: 1, z: 1}
   Mass: 1
-  RestitutionCoefficient: 0.5
+  RestitutionCoefficient: 1
   rb: {fileID: 0}
   collider_obj: {fileID: 0}
 --- !u!1 &404593565
@@ -673,7 +673,7 @@ MonoBehaviour:
   Euler: {x: 0, y: 0, z: 0}
   Inertia: {x: 1, y: 1, z: 1}
   Mass: 1
-  RestitutionCoefficient: 0.5
+  RestitutionCoefficient: 1
   rb: {fileID: 0}
   collider_obj: {fileID: 0}
 --- !u!1 &705507993
@@ -904,7 +904,7 @@ MonoBehaviour:
   Euler: {x: 0, y: 0, z: 0}
   Inertia: {x: 1, y: 1, z: 1}
   Mass: 1
-  RestitutionCoefficient: 1
+  RestitutionCoefficient: 2
   rb: {fileID: 767571516}
   collider_obj: {fileID: 767571511}
 --- !u!54 &767571516
@@ -947,6 +947,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
+  drag: 1
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1220,7 +1221,7 @@ MonoBehaviour:
   Euler: {x: 0, y: 0, z: 0}
   Inertia: {x: 1, y: 1, z: 1}
   Mass: 1
-  RestitutionCoefficient: 0.5
+  RestitutionCoefficient: 1
   rb: {fileID: 0}
   collider_obj: {fileID: 0}
 --- !u!1 &1081649304
@@ -1380,7 +1381,7 @@ MonoBehaviour:
   Euler: {x: 0, y: 0, z: 0}
   Inertia: {x: 1, y: 1, z: 1}
   Mass: 1
-  RestitutionCoefficient: 0.5
+  RestitutionCoefficient: 1
   rb: {fileID: 0}
   collider_obj: {fileID: 0}
 --- !u!1 &1227225202
@@ -1577,7 +1578,7 @@ MonoBehaviour:
   Euler: {x: 0, y: 0, z: 0}
   Inertia: {x: 1, y: 1, z: 1}
   Mass: 1
-  RestitutionCoefficient: 0.5
+  RestitutionCoefficient: 1
   rb: {fileID: 0}
   collider_obj: {fileID: 0}
 --- !u!1001 &1422299132

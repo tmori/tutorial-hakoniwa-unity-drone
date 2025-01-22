@@ -4,13 +4,21 @@ using UnityEngine.InputSystem;
 public class CubeController : MonoBehaviour
 {
     public float moveSpeed = 5f; // 移動速度
+    public float drag = 1f; // 空気抵抗（減速率）
 
-    private Vector3 moveInput = Vector3.zero;
+    private Vector3 velocity = Vector3.zero; // 現在の速度ベクトル
+    private Vector3 moveInput = Vector3.zero; // プレイヤー入力による移動方向
 
     private void Update()
     {
-        // 入力されたベクトルに応じてキューブを移動
-        transform.Translate(moveInput * moveSpeed * Time.deltaTime, Space.World);
+        // 入力値に基づいて速度を加算
+        velocity += moveInput * moveSpeed * Time.deltaTime;
+
+        // 空気摩擦（減速）を適用
+        velocity = Vector3.Lerp(velocity, Vector3.zero, drag * Time.deltaTime);
+
+        // 現在の速度に基づいてオブジェクトを移動
+        transform.Translate(velocity * Time.deltaTime, Space.World);
     }
 
     private void FixedUpdate()

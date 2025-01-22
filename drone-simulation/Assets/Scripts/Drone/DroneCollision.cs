@@ -81,8 +81,9 @@ public class DroneCollision : MonoBehaviour
         Vector3 targetContactVector = contactPoint - info.Position;
 
         // Calculate normal
-        //Vector3 normal = info.GetNormal(contactPoint);
-        Vector3 normal = info.GetNormalSphere(this.pos_obj.transform.position);
+        //Vector3 normal = info.GetNormal(contactPoint, this.pos_obj.transform.position);
+        //Vector3 normal = info.GetNormalSphere(this.pos_obj.transform.position);
+        Vector3 normal = (-selfContactVector).normalized;
 
         // Calculate TargetVelocity
         Vector3 targetVelocity = info.Velocity;
