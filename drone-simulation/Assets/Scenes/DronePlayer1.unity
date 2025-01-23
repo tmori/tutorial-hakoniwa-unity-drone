@@ -593,7 +593,7 @@ Transform:
   m_GameObject: {fileID: 23304603}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.219}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1925,6 +1925,7 @@ GameObject:
   - component: {fileID: 157355833}
   - component: {fileID: 157355835}
   - component: {fileID: 157355834}
+  - component: {fileID: 157355836}
   m_Layer: 0
   m_Name: RightHandAnchor
   m_TagString: Untagged
@@ -2021,6 +2022,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &157355836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157355831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb061c88de8146a6870b9fd697bc621, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  robotName: Player1_right_hand
+  pdu_name: pos
+  body: {fileID: 157355831}
 --- !u!1 &164908261
 GameObject:
   m_ObjectHideFlags: 0
@@ -2585,6 +2601,9 @@ MonoBehaviour:
   player_obj: {fileID: 8635361309597439300}
   avatar_objs:
   - {fileID: 7616432273625411075}
+  - {fileID: 559735672}
+  - {fileID: 1247235620}
+  - {fileID: 157355831}
   xr: 1
   moveSpeed: 0.1
   rotationSpeed: 10
@@ -5791,6 +5810,7 @@ GameObject:
   - component: {fileID: 559735677}
   - component: {fileID: 559735676}
   - component: {fileID: 559735678}
+  - component: {fileID: 559735679}
   m_Layer: 0
   m_Name: CenterEyeAnchor
   m_TagString: MainCamera
@@ -5891,8 +5911,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.3, y: 1.2, z: 0.3}
-  m_Center: {x: 0, y: -0.4, z: 0}
+  m_Size: {x: 0.3, y: 0.3, z: 0.3}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &559735677
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5943,6 +5963,21 @@ MonoBehaviour:
   RestitutionCoefficient: 1
   rb: {fileID: 559735677}
   collider_obj: {fileID: 559735676}
+--- !u!114 &559735679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559735672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb061c88de8146a6870b9fd697bc621, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  robotName: Player1_head
+  pdu_name: pos
+  body: {fileID: 559735672}
 --- !u!1 &561285570
 GameObject:
   m_ObjectHideFlags: 0
@@ -13492,6 +13527,7 @@ GameObject:
   - component: {fileID: 1247235622}
   - component: {fileID: 1247235624}
   - component: {fileID: 1247235623}
+  - component: {fileID: 1247235625}
   m_Layer: 0
   m_Name: LeftHandAnchor
   m_TagString: Untagged
@@ -13588,6 +13624,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1247235625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247235620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb061c88de8146a6870b9fd697bc621, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  robotName: Player1_left_hand
+  pdu_name: pos
+  body: {fileID: 1247235620}
 --- !u!1 &1248675488
 GameObject:
   m_ObjectHideFlags: 0
@@ -37994,7 +38045,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2116656261730524738, guid: 1a347f00505d148f6b58b76a7a4ad0f4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.162
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2116656261730524738, guid: 1a347f00505d148f6b58b76a7a4ad0f4, type: 3}
       propertyPath: m_LocalPosition.z
