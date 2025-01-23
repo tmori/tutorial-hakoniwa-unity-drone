@@ -78,6 +78,31 @@ namespace Hakoniwa.DroneService
         {
             return drone_service_rc_start();
         }
+        [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+        private static extern int drone_service_set_debuff_on_collision(int index, int debuff_duration_msec);
+        public static int SetDebuffOnCollision(int index, int debuffDurationMsec)
+        {
+            try
+            {
+                return drone_service_set_debuff_on_collision(index, debuffDurationMsec);
+            }
+            catch (DllNotFoundException e)
+            {
+                Debug.LogError($"DllNotFoundException: {e.Message}");
+                return -1;
+            }
+            catch (EntryPointNotFoundException e)
+            {
+                Debug.LogError($"EntryPointNotFoundException: {e.Message}");
+                return -1;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"Exception: {e.Message}");
+                return -1;
+            }
+        }
+
 
         [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
         private static extern int drone_service_rc_run();

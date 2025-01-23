@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 public class DronePlayer : MonoBehaviour, IHakoniwaArObject
 {
     public GameObject body;
+    public int debuff_duration_msec = 100;
     private DroneCollision my_collision;
     private DroneControl drone_control;
     private DronePropeller drone_propeller;
@@ -142,7 +143,7 @@ public class DronePlayer : MonoBehaviour, IHakoniwaArObject
             ret = DroneServiceRC.InitSingle(droneConfigText, controllerConfigText, enable_data_logger, debug_logpath);
 
         }
-
+        DroneServiceRC.SetDebuffOnCollision(0, debuff_duration_msec);
         Debug.Log("InitSingle: ret = " + ret);
 
         if (ret != 0)
