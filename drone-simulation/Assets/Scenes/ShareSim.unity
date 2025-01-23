@@ -885,7 +885,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 1.2, z: 0.3}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1280694009}
@@ -1219,8 +1219,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1039315659}
+  - component: {fileID: 1039315660}
   m_Layer: 0
-  m_Name: RightHand
+  m_Name: Player1_RightHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1242,6 +1243,21 @@ Transform:
   - {fileID: 1838381291}
   m_Father: {fileID: 1404789092}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1039315660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039315658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfbcc972e78554d5fb54ed1a8f7c0e22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  robotName: Player1_right_hand
+  pdu_name: pos
+  body: {fileID: 1039315658}
 --- !u!1 &1137283281
 GameObject:
   m_ObjectHideFlags: 0
@@ -1292,6 +1308,8 @@ MonoBehaviour:
   - {fileID: 507725904}
   - {fileID: 1980863858}
   - {fileID: 1280694008}
+  - {fileID: 1314245750}
+  - {fileID: 1039315658}
   _state: 0
   _worldTime: 0
 --- !u!1 &1257387032 stripped
@@ -1322,7 +1340,7 @@ GameObject:
   - component: {fileID: 1280694009}
   - component: {fileID: 1280694010}
   m_Layer: 0
-  m_Name: Head
+  m_Name: Player1_head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1356,8 +1374,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfbcc972e78554d5fb54ed1a8f7c0e22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  robotName: Player1
-  pdu_name: head
+  robotName: Player1_head
+  pdu_name: pos
   body: {fileID: 1280694008}
 --- !u!1 &1314245750
 GameObject:
@@ -1368,8 +1386,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1314245751}
+  - component: {fileID: 1314245752}
   m_Layer: 0
-  m_Name: LeftHand
+  m_Name: Player1_LeftHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1391,6 +1410,21 @@ Transform:
   - {fileID: 784796091}
   m_Father: {fileID: 1404789092}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1314245752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314245750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfbcc972e78554d5fb54ed1a8f7c0e22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  robotName: Player1_left_hand
+  pdu_name: pos
+  body: {fileID: 1314245750}
 --- !u!1 &1342514182
 GameObject:
   m_ObjectHideFlags: 0
@@ -1448,7 +1482,7 @@ Transform:
   m_GameObject: {fileID: 1404789091}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.07487294, y: 0.14281736, z: -0.689}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -1,62 +1,90 @@
 {
     "robots": [
-        {
-            "name": "Player1",
+      {
+                "name": "Player1_head",
+                "rpc_pdu_readers": [],
+                "rpc_pdu_writers": [],
+                "shm_pdu_readers": [
+                    {
+                        "type": "geometry_msgs/Twist",
+                        "org_name": "pos",
+                        "name": "Player1_head_pos",
+                        "channel_id": 0,
+                        "pdu_size": 72,
+                        "write_cycle": 1
+                    }
+                ]
+            },
+            {
+              "name": "Player1_left_hand",
+              "rpc_pdu_readers": [],
+              "rpc_pdu_writers": [],
+              "shm_pdu_readers": [
+                  {
+                      "type": "geometry_msgs/Twist",
+                      "org_name": "pos",
+                      "name": "Player1_left_hand_pos",
+                      "channel_id": 0,
+                      "pdu_size": 72,
+                      "write_cycle": 1
+                  }
+              ]
+          },      
+          {
+            "name": "Player1_right_hand",
             "rpc_pdu_readers": [],
             "rpc_pdu_writers": [],
             "shm_pdu_readers": [
                 {
                     "type": "geometry_msgs/Twist",
-                    "org_name": "head",
-                    "name": "Player1_head",
+                    "org_name": "pos",
+                    "name": "Player1_right_hand_pos",
                     "channel_id": 0,
-                    "pdu_size": 72,
-                    "write_cycle": 1
-                },
-                {
-                    "type": "geometry_msgs/Twist",
-                    "org_name": "left_hand",
-                    "name": "Player1_left_hand",
-                    "channel_id": 1,
-                    "pdu_size": 72,
-                    "write_cycle": 1
-                },
-                {
-                    "type": "geometry_msgs/Twist",
-                    "org_name": "right_hand",
-                    "name": "Player1_right_hand",
-                    "channel_id": 2,
                     "pdu_size": 72,
                     "write_cycle": 1
                 }
             ]
         },
         {
-            "name": "Player2",
+            "name": "Player2_head",
             "rpc_pdu_readers": [],
             "rpc_pdu_writers": [],
             "shm_pdu_readers": [
                 {
                     "type": "geometry_msgs/Twist",
-                    "org_name": "head",
-                    "name": "Player2_head",
+                    "org_name": "pos",
+                    "name": "Player2_head_pos",
                     "channel_id": 0,
                     "pdu_size": 72,
                     "write_cycle": 1
-                },
+                }
+            ]
+        },
+        {
+            "name": "Player2_left_hand",
+            "rpc_pdu_readers": [],
+            "rpc_pdu_writers": [],
+            "shm_pdu_readers": [
                 {
                     "type": "geometry_msgs/Twist",
-                    "org_name": "left_hand",
-                    "name": "Player2_left_hand",
-                    "channel_id": 1,
+                    "org_name": "pos",
+                    "name": "Player2_left_hand_pos",
+                    "channel_id": 0,
                     "pdu_size": 72,
                     "write_cycle": 1
-                },
+                }
+            ]
+        },
+        {
+            "name": "Player2_right_hand",
+            "rpc_pdu_readers": [],
+            "rpc_pdu_writers": [],
+            "shm_pdu_readers": [
                 {
                     "type": "geometry_msgs/Twist",
-                    "org_name": "right_hand",
-                    "name": "Player2_right_hand",
-                    "channel_id": 2,
+                    "org_name": "pos",
+                    "name": "Player2_right_hand_pos",
+                    "channel_id": 0,
                     "pdu_size": 72,
                     "write_cycle": 1
                 }
@@ -109,4 +137,5 @@
             ]
         }
     ]
-}
+  }
+  
