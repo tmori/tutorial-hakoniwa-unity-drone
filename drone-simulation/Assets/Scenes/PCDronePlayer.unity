@@ -1601,6 +1601,10 @@ PrefabInstance:
       propertyPath: debug_logpath
       value: ./debug.txt
       objectReference: {fileID: 0}
+    - target: {fileID: 1172791302435086947, guid: 74ae49ccc4a0e441487ee2583c0bc6ca, type: 3}
+      propertyPath: enable_data_logger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2116656261730524738, guid: 74ae49ccc4a0e441487ee2583c0bc6ca, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
