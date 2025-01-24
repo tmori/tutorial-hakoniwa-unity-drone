@@ -1966,7 +1966,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -5907,7 +5907,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -13568,7 +13568,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -36387,7 +36387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f3ac439b40fe4125b98a1b9f55d9b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsStatic: 0
+  IsStatic: 1
   Position: {x: 0, y: 0, z: 0}
   Rotation: {x: 0, y: 0, z: 0, w: 0}
   Velocity: {x: 0, y: 0, z: 0}
@@ -38039,6 +38039,10 @@ PrefabInstance:
       propertyPath: robotName
       value: Drone1
       objectReference: {fileID: 0}
+    - target: {fileID: 1172791302435086947, guid: 1a347f00505d148f6b58b76a7a4ad0f4, type: 3}
+      propertyPath: debuff_duration_msec
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 2116656261730524738, guid: 1a347f00505d148f6b58b76a7a4ad0f4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -38979,7 +38983,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f3ac439b40fe4125b98a1b9f55d9b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsStatic: 0
+  IsStatic: 1
   Position: {x: 0, y: 0, z: 0}
   Rotation: {x: 0, y: 0, z: 0, w: 0}
   Velocity: {x: 0, y: 0, z: 0}
