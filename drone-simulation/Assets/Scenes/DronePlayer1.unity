@@ -2604,6 +2604,9 @@ MonoBehaviour:
   - {fileID: 559735672}
   - {fileID: 1247235620}
   - {fileID: 157355831}
+  - {fileID: 4305702172542958879}
+  - {fileID: 4305702172542958878}
+  - {fileID: 4305702172542958877}
   xr: 1
   moveSpeed: 0.1
   rotationSpeed: 10
@@ -30159,6 +30162,21 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de839eb117e524bd8a3115a76c900e80, type: 3}
+--- !u!1 &4305702172542958877 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1528062372376124320, guid: de839eb117e524bd8a3115a76c900e80, type: 3}
+  m_PrefabInstance: {fileID: 4305702172542958876}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4305702172542958878 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7506301101672965365, guid: de839eb117e524bd8a3115a76c900e80, type: 3}
+  m_PrefabInstance: {fileID: 4305702172542958876}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4305702172542958879 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3966224812648210177, guid: de839eb117e524bd8a3115a76c900e80, type: 3}
+  m_PrefabInstance: {fileID: 4305702172542958876}
+  m_PrefabAsset: {fileID: 0}
 --- !u!33 &4315493477357876779
 MeshFilter:
   m_ObjectHideFlags: 0

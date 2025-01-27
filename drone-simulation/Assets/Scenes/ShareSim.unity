@@ -1051,6 +1051,9 @@ MonoBehaviour:
   - {fileID: 1280694008}
   - {fileID: 1314245750}
   - {fileID: 1039315658}
+  - {fileID: 5973691267648374544}
+  - {fileID: 5973691267648374543}
+  - {fileID: 5973691267648374542}
   _state: 0
   _worldTime: 0
 --- !u!1 &1257387032 stripped
@@ -1730,6 +1733,21 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19fc10412aae845b0b6ecd2bfd66f635, type: 3}
+--- !u!1 &5973691267648374542 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1989880328259911459, guid: 19fc10412aae845b0b6ecd2bfd66f635, type: 3}
+  m_PrefabInstance: {fileID: 5973691267648374541}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5973691267648374543 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6091247983353468495, guid: 19fc10412aae845b0b6ecd2bfd66f635, type: 3}
+  m_PrefabInstance: {fileID: 5973691267648374541}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5973691267648374544 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3758210978676292262, guid: 19fc10412aae845b0b6ecd2bfd66f635, type: 3}
+  m_PrefabInstance: {fileID: 5973691267648374541}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
