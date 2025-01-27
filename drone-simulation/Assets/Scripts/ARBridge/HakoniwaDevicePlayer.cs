@@ -27,7 +27,7 @@ namespace hakoniwa.ar.bridge
             }
             this.robotName = robot_name;
             var ret = await pdu_manager.DeclarePduForWrite(robotName, pdu_name);
-            Debug.Log($"declare for write pdu_name: {pdu_name} ret = {ret}");
+            Debug.Log($"declare for write pdu_name: {robotName}/{pdu_name} ret = {ret}");
         }
         async void FixedUpdate()
         {

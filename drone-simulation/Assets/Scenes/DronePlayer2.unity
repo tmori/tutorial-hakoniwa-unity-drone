@@ -9535,7 +9535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cc5c234723e3a54d8dd09b131117743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _meshType: 1
+  _meshType: 5
 --- !u!114 &892481467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9566,7 +9566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2609c54f376cffc4da1ab9401cc1a36f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skeletonType: 1
+  _skeletonType: 5
   _updateRootPose: 0
   _updateRootScale: 1
   _enablePhysicsCapsules: 0
@@ -14728,7 +14728,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cc5c234723e3a54d8dd09b131117743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _meshType: 0
+  _meshType: 4
 --- !u!114 &1310193411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14759,7 +14759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2609c54f376cffc4da1ab9401cc1a36f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skeletonType: 0
+  _skeletonType: 4
   _updateRootPose: 0
   _updateRootScale: 1
   _enablePhysicsCapsules: 0
@@ -20861,6 +20861,10 @@ PrefabInstance:
     - target: {fileID: 5501957225854193105, guid: cdf3c177f8b5b4124a0596bf34b3dbe6, type: 3}
       propertyPath: m_Name
       value: PlayerDevAvatar1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5501957225854193105, guid: cdf3c177f8b5b4124a0596bf34b3dbe6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9004950621061444735, guid: cdf3c177f8b5b4124a0596bf34b3dbe6, type: 3}
       propertyPath: m_LocalPosition.x
