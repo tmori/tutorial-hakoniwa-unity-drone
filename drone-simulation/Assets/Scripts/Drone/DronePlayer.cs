@@ -22,17 +22,18 @@ public class DronePlayer : MonoBehaviour, IHakoniwaArObject
     public string robotName = "DroneTransporter";
     public string pdu_name_propeller = "drone_motor";
     public string pdu_name_pos = "drone_pos";
-    private void SetPosition(Twist pos, UnityEngine.Vector3 unity_pos)
+
+    private void SetPosition(Twist pos, UnityEngine.Vector3 unity_pos, UnityEngine.Vector3 unity_rot)
     {
         pos.linear.x = unity_pos.z;
         pos.linear.y = -unity_pos.x;
         pos.linear.z = unity_pos.y;
 
-        UnityEngine.Vector3 unity_rot = body.transform.localEulerAngles;
         pos.angular.x = -Mathf.Deg2Rad * unity_rot.z;
         pos.angular.y = Mathf.Deg2Rad * unity_rot.x;
         pos.angular.z = -Mathf.Deg2Rad * unity_rot.y;
     }
+
 
     private async void FlushPduPos(UnityEngine.Vector3 unity_pos)
     {
@@ -50,7 +51,7 @@ public class DronePlayer : MonoBehaviour, IHakoniwaArObject
             throw new Exception($"Can not find npdu: {robotName} {pdu_name_pos}");
         }
         Twist pos = new Twist(npdu_pos.Pdu);
-        SetPosition(pos, unity_pos);
+        SetPosition(pos, body.transform.position, body.transform.localEulerAngles);
         pdu_manager.WriteNamedPdu(npdu_pos);
         var ret = await pdu_manager.FlushNamedPdu(npdu_pos);
         //Debug.Log("Flush result: " + ret);
@@ -222,5 +223,4 @@ public class DronePlayer : MonoBehaviour, IHakoniwaArObject
         int ret = DroneServiceRC.Stop();
         Debug.Log("Stop: ret = " + ret);
     }
-
 }

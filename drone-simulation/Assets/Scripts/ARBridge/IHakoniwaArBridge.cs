@@ -27,10 +27,6 @@ namespace hakoniwa.ar.bridge
     {
         Task DeclarePduAsync(string type_name, string robot_name);
     }
-    public interface IHakoniwaArDevObject: IHakoniwaArObject
-    {
-        void UpdateBasePosition(HakoVector3 base_pos, HakoVector3 base_rot);
-    }
 
     public interface IHakoniwaArBridgePlayer
     {

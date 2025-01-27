@@ -34,7 +34,6 @@ public class ARBridge : MonoBehaviour, IHakoniwaArBridgePlayer, IHakoPduInstance
     public List<GameObject> avatar_objs;
     private IHakoniwaArObject ar_player;
     private List<IHakoniwaArObject> ar_avatars;
-    private List<IHakoniwaArDevObject> ardev_objects;
     private IPduManager mgr = null;
     private IEnvironmentService service;
 
@@ -117,10 +116,6 @@ public class ARBridge : MonoBehaviour, IHakoniwaArBridgePlayer, IHakoPduInstance
         base_object.transform.position = base_pos;
         base_object.transform.localEulerAngles = base_rot;
 
-        foreach (var entry in ardev_objects)
-        {
-            entry.UpdateBasePosition(new HakoVector3(base_pos), new HakoVector3(base_rot));
-        }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -132,7 +127,6 @@ public class ARBridge : MonoBehaviour, IHakoniwaArBridgePlayer, IHakoPduInstance
             throw new System.Exception("Can not find Player ar obj");
         }
         ar_avatars = new List<IHakoniwaArObject>();
-        ardev_objects = new List<IHakoniwaArDevObject>();
         foreach (var entry in avatar_objs)
         {
             var e = entry.GetComponentInChildren<IHakoniwaArObject>();
@@ -141,12 +135,6 @@ public class ARBridge : MonoBehaviour, IHakoniwaArBridgePlayer, IHakoPduInstance
                 throw new System.Exception("Can not find Avatar ar obj");
             }
             ar_avatars.Add(e);
-            var d = entry.GetComponentInChildren<IHakoniwaArDevObject>();
-            if (d != null)
-            {
-                Debug.Log("AR DEV object: " + entry.name);
-                ardev_objects.Add(d);
-            }
         }
         if (xr)
         {
