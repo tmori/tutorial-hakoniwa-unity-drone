@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7606989902039883786}
   - component: {fileID: 3454865416762699338}
   m_Layer: 0
-  m_Name: Player2_RightHand
+  m_Name: Player1_RightHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feea43f5e16c479a968ecb21d59d82e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  robotName: Player2_right_hand
+  robotName: Player1_right_hand
   pdu_name: pos
   body: {fileID: 1528062372376124320}
 --- !u!114 &3454865416762699338
@@ -138,7 +138,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0c3c01594ead344f18a3f80fae5dfd9b, type: 2}
+  - {fileID: 2100000, guid: 7ba26582ee3a64d7db01eb0958928398, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -274,7 +274,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0c3c01594ead344f18a3f80fae5dfd9b, type: 2}
+  - {fileID: 2100000, guid: 7ba26582ee3a64d7db01eb0958928398, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -410,7 +410,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0c3c01594ead344f18a3f80fae5dfd9b, type: 2}
+  - {fileID: 2100000, guid: 7ba26582ee3a64d7db01eb0958928398, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -492,7 +492,7 @@ GameObject:
   - component: {fileID: 1676189819012793532}
   - component: {fileID: 662847430163101550}
   m_Layer: 0
-  m_Name: Player2_head
+  m_Name: Player1_head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -526,7 +526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feea43f5e16c479a968ecb21d59d82e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  robotName: Player2_head
+  robotName: Player1_head
   pdu_name: pos
   body: {fileID: 3966224812648210177}
 --- !u!114 &662847430163101550
@@ -562,7 +562,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9004950621061444735}
   m_Layer: 0
-  m_Name: PlayerDevAvatar2
+  m_Name: PlayerDevAvatar1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -598,7 +598,7 @@ GameObject:
   - component: {fileID: 4378938334546425559}
   - component: {fileID: 168040413990470241}
   m_Layer: 0
-  m_Name: Player2_LeftHand
+  m_Name: Player1_LeftHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -632,7 +632,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4feea43f5e16c479a968ecb21d59d82e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  robotName: Player2_left_hand
+  robotName: Player1_left_hand
   pdu_name: pos
   body: {fileID: 7506301101672965365}
 --- !u!114 &168040413990470241
