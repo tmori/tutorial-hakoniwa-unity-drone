@@ -16,10 +16,20 @@ namespace hakoniwa.ar.bridge
             Y = y;
             Z = z;
         }
+        public HakoVector3(UnityEngine.Vector3 src)
+        {
+            X = src.x;
+            Y = src.y;
+            Z = src.z;
+        }
     }
     public interface IHakoniwaArObject
     {
         Task DeclarePduAsync(string type_name, string robot_name);
+    }
+    public interface IHakoniwaArDevObject: IHakoniwaArObject
+    {
+        void UpdateBasePosition(HakoVector3 base_pos, HakoVector3 base_rot);
     }
 
     public interface IHakoniwaArBridgePlayer

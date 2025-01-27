@@ -18,7 +18,7 @@ namespace hakoniwa.ar.bridge
         private static readonly object lockObject = new object(); // スレッドセーフのためのロックオブジェクト
 
         private static HakoniwaArBridgeDevice instance;
-        public static HakoniwaArBridgeDevice Instance
+        public static IHakoniwaArBridge Instance
         {
             get
             {
