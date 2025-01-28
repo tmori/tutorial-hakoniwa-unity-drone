@@ -1,0 +1,6 @@
+[submodule "hakoniwa-webserver"]
+	path = hakoniwa-webserver
+	url = https://github.com/toppers/hakoniwa-webserver.git
+[submodule "hakoniwa-ar-bridge"]
+	path = hakoniwa-ar-bridge
+	url = https://github.com/toppers/hakoniwa-ar-bridge.git
