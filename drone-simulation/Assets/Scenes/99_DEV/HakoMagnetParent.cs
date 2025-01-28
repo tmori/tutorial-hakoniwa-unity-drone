@@ -43,6 +43,16 @@ public class HakoMagnet : MonoBehaviour
     {
         on = false;
     }
+    /// <summary>
+    /// 荷物を掴んでいるかどうか
+    /// </summary>
+    public bool IsGrabbed()
+    {
+        if (on && (currentBaggage != null)) {
+            return true;
+        }
+        return false;
+    }
 
     /// <summary>
     /// 想定距離範囲内にいる最も近いHakoBaggageを探し、掴む
