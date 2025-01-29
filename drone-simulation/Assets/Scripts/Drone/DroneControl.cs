@@ -38,10 +38,10 @@ public class DroneControl : MonoBehaviour
             DroneServiceRC.PutRadioControlButton(0, 0);
         }
 
-        DroneServiceRC.PutHorizontal(0, horizontal * stick_strength);  // 横移動
-        DroneServiceRC.PutForward(0, -forward * stick_strength);       // 前後移動
-        DroneServiceRC.PutHeading(0, yaw * stick_yaw_strength);        // 水平回転 (ヨー)
-        DroneServiceRC.PutVertical(0, -pitch * stick_strength);        // 垂直移動 (ピッチ)
+        DroneServiceRC.PutHorizontal(0, horizontal * stick_strength);
+        DroneServiceRC.PutForward(0, -forward * stick_strength);
+        DroneServiceRC.PutHeading(0, yaw * stick_yaw_strength);
+        DroneServiceRC.PutVertical(0, -pitch * stick_strength);
     }
 
 }
