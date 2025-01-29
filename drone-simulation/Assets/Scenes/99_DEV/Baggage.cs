@@ -59,7 +59,7 @@ namespace hakoniwa.objects.core
         /// <summary>
         /// 毎フレームの更新処理
         /// </summary>
-        void Update()
+        void FixedUpdate()
         {
             if (parent != null)
             {
@@ -77,14 +77,14 @@ namespace hakoniwa.objects.core
                 this.transform.position = Vector3.Lerp(
                     this.transform.position,
                     parent.transform.position,
-                    Time.deltaTime * speed // 補間速度
+                    Time.fixedDeltaTime * speed // 補間速度
                 );
 
                 // 親オブジェクトの回転に向かって補間
                 this.transform.rotation = Quaternion.Lerp(
                     this.transform.rotation,
                     parent.transform.rotation,
-                    Time.deltaTime * speed // 補間速度
+                    Time.fixedDeltaTime * speed // 補間速度
                 );
             }
             else

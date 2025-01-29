@@ -22,7 +22,7 @@ namespace hakoniwa.objects.core
             originalColor = magnetRenderer.material.color;
         }
 
-        void Update()
+        void FixedUpdate()
         {
             // Magnetの状態に応じて処理を実行
             if (on && currentBaggage == null)
