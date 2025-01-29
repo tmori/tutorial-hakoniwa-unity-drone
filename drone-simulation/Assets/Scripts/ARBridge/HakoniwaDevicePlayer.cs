@@ -42,7 +42,7 @@ namespace hakoniwa.ar.bridge
                 throw new System.Exception($"Can not find npud: {robotName} / {pdu_name}");
             }
             Twist pdu = new Twist(npdu.Pdu);
-            SetPosition(pdu, body.transform.position, body.transform.localEulerAngles);
+            SetPosition(pdu, body.transform.position, body.transform.eulerAngles);
             pdu_manager.WriteNamedPdu(npdu);
             var ret = await pdu_manager.FlushNamedPdu(npdu);
         }

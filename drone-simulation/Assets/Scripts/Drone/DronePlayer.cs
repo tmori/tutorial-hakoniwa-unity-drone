@@ -51,7 +51,7 @@ public class DronePlayer : MonoBehaviour, IHakoniwaArObject
             throw new Exception($"Can not find npdu: {robotName} {pdu_name_pos}");
         }
         Twist pos = new Twist(npdu_pos.Pdu);
-        SetPosition(pos, body.transform.position, body.transform.localEulerAngles);
+        SetPosition(pos, body.transform.position, body.transform.eulerAngles);
         pdu_manager.WriteNamedPdu(npdu_pos);
         var ret = await pdu_manager.FlushNamedPdu(npdu_pos);
         //Debug.Log("Flush result: " + ret);

@@ -64,7 +64,7 @@ namespace hakoniwa.ar.bridge
             }
 
             Twist pdu = new Twist(npdu.Pdu);
-            SetPosition(pdu, body.transform.position, body.transform.localEulerAngles);
+            SetPosition(pdu, body.transform.position, body.transform.eulerAngles);
             pdu_manager.WriteNamedPdu(npdu);
 
             bool ret = await pdu_manager.FlushNamedPdu(npdu);

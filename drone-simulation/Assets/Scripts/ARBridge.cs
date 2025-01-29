@@ -114,7 +114,7 @@ public class ARBridge : MonoBehaviour, IHakoniwaArBridgePlayer, IHakoPduInstance
         // 回転計算（速度を考慮）
         base_rot.y += left_value.x * rotationSpeed * deltaTime;
         base_object.transform.position = base_pos;
-        base_object.transform.localEulerAngles = base_rot;
+        base_object.transform.eulerAngles = base_rot;
 
     }
 

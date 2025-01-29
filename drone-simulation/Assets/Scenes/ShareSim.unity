@@ -14840,7 +14840,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 0}
-  speed: 5
+  speed: 10
 --- !u!1 &6918653961883614088
 GameObject:
   m_ObjectHideFlags: 0
@@ -16906,7 +16906,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2b4edeb898c946bb80c7a16a5d76efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  robotName: Baggage
+  robotName: Baggage1
   pdu_name: pos
   body: {fileID: 3505186968927678231}
 --- !u!33 &8084775000089476881
