@@ -1,7 +1,9 @@
 using System;
+using hakoniwa.objects.core;
 using hakoniwa.pdu.interfaces;
 using hakoniwa.pdu.msgs.geometry_msgs;
 using hakoniwa.pdu.msgs.hako_mavlink_msgs;
+using hakoniwa.pdu.msgs.hako_msgs;
 using hakoniwa.sim;
 using hakoniwa.sim.core;
 using UnityEngine;
@@ -12,8 +14,10 @@ public class DroneAvatar : MonoBehaviour, IHakoObject
     public string robotName = "DroneTransporter";
     public string pdu_name_propeller = "drone_motor";
     public string pdu_name_pos = "drone_pos";
+    public string pdu_name_magnet = "hako_status_magnet_holder";
     public GameObject body;
     private DronePropeller drone_propeller;
+    private Magnet magnet_object;
 
     public void EventInitialize()
     {
@@ -26,6 +30,11 @@ public class DroneAvatar : MonoBehaviour, IHakoObject
         if (drone_propeller == null)
         {
             throw new Exception("Can not found drone propeller");
+        }
+        magnet_object = this.GetComponentInChildren<Magnet>();
+        if (magnet_object == null)
+        {
+            throw new Exception("Can not found magnet");
         }
 
 
@@ -46,7 +55,14 @@ public class DroneAvatar : MonoBehaviour, IHakoObject
         {
             throw new ArgumentException($"Can not declare pdu for read: {robotName} {pdu_name_propeller}");
         }
-
+        /*
+         * Magnet Status
+         */
+        ret = hakoPdu.DeclarePduForRead(robotName, pdu_name_magnet);
+        if (ret == false)
+        {
+            throw new ArgumentException($"Can not declare pdu for read: {robotName} {pdu_name_magnet}");
+        }
     }
 
     public void EventReset()
@@ -100,6 +116,31 @@ public class DroneAvatar : MonoBehaviour, IHakoObject
             HakoHilActuatorControls propeller = new HakoHilActuatorControls(pdu_propeller);
             //Debug.Log("c1: " + propeller.controls[0]);
             drone_propeller.Rotate((float)propeller.controls[0], (float)propeller.controls[1], (float)propeller.controls[2], (float)propeller.controls[3]);
+        }
+        /*
+         * Magnet Status
+         */
+        IPdu pdu_magnet = pduManager.ReadPdu(robotName, pdu_name_magnet);
+        if (pdu_magnet == null)
+        {
+            Debug.Log("Can not get pdu of magnet");
+        }
+        else
+        {
+            HakoStatusMagnetHolder magnet = new HakoStatusMagnetHolder(pdu_magnet);
+            ControlMagnet(magnet);
+        }
+    }
+
+    private void ControlMagnet(HakoStatusMagnetHolder magnet)
+    {
+        if (magnet.magnet_on)
+        {
+            magnet_object.TurnOn();
+        }
+        else
+        {
+            magnet_object.TurnOff();
         }
     }
 
