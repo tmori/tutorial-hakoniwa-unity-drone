@@ -6,6 +6,7 @@ using hakoniwa.pdu.msgs.geometry_msgs;
 using hakoniwa.pdu.msgs.hako_mavlink_msgs;
 using hakoniwa.ar.bridge;
 using System.Threading.Tasks;
+using hakoniwa.pdu.msgs.hako_msgs;
 
 public class DronePlayer : MonoBehaviour, IHakoniwaArObject
 {
@@ -22,6 +23,7 @@ public class DronePlayer : MonoBehaviour, IHakoniwaArObject
     public string robotName = "DroneTransporter";
     public string pdu_name_propeller = "drone_motor";
     public string pdu_name_pos = "drone_pos";
+    public string pdu_name_magnet = "hako_status_magnet_holder";
 
     private void SetPosition(Twist pos, UnityEngine.Vector3 unity_pos, UnityEngine.Vector3 unity_rot)
     {
@@ -100,6 +102,8 @@ public class DronePlayer : MonoBehaviour, IHakoniwaArObject
         Debug.Log("declare pdu pos: " + ret);
         ret = await pdu_manager.DeclarePduForWrite(robotName, pdu_name_propeller);
         Debug.Log("declare pdu propeller: " + ret);
+        ret = await pdu_manager.DeclarePduForWrite(robotName, pdu_name_magnet);
+        Debug.Log("declare pdu magnet: " + ret);
     }
 
     void Start()
@@ -178,7 +182,7 @@ public class DronePlayer : MonoBehaviour, IHakoniwaArObject
         drone_control.HandleInput();
     }
 
-    private void FixedUpdate()
+    private async void FixedUpdate()
     {
         // 現在位置を記録
         for (int i = 0; i < 20; i++)
@@ -216,6 +220,36 @@ public class DronePlayer : MonoBehaviour, IHakoniwaArObject
             drone_propeller.Rotate((float)c1, (float)c2, (float)c3, (float)c4);
             FlushPduPropeller((float)c1, (float)c2, (float)c3, (float)c4);
         }
+        /*
+         * Magnet Status
+         */
+        await FlushPduMagnetStatusAsync(drone_control.IsMagnetOn());
+    }
+
+    private async Task FlushPduMagnetStatusAsync(bool v)
+    {
+        var pdu_manager = ARBridge.Instance.Get();
+        if (pdu_manager == null)
+        {
+            return;
+        }
+
+        /*
+         * Propeller
+         */
+        INamedPdu npdu = pdu_manager.CreateNamedPdu(robotName, pdu_name_magnet);
+        if (npdu == null || npdu.Pdu == null)
+        {
+            throw new Exception($"Can not find npdu: {robotName} {pdu_name_magnet}");
+        }
+
+        HakoStatusMagnetHolder magnet = new HakoStatusMagnetHolder(npdu.Pdu);
+        magnet.magnet_on = v;
+        magnet.contact_on = true;
+
+        pdu_manager.WriteNamedPdu(npdu);
+        var ret = await pdu_manager.FlushNamedPdu(npdu);
+        //Debug.Log("Flush result: " + ret);
     }
 
     private void OnApplicationQuit()
