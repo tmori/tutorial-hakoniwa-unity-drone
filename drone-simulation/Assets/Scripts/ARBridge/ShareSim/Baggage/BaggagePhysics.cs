@@ -28,7 +28,7 @@ public class BaggagePhysics : MonoBehaviour, IShareSimPhysics
 
     public void UpdatePosition(ShareObjectOwner owner)
     {
-        //nothing to do
+        DefaultShareSimPhysics.SetPosition(owner.pos, this.transform.position, this.transform.eulerAngles);
     }
 
 }

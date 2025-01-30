@@ -34,7 +34,7 @@ namespace hakoniwa.ar.bridge.sharesim
         {
             SetPosition(owner.pos, body.transform.position, body.transform.eulerAngles);
         }
-        private void SetPosition(Twist pos, UnityEngine.Vector3 unity_pos, UnityEngine.Vector3 unity_rot)
+        public static void SetPosition(Twist pos, UnityEngine.Vector3 unity_pos, UnityEngine.Vector3 unity_rot)
         {
             pos.linear.x = unity_pos.z;
             pos.linear.y = -unity_pos.x;
