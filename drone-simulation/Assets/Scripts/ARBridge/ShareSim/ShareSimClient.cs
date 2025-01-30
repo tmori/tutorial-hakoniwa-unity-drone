@@ -129,7 +129,7 @@ namespace hakoniwa.ar.bridge.sharesim
                 {
                     ulong sim_time = 0; //TODO
                     var owner_id = await owner.DoUpdate(pduManager, sim_time);
-                    Debug.Log($"update owner_id= {owner_id} targetOwnerId: {owner.GetTargetOwnerId()}");
+                    //Debug.Log($"update owner_id= {owner_id} targetOwnerId: {owner.GetTargetOwnerId()}");
                     if (owner_id == uint.MaxValue)
                     {
                         //nothing to do
