@@ -53,6 +53,7 @@ namespace hakoniwa.objects.core
                 return false;
             }
             currentBaggage = baggage;
+            currentBaggage.Grab(this.gameObject);
             on = true;
             return true;
         }
