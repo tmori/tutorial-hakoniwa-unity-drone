@@ -65,7 +65,7 @@ namespace hakoniwa.ar.bridge.sharesim
                 {
                     throw new ArgumentException($"Can not declare pdu for write: {owner.GetName()} {pduOwner}");
                 }
-                owner.SetOwnerId(owner_id);
+                owner.SetDeviceOwnerId(owner_id);
                 owner.DoInitialize();
                 owner.DoStart();
             }
@@ -99,20 +99,20 @@ namespace hakoniwa.ar.bridge.sharesim
             {
                 throw new Exception("Invalid target name: " + req.object_name);
             }
-            if ((req.request_type == (uint)ShareObjectOwnerRequestType.Acquire) && (target.GetTargetOwnerId() != owner_id))
+            if ((req.request_type == (uint)ShareObjectOwnerRequestType.Acquire) && (target.GetCurrentOwnerId() != owner_id))
             {
-                Debug.Log($"BUSY: can not acquire owner because is target{target.GetName()} is not released. current owner is {target.GetTargetOwnerId()}");
+                Debug.Log($"BUSY: can not acquire owner because is target{target.GetName()} is not released. current owner is {target.GetCurrentOwnerId()}");
             }
             else
             {
                 //update target owner
                 target.DoStop();
                 if (req.request_type == (uint)ShareObjectOwnerRequestType.Acquire) {
-                    target.SetTargetOwnerId(req.new_owner_id);
+                    target.SetCurrentOwnerId(req.new_owner_id);
                 }
                 else
                 {
-                    target.SetTargetOwnerId(owner_id);
+                    target.SetCurrentOwnerId(owner_id);
                 }
                 target.DoFlushAsync(pduManager).GetAwaiter().GetResult();
                 target.DoStart();

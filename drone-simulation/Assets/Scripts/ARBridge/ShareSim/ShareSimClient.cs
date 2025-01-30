@@ -93,8 +93,8 @@ namespace hakoniwa.ar.bridge.sharesim
                 {
                     throw new ArgumentException($"Can not declare pdu for write: {owner.GetName()} {ShareSimServer.pduOwner}");
                 }
-                owner.SetOwnerId(my_owner_id);
-                owner.SetTargetOwnerId(ShareSimServer.owner_id);
+                owner.SetDeviceOwnerId(my_owner_id);
+                owner.SetCurrentOwnerId(ShareSimServer.owner_id);
                 owner.DoInitialize();
                 owner.DoStart();
             }
@@ -134,11 +134,11 @@ namespace hakoniwa.ar.bridge.sharesim
                     {
                         //nothing to do
                     }
-                    else if (owner_id != owner.GetTargetOwnerId())
+                    else if (owner_id != owner.GetCurrentOwnerId())
                     {
-                        Debug.Log($"update target owner id: new_owner_id= {owner_id} targetOwnerId: {owner.GetTargetOwnerId()}");
+                        Debug.Log($"update target owner id: new_owner_id= {owner_id} targetOwnerId: {owner.GetCurrentOwnerId()}");
                         owner.DoStop();
-                        owner.SetTargetOwnerId(owner_id);
+                        owner.SetCurrentOwnerId(owner_id);
                         owner.DoStart();
                     }
                 }
@@ -154,7 +154,7 @@ namespace hakoniwa.ar.bridge.sharesim
             {
                 if (owner.GetName() == object_name)
                 {
-                    return owner.GetTargetOwnerId();
+                    return owner.GetCurrentOwnerId();
                 }
             }
             return uint.MaxValue;
@@ -165,7 +165,7 @@ namespace hakoniwa.ar.bridge.sharesim
             {
                 if (owner.GetName() == object_name)
                 {
-                    owner.SetTargetOwnerId(target_owner_id);
+                    owner.SetCurrentOwnerId(target_owner_id);
                     return true;
                 }
             }

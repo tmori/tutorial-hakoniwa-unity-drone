@@ -11,8 +11,14 @@ namespace hakoniwa.ar.bridge.sharesim
     public class ShareSimObject : MonoBehaviour
     {
         public GameObject target_object;
-        public uint target_owner_id = 0;
-        public uint my_owner_id = 0;
+        /// <summary>
+        /// 現在このオブジェクトを所有しているデバイスのID
+        /// </summary>
+        public uint current_owner_id = 0;
+        /// <summary>
+        /// 自分のデバイス（固定ID）
+        /// </summary>
+        public uint device_owner_id = 0;
         private IShareSimPhysics physics;
         private IShareSimAvatar avatar;
 
@@ -21,25 +27,25 @@ namespace hakoniwa.ar.bridge.sharesim
             return target_object.name;
         }
 
-        public void SetTargetOwnerId(uint owner_id)
+        public void SetCurrentOwnerId(uint owner_id)
         {
-            target_owner_id = owner_id;
+            current_owner_id = owner_id;
         }
-        public uint GetTargetOwnerId()
+        public uint GetCurrentOwnerId()
         {
-            return target_owner_id;
+            return current_owner_id;
         }
-        public void SetOwnerId(uint owner_id)
+        public void SetDeviceOwnerId(uint owner_id)
         {
-            my_owner_id = owner_id;
+            device_owner_id = owner_id;
         }
-        public uint GetOwnerId()
+        public uint GetDeviceOwnerId()
         {
-            return my_owner_id;
+            return device_owner_id;
         }
         public bool IsOwner(uint owner_id)
         {
-            return (owner_id == target_owner_id);
+            return (owner_id == current_owner_id);
         }
         public void DoInitialize()
         {
@@ -64,7 +70,7 @@ namespace hakoniwa.ar.bridge.sharesim
 
         public void DoStart()
         {
-            if (IsOwner(my_owner_id))
+            if (IsOwner(device_owner_id))
             {
                 physics.StartPhysics();
             }
@@ -82,10 +88,10 @@ namespace hakoniwa.ar.bridge.sharesim
                 return uint.MaxValue;
             }
             ShareObjectOwner owner = new ShareObjectOwner(pdu);
-            if (IsOwner(my_owner_id))
+            if (IsOwner(device_owner_id))
             {
                 owner.object_name = target_object.name;
-                owner.owner_id = my_owner_id;
+                owner.owner_id = device_owner_id;
                 owner.last_update = (ulong)sim_time;
                 physics.UpdatePosition(owner);
                 var key = pduManager.WritePdu(target_object.name, pdu);
@@ -105,7 +111,7 @@ namespace hakoniwa.ar.bridge.sharesim
                 throw new Exception("Can not get pdu of owner on " + target_object.name);
             }
             ShareObjectOwner owner = new ShareObjectOwner(pdu);
-            owner.owner_id = target_owner_id;
+            owner.owner_id = current_owner_id;
             var key = pduManager.WritePdu(owner.object_name, pdu);
             _ = await pduManager.FlushPdu(key);
             return;
@@ -113,7 +119,7 @@ namespace hakoniwa.ar.bridge.sharesim
 
         public void DoStop()
         {
-            if (IsOwner(my_owner_id))
+            if (IsOwner(device_owner_id))
             {
                 physics.StopPhysics();
             }
