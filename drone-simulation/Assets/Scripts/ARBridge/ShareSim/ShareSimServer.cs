@@ -19,12 +19,12 @@ namespace hakoniwa.ar.bridge.sharesim
     public class ShareSimServer : MonoBehaviour, IHakoObject
     {
         IHakoPdu hakoPdu;
-        public uint owner_id = 0;
-        public string robotName = "ShareSim";
+        public const uint owner_id = 0;
+        public const string robotName = "ShareSim";
         public const string pduRequest = "req";
         public const string pduTime = "core_time";
-        public List<ShareSimObject> owners;
         public const string pduOwner = "owner";
+        public List<ShareSimObject> owners;
 
         public void EventInitialize()
         {
@@ -137,16 +137,16 @@ namespace hakoniwa.ar.bridge.sharesim
             {
                 DoRequestAsync(pduManager).GetAwaiter().GetResult();
                 UpdateHakoTimAsync(pduManager).GetAwaiter().GetResult();
+                // avatar, physics controls
+                foreach (var owner in owners)
+                {
+                    ulong sim_time = (ulong)HakoAsset.GetHakoControl().GetWorldTime();
+                    owner.DoUpdate(pduManager, sim_time);
+                }
             }
             catch (Exception ex)
             {
                 Debug.LogError($"DoRequestAsync() failed: {ex}");
-            }
-            // avatar, physics controls
-            foreach (var owner in owners)
-            {
-                ulong sim_time = (ulong)HakoAsset.GetHakoControl().GetWorldTime();
-                owner.DoUpdate(pduManager, sim_time);
             }
         }
 
