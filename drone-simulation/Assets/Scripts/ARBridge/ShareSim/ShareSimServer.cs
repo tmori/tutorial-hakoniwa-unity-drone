@@ -145,7 +145,8 @@ namespace hakoniwa.ar.bridge.sharesim
             // avatar, physics controls
             foreach (var owner in owners)
             {
-                owner.DoUpdate(pduManager);
+                ulong sim_time = (ulong)HakoAsset.GetHakoControl().GetWorldTime();
+                owner.DoUpdate(pduManager, sim_time);
             }
         }
 

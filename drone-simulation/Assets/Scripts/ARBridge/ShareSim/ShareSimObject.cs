@@ -1,4 +1,5 @@
 using hakoniwa.pdu.interfaces;
+using hakoniwa.pdu.msgs.hako_msgs;
 using hakoniwa.sim;
 using hakoniwa.sim.core;
 using UnityEngine;
@@ -55,6 +56,8 @@ namespace hakoniwa.ar.bridge.sharesim
             {
                 throw new System.Exception("Can not find IShareSimAvatar on " + target_object.name);
             }
+            physics.Initialize(target_object);
+            avatar.Initialize(target_object);
         }
 
         public void DoStart()
@@ -68,17 +71,27 @@ namespace hakoniwa.ar.bridge.sharesim
                 avatar.StartAvatarProc();
             }
         }
-        public void DoUpdate(IPduManager pduManager)
+        public async void DoUpdate(IPduManager pduManager, ulong sim_time)
         {
+            IPdu pdu = pduManager.ReadPdu(target_object.name, ShareSimServer.pduOwner);
+            if (pdu == null)
+            {
+                Debug.Log("Can not get pdu of pos on " + target_object.name);
+                return;
+            }
+            ShareObjectOwner owner = new ShareObjectOwner(pdu);
             if (IsOwner(my_owner_id))
             {
-                //TODO PDU Write for physics
-                physics.UpdatePosition(pduManager);
+                owner.object_name = target_object.name;
+                owner.owner_id = my_owner_id;
+                owner.last_update = (ulong)sim_time;
+                physics.UpdatePosition(owner);
+                var key = pduManager.WritePdu(target_object.name, pdu);
+                _ = await pduManager.FlushPdu(key);
             }
             else
             {
-                //TODO PDU Read and update pos and rot of target 
-                avatar.UpdatePosition(pduManager);
+                avatar.UpdatePosition(owner);
             }
         }
 
