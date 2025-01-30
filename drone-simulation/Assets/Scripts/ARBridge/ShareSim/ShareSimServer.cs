@@ -124,7 +124,7 @@ namespace hakoniwa.ar.bridge.sharesim
             }
 
         }
-        public void EventTick()
+        public async void EventTick()
         {
             var pduManager = hakoPdu.GetPduManager();
             if (pduManager == null)
@@ -141,7 +141,7 @@ namespace hakoniwa.ar.bridge.sharesim
                 foreach (var owner in owners)
                 {
                     ulong sim_time = (ulong)HakoAsset.GetHakoControl().GetWorldTime();
-                    owner.DoUpdate(pduManager, sim_time);
+                    await owner.DoUpdate(pduManager, sim_time);
                 }
             }
             catch (Exception ex)

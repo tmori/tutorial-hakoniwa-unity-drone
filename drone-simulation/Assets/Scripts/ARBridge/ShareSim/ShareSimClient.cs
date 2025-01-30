@@ -11,6 +11,49 @@ namespace hakoniwa.ar.bridge.sharesim
     public class ShareSimClient : MonoBehaviour, IHakoniwaArObject
     {
         public uint my_owner_id = 1; //1: Quest1, 2: Quest2
+        public uint GetOwnerId()
+        {
+            return my_owner_id;
+        }
+        private static ShareSimClient _instance;
+
+        /// <summary>
+        /// シングルトンのインスタンス取得
+        /// </summary>
+        public static ShareSimClient Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    Debug.LogError("ShareSimClient instance is not initialized.");
+                }
+                return _instance;
+            }
+        }
+
+        private void Awake()
+        {
+            // すでにインスタンスが存在する場合は、重複を防ぐ
+            if (_instance != null && _instance != this)
+            {
+                Debug.LogWarning("Multiple ShareSimClient instances detected. Destroying duplicate.");
+                Destroy(this.gameObject);
+                return;
+            }
+
+            _instance = this;
+        }
+
+        private void OnDestroy()
+        {
+            // インスタンスが削除された場合、参照をクリア
+            if (_instance == this)
+            {
+                _instance = null;
+            }
+        }
+
         public List<ShareSimObject> owners;
         public async Task DeclarePduAsync(string type_name, string robot_name)
         {
@@ -65,7 +108,7 @@ namespace hakoniwa.ar.bridge.sharesim
         {
             hako_time = 0;
         }
-        void FixedUpdate()
+        async void FixedUpdate()
         {
             var pduManager = ARBridge.Instance.Get();
             if (pduManager == null)
@@ -85,13 +128,34 @@ namespace hakoniwa.ar.bridge.sharesim
                 foreach (var owner in owners)
                 {
                     ulong sim_time = 0; //TODO
-                    owner.DoUpdate(pduManager, sim_time);
+                    var owner_id = await owner.DoUpdate(pduManager, sim_time);
+                    if (owner_id == uint.MaxValue)
+                    {
+                        //nothing to do
+                    }
+                    else if (owner_id != owner.GetTargetOwnerId())
+                    {
+                        owner.DoStop();
+                        owner.SetTargetOwnerId(owner_id);
+                        owner.DoStart();
+                    }
                 }
             }
             catch (Exception ex)
             {
                 Debug.LogError($"DoRequestAsync() failed: {ex}");
             }
+        }
+        public uint GetOwnerId(string object_name)
+        {
+            foreach (var owner in owners)
+            {
+                if (owner.GetName() == object_name)
+                {
+                    return owner.GetOwnerId();
+                }
+            }
+            return uint.MaxValue;
         }
 
         public async Task<bool> RequestOwnerAsync(ShareSimObject obj, ShareObjectOwnerRequestType req_type)

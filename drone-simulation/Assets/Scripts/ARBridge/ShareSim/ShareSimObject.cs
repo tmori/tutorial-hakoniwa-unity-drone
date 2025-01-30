@@ -71,13 +71,13 @@ namespace hakoniwa.ar.bridge.sharesim
                 avatar.StartAvatarProc();
             }
         }
-        public async void DoUpdate(IPduManager pduManager, ulong sim_time)
+        public async Task<uint> DoUpdate(IPduManager pduManager, ulong sim_time)
         {
             IPdu pdu = pduManager.ReadPdu(target_object.name, ShareSimServer.pduOwner);
             if (pdu == null)
             {
                 Debug.Log("Can not get pdu of pos on " + target_object.name);
-                return;
+                return uint.MaxValue;
             }
             ShareObjectOwner owner = new ShareObjectOwner(pdu);
             if (IsOwner(my_owner_id))
@@ -93,6 +93,7 @@ namespace hakoniwa.ar.bridge.sharesim
             {
                 avatar.UpdatePosition(owner);
             }
+            return owner.owner_id;
         }
 
         public void DoStop()
