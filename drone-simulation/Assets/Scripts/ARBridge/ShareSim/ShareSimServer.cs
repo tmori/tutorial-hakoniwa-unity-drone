@@ -79,6 +79,7 @@ namespace hakoniwa.ar.bridge.sharesim
                 Debug.Log("no request");
                 return;
             }
+            Debug.Log("request target name: " + req.object_name);
             // find object
             ShareSimObject target = null;
             foreach (var obj in owners)
@@ -88,6 +89,10 @@ namespace hakoniwa.ar.bridge.sharesim
                     target = obj;
                     break;
                 }
+            }
+            if (target == null)
+            {
+                throw new Exception("Invalid target name: " + req.object_name);
             }
             if (target.GetTargetOwnerId() != owner_id)
             {
