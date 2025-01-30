@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using hakoniwa.pdu.interfaces;
 using hakoniwa.pdu.msgs.hako_msgs;
@@ -77,7 +78,7 @@ namespace hakoniwa.ar.bridge.sharesim
             IPdu pdu = pduManager.ReadPdu(target_object.name, ShareSimServer.pduOwner);
             if (pdu == null)
             {
-                Debug.Log("Can not get pdu of pos on " + target_object.name);
+                Debug.Log("Can not get pdu of owner on " + target_object.name);
                 return uint.MaxValue;
             }
             ShareObjectOwner owner = new ShareObjectOwner(pdu);
@@ -95,6 +96,19 @@ namespace hakoniwa.ar.bridge.sharesim
                 avatar.UpdatePosition(owner);
             }
             return owner.owner_id;
+        }
+        public async Task DoFlushAsync(IPduManager pduManager)
+        {
+            IPdu pdu = pduManager.ReadPdu(target_object.name, ShareSimServer.pduOwner);
+            if (pdu == null)
+            {
+                throw new Exception("Can not get pdu of owner on " + target_object.name);
+            }
+            ShareObjectOwner owner = new ShareObjectOwner(pdu);
+            owner.owner_id = target_owner_id;
+            var key = pduManager.WritePdu(owner.object_name, pdu);
+            _ = await pduManager.FlushPdu(key);
+            return;
         }
 
         public void DoStop()

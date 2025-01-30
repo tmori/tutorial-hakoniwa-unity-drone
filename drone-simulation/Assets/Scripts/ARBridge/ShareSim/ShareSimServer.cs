@@ -108,6 +108,7 @@ namespace hakoniwa.ar.bridge.sharesim
                 //update target owner
                 target.DoStop();
                 target.SetTargetOwnerId(req.new_owner_id);
+                target.DoFlushAsync(pduManager).GetAwaiter().GetResult();
                 target.DoStart();
                 Debug.Log("Updated owner: " + req.new_owner_id);
             }
