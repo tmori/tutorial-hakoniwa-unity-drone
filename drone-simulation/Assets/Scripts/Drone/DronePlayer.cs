@@ -16,6 +16,10 @@ public class DronePlayer : MonoBehaviour, IHakoniwaArObject
     private DroneControl drone_control;
     private DronePropeller drone_propeller;
     private IHakoniwaArBridge ibridge;
+    private BaggageGrabber baggage_grabber;
+    private bool isGrabProcessing = false;
+    private bool isReleaseProcessing = false;
+    private bool isGrabbed = false;
 
     public bool enable_data_logger = false;
     public string debug_logpath = null;
@@ -124,6 +128,11 @@ public class DronePlayer : MonoBehaviour, IHakoniwaArObject
             throw new Exception("Can not found drone propeller");
         }
         my_collision.SetIndex(0);
+        baggage_grabber = this.GetComponentInChildren<BaggageGrabber>();
+        if (baggage_grabber == null)
+        {
+            throw new Exception("Can not found BaggageGrabber");
+        }
 
         string droneConfigText = LoadTextFromResources("config/drone/rc/drone_config_0");
         string controllerConfigText = LoadTextFromResources("config/controller/param-api-mixer");
@@ -223,7 +232,46 @@ public class DronePlayer : MonoBehaviour, IHakoniwaArObject
         /*
          * Magnet Status
          */
-        await FlushPduMagnetStatusAsync(drone_control.IsMagnetOn());
+        var pdu_manager = ARBridge.Instance.Get();
+        if (pdu_manager == null)
+        {
+            return;
+        }
+
+        if (drone_control.IsMagnetOn())
+        {
+            if (!isGrabbed)
+            {
+                if (!isGrabProcessing) // すでに処理中でなければ実行
+                {
+                    isGrabProcessing = true;
+                    var result = await baggage_grabber.RequestGrab(1, pdu_manager);
+
+                    if (result == BaggageGrabber.GrabResult.Success)
+                    {
+                        isGrabbed = true; // 取得成功時のみ `isGrabbed` を更新
+                    }
+                    isGrabProcessing = false; // 確実に解除
+                }
+            }
+        }
+        else
+        {
+            if (isGrabbed)
+            {
+                if (!isReleaseProcessing) // すでに処理中でなければ実行
+                {
+                    isReleaseProcessing = true;
+                    var result = await baggage_grabber.RequestRelease(1, pdu_manager);
+                    isReleaseProcessing = false; // 確実に解除
+
+                    if (result == BaggageGrabber.ReleaseResult.Success)
+                    {
+                        isGrabbed = false; // リリース成功時のみ `isGrabbed` を更新
+                    }
+                }
+            }
+        }
     }
 
     private async Task FlushPduMagnetStatusAsync(bool v)
