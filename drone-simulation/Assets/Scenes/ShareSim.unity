@@ -790,6 +790,52 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4430024656805238887, guid: e822e728d868a4f2bb0a6ad49e57f34e, type: 3}
   m_PrefabInstance: {fileID: 627888447}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &687046577
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 687046579}
+  - component: {fileID: 687046578}
+  m_Layer: 0
+  m_Name: ShareSim
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &687046578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 687046577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a9e3d647834f4801911423d24bfdccf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owners:
+  - {fileID: 8048751298808637940}
+--- !u!4 &687046579
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 687046577}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.011973077, y: 0.07474019, z: 0.078209504}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &760207080
 GameObject:
   m_ObjectHideFlags: 0
@@ -988,7 +1034,7 @@ MonoBehaviour:
   - {fileID: 5973691267648374544}
   - {fileID: 5973691267648374543}
   - {fileID: 5973691267648374542}
-  - {fileID: 3505186968927678231}
+  - {fileID: 687046577}
   _state: 0
   _worldTime: 0
 --- !u!1001 &1220499780
@@ -15730,8 +15776,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3165794261014537256}
   - component: {fileID: 8048751298808637939}
-  - component: {fileID: 6907768627112497580}
   - component: {fileID: 8048751298808637940}
+  - component: {fileID: 8048751298808637942}
+  - component: {fileID: 8048751298808637941}
   m_Layer: 0
   m_Name: Baggage1
   m_TagString: Untagged
@@ -27541,20 +27588,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &6907768627112497580
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3505186968927678231}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b7b192b276a141c094bc62f677ee04f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parent: {fileID: 0}
-  speed: 10
 --- !u!1 &6918653961883614088
 GameObject:
   m_ObjectHideFlags: 0
@@ -31627,12 +31660,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 3505186968927678231}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2b4edeb898c946bb80c7a16a5d76efc, type: 3}
+  m_Script: {fileID: 11500000, guid: c4bf2b0e366d9412c8343a79587d8113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  robotName: Baggage1
-  pdu_name: pos
-  body: {fileID: 3505186968927678231}
+  target_object: {fileID: 3505186968927678231}
+--- !u!114 &8048751298808637941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3505186968927678231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f3be6c7bb22d4e5a982e0e9b6e5ffea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8048751298808637942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3505186968927678231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fee51f1e26544598a135d30d29138f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!33 &8084775000089476881
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -35949,3 +36004,4 @@ SceneRoots:
   - {fileID: 4459398662247560001}
   - {fileID: 5973691267648374541}
   - {fileID: 3165794261014537256}
+  - {fileID: 687046579}

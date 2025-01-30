@@ -158,18 +158,56 @@
         "name": "Baggage1",
         "rpc_pdu_readers": [],
         "rpc_pdu_writers": [],
-        "shm_pdu_readers": [],
+        "shm_pdu_readers": [
+            {
+                "type": "hako_msgs/ShareObjectOwner",
+                "org_name": "owner",
+                "name": "Baggage1_owner",
+                "channel_id": 0,
+                "pdu_size": 216,
+                "write_cycle": 1,
+                "method_type": "SHM"
+              }
+    
+        ],
         "shm_pdu_writers": [
-          {
-            "type": "geometry_msgs/Twist",
-            "org_name": "pos",
-            "name": "Baggage1_pos",
-            "channel_id": 0,
-            "pdu_size": 112,
-            "write_cycle": 1,
-            "method_type": "SHM"
-          }
-        ]
+            {
+                "type": "hako_msgs/ShareObjectOwner",
+                "org_name": "owner",
+                "name": "Baggage1_owner",
+                "channel_id": 0,
+                "pdu_size": 216,
+                "write_cycle": 1,
+                "method_type": "SHM"
+              }
+            ]
+      },
+      {
+        "name": "ShareSim",
+        "rpc_pdu_readers": [],
+        "rpc_pdu_writers": [],
+        "shm_pdu_readers": [
+            {
+                "type": "hako_msgs/ShareObjectOwnerRequest",
+                "org_name": "req",
+                "name": "ShareSim_req",
+                "channel_id": 0,
+                "pdu_size": 168,
+                "write_cycle": 1,
+                "method_type": "SHM"
+              }
+            ],
+        "shm_pdu_writers": [
+            {
+                "type": "hako_msgs/SimTime",
+                "org_name": "core_time",
+                "name": "ShareSim_core_time",
+                "channel_id": 1,
+                "pdu_size": 32,
+                "write_cycle": 1,
+                "method_type": "SHM"
+              }
+            ]
       }
   
   ]
