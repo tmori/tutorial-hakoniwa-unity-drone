@@ -37,6 +37,11 @@ namespace hakoniwa.ar.bridge.sharesim
             {
                 throw new ArgumentException($"Can not declare pdu for read: {robotName} {pduRequest}");
             }
+            ret = hakoPdu.DeclarePduForWrite(robotName, pduRequest);
+            if (ret == false)
+            {
+                throw new ArgumentException($"Can not declare pdu for write: {robotName} {pduRequest}");
+            }
             /*
              * hako core time
              */
@@ -107,9 +112,18 @@ namespace hakoniwa.ar.bridge.sharesim
                 Debug.Log("Updated owner: " + req.new_owner_id);
             }
             // done
-            req.request_type = (uint)ShareObjectOwnerRequestType.None; //no request
-            string key = pduManager.WritePdu(robotName, pdu);
-            _ = await pduManager.FlushPdu(key);
+            INamedPdu npdu = pduManager.CreateNamedPdu(robotName, pduRequest);
+            if (npdu == null)
+            {
+                throw new Exception("Can not find npdu of " + pduRequest);
+            }
+            var wreq = new ShareObjectOwnerRequest(npdu.Pdu);
+            wreq.object_name = req.object_name;
+            wreq.new_owner_id = req.new_owner_id;
+            wreq.request_time = req.request_time;
+            wreq.request_type = (uint)ShareObjectOwnerRequestType.None; //no request
+            pduManager.WriteNamedPdu(npdu);
+            _ = await pduManager.FlushNamedPdu(npdu);
         }
         private async Task UpdateHakoTimAsync(IPduManager pduManager)
         {

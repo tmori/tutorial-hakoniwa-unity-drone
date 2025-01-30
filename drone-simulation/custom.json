@@ -199,6 +199,15 @@
             ],
         "shm_pdu_writers": [
             {
+                "type": "hako_msgs/ShareObjectOwnerRequest",
+                "org_name": "req",
+                "name": "ShareSim_req",
+                "channel_id": 0,
+                "pdu_size": 168,
+                "write_cycle": 1,
+                "method_type": "SHM"
+            },
+            {
                 "type": "hako_msgs/SimTime",
                 "org_name": "core_time",
                 "name": "ShareSim_core_time",
