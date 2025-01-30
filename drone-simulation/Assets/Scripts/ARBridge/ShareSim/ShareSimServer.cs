@@ -1,0 +1,166 @@
+﻿using UnityEngine;
+using System.Collections;
+using hakoniwa.sim;
+using System.Collections.Generic;
+using System;
+using hakoniwa.sim.core;
+using hakoniwa.pdu.interfaces;
+using hakoniwa.pdu.msgs.hako_msgs;
+using System.Threading.Tasks;
+
+namespace hakoniwa.ar.bridge.sharesim
+{
+    public enum ShareObjectOwnerRequestType
+    {
+        None = 0,
+        Acquire = 1,
+        Release = 2
+    }
+    public class ShareSimServer : MonoBehaviour, IHakoObject
+    {
+        IHakoPdu hakoPdu;
+        public uint owner_id = 0;
+        public string robotName = "ShareSim";
+        public const string pduRequest = "req";
+        public const string pduTime = "core_time";
+        public List<ShareSimObject> owners;
+        public const string pduOwner = "owner";
+
+        public void EventInitialize()
+        {
+            hakoPdu = HakoAsset.GetHakoPdu();
+            /*
+             * req
+             */
+            var ret = hakoPdu.DeclarePduForRead(robotName, pduRequest);
+            if (ret == false)
+            {
+                throw new ArgumentException($"Can not declare pdu for read: {robotName} {pduRequest}");
+            }
+            /*
+             * hako core time
+             */
+            ret = hakoPdu.DeclarePduForWrite(robotName, pduTime);
+            if (ret == false)
+            {
+                throw new ArgumentException($"Can not declare pdu for read: {robotName} {pduRequest}");
+            }
+            /*
+             * share object pdu
+             */
+            foreach (var owner in owners)
+            {
+                ret = hakoPdu.DeclarePduForRead(owner.GetName(), pduOwner);
+                if (ret == false)
+                {
+                    throw new ArgumentException($"Can not declare pdu for read: {owner.GetName()} {pduOwner}");
+                }
+                ret = hakoPdu.DeclarePduForWrite(owner.GetName(), pduOwner);
+                if (ret == false)
+                {
+                    throw new ArgumentException($"Can not declare pdu for write: {owner.GetName()} {pduOwner}");
+                }
+                owner.SetOwnerId(owner_id);
+                owner.DoInitialize();
+                owner.DoStart();
+            }
+        }
+        private async Task DoRequestAsync(IPduManager pduManager)
+        {
+            IPdu pdu = pduManager.ReadPdu(robotName, pduRequest);
+            if (pdu == null)
+            {
+                Debug.Log("Can not get pdu of req");
+                return;
+            }
+            ShareObjectOwnerRequest req = new ShareObjectOwnerRequest(pdu);
+            if (req.request_type == (uint)ShareObjectOwnerRequestType.None)
+            {
+                Debug.Log("no request");
+                return;
+            }
+            // find object
+            ShareSimObject target = null;
+            foreach (var obj in owners)
+            {
+                if (obj.GetName() == req.object_name)
+                {
+                    target = obj;
+                    break;
+                }
+            }
+            if (target.GetTargetOwnerId() != owner_id)
+            {
+                Debug.Log("BUSY: owner is " + target.GetOwnerId());
+            }
+            else
+            {
+                //update target owner
+                target.DoStop();
+                target.SetTargetOwnerId(req.new_owner_id);
+                target.DoStart();
+                Debug.Log("Updated owner: " + req.new_owner_id);
+            }
+            // done
+            req.request_type = (uint)ShareObjectOwnerRequestType.None; //no request
+            string key = pduManager.WritePdu(robotName, pdu);
+            _ = await pduManager.FlushPdu(key);
+        }
+        private async Task UpdateHakoTimAsync(IPduManager pduManager)
+        {
+            INamedPdu npdu = pduManager.CreateNamedPdu(robotName, pduTime);
+            if (npdu == null)
+            {
+                throw new System.Exception($"Can not find npdu: {robotName} / {pduTime}");
+            }
+            SimTime sim_time = new SimTime(npdu.Pdu);
+            sim_time.time_usec = (ulong)HakoAsset.GetHakoControl().GetWorldTime();
+            pduManager.WriteNamedPdu(npdu);
+
+            bool ret = await pduManager.FlushNamedPdu(npdu);
+            if (!ret)
+            {
+                Debug.LogError($"FlushNamedPdu failed for {robotName} / {pduTime}");
+            }
+
+        }
+        public void EventTick()
+        {
+            var pduManager = hakoPdu.GetPduManager();
+            if (pduManager == null)
+            {
+                return;
+            }
+            // request check
+            // update hako time
+            try
+            {
+                DoRequestAsync(pduManager).GetAwaiter().GetResult();
+                UpdateHakoTimAsync(pduManager).GetAwaiter().GetResult();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"DoRequestAsync() failed: {ex}");
+            }
+            // avatar, physics controls
+            foreach (var owner in owners)
+            {
+                owner.DoUpdate(pduManager);
+            }
+        }
+
+        public void EventReset()
+        {
+        }
+
+        public void EventStart()
+        {
+        }
+
+        public void EventStop()
+        {
+        }
+
+    }
+}
+
