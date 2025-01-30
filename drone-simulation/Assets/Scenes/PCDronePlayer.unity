@@ -2204,6 +2204,7 @@ GameObject:
   - component: {fileID: 2924658496959939935}
   - component: {fileID: 4739266239131069945}
   - component: {fileID: 2947694062203661297}
+  - component: {fileID: 4739266239131069946}
   m_Layer: 0
   m_Name: DronePlayer2
   m_TagString: Untagged
@@ -21710,6 +21711,19 @@ MonoBehaviour:
   stick_strength: 0.1
   stick_yaw_strength: 1
   magnet_on: 0
+--- !u!114 &4739266239131069946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164460974453360769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1b48fee3f131ea4cbf3a1e92de5764c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeoutDuration: 5
 --- !u!1 &4765767479640351436
 GameObject:
   m_ObjectHideFlags: 0
