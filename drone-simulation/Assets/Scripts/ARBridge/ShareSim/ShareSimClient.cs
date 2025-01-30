@@ -159,7 +159,18 @@ namespace hakoniwa.ar.bridge.sharesim
             }
             return uint.MaxValue;
         }
-
+        public bool SetTargetOwnerId(string object_name, uint target_owner_id)
+        {
+            foreach (var owner in owners)
+            {
+                if (owner.GetName() == object_name)
+                {
+                    owner.SetTargetOwnerId(target_owner_id);
+                    return true;
+                }
+            }
+            return false;
+        }
         public async Task<bool> RequestOwnerAsync(ShareSimObject obj, ShareObjectOwnerRequestType req_type)
         {
             var pduManager = ARBridge.Instance.Get();
