@@ -129,12 +129,14 @@ namespace hakoniwa.ar.bridge.sharesim
                 {
                     ulong sim_time = 0; //TODO
                     var owner_id = await owner.DoUpdate(pduManager, sim_time);
+                    Debug.Log($"update owner_id= {owner_id} targetOwnerId: {owner.GetTargetOwnerId()}");
                     if (owner_id == uint.MaxValue)
                     {
                         //nothing to do
                     }
                     else if (owner_id != owner.GetTargetOwnerId())
                     {
+                        Debug.Log($"update target owner id: new_owner_id= {owner_id} targetOwnerId: {owner.GetTargetOwnerId()}");
                         owner.DoStop();
                         owner.SetTargetOwnerId(owner_id);
                         owner.DoStart();
@@ -146,13 +148,13 @@ namespace hakoniwa.ar.bridge.sharesim
                 Debug.LogError($"DoRequestAsync() failed: {ex}");
             }
         }
-        public uint GetOwnerId(string object_name)
+        public uint GetTargetOwnerId(string object_name)
         {
             foreach (var owner in owners)
             {
                 if (owner.GetName() == object_name)
                 {
-                    return owner.GetOwnerId();
+                    return owner.GetTargetOwnerId();
                 }
             }
             return uint.MaxValue;

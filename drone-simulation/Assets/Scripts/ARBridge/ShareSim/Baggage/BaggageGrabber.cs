@@ -43,6 +43,7 @@ public class BaggageGrabber : MonoBehaviour
     {
         if (currentBaggage)
         {
+            Debug.Log("already requesting.");
             return currentBaggage;
         }
 
@@ -50,6 +51,7 @@ public class BaggageGrabber : MonoBehaviour
         currentBaggage = this.magnet.FindNearestBaggage();
         if (currentBaggage == null)
         {
+            Debug.Log("not find nearest baggage");
             return null;
         }
         requestOwnerId = owner_id;
@@ -66,7 +68,7 @@ public class BaggageGrabber : MonoBehaviour
         req.request_type = (uint)ShareObjectOwnerRequestType.Acquire;
         req.new_owner_id = owner_id;
         req.request_time = (uint)(requestStartTime * 1000);
-
+        Debug.Log("object_name: " + req.object_name);
         pduManager.WriteNamedPdu(npdu);
         bool ret = await pduManager.FlushNamedPdu(npdu);
         if (!ret)
@@ -76,9 +78,9 @@ public class BaggageGrabber : MonoBehaviour
         return currentBaggage;
     }
 
-    private uint GetCurrentOwner(Baggage baggage)
+    private uint GetCurrentTargetOwner(Baggage baggage)
     {
-        return ShareSimClient.Instance.GetOwnerId(baggage.name);
+        return ShareSimClient.Instance.GetTargetOwnerId(baggage.name);
     }
 
     private bool Grab()
@@ -95,8 +97,6 @@ public class BaggageGrabber : MonoBehaviour
             Debug.LogError("Failed to grab baggage.");
             return false;
         }
-
-        currentBaggage = null;
         return true;
     }
 
@@ -136,7 +136,7 @@ public class BaggageGrabber : MonoBehaviour
                 return GrabResult.Timeout;
             }
 
-            uint owner_id_now = GetCurrentOwner(currentBaggage);
+            uint owner_id_now = GetCurrentTargetOwner(currentBaggage);
             if (owner_id_now == uint.MaxValue)
             {
                 Debug.LogWarning("Failed to retrieve owner information.");
@@ -145,6 +145,7 @@ public class BaggageGrabber : MonoBehaviour
 
             if (owner_id_now == requestOwnerId)
             {
+                Debug.Log("get owner: " + owner_id_now);
                 break; // 所有権獲得
             }
             else if (owner_id_now != ShareSimServer.owner_id)
@@ -153,7 +154,7 @@ public class BaggageGrabber : MonoBehaviour
                 currentBaggage = null;
                 return GrabResult.OwnershipLost;
             }
-
+            Debug.Log("wait for a while... : owner_id " + owner_id_now);
             await Task.Delay(100); // 次のチェックまで少し待機
         }
 
