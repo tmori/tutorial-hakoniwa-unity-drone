@@ -25,8 +25,7 @@ namespace hakoniwa.objects.core
             rd = this.GetComponentInChildren<Rigidbody>();
             if (rd == null)
             {
-                // Rigidbodyが見つからない場合は例外をスロー
-                throw new System.Exception($"Not found Rigidbody on {this.transform.name}");
+                Debug.Log($"Not found Rigidbody on {this.transform.name}");
             }
         }
 
@@ -70,8 +69,11 @@ namespace hakoniwa.objects.core
                     this.transform.parent = parent.transform;
                 }
 
-                // Rigidbodyを停止（物理挙動を無効化）
-                this.rd.isKinematic = true;
+                if (rd)
+                {
+                    // Rigidbodyを停止（物理挙動を無効化）
+                    rd.isKinematic = true;
+                }
 
                 // 親オブジェクトの位置に向かって補間で移動
                 this.transform.position = Vector3.Lerp(
@@ -91,7 +93,10 @@ namespace hakoniwa.objects.core
             {
                 // 親が設定されていない場合（自由な状態）
                 this.transform.parent = initial_parent; // 初期の親に戻す
-                this.rd.isKinematic = false; // Rigidbodyを再度有効化
+                if (rd)
+                {
+                    rd.isKinematic = false; // Rigidbodyを再度有効化
+                }
             }
         }
     }
