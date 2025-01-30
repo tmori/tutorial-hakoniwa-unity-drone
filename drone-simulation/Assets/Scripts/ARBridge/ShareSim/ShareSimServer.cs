@@ -99,15 +99,21 @@ namespace hakoniwa.ar.bridge.sharesim
             {
                 throw new Exception("Invalid target name: " + req.object_name);
             }
-            if (target.GetTargetOwnerId() != owner_id)
+            if ((req.request_type == (uint)ShareObjectOwnerRequestType.Acquire) && (target.GetTargetOwnerId() != owner_id))
             {
-                Debug.Log("BUSY: owner is " + target.GetOwnerId());
+                Debug.Log($"BUSY: can not acquire owner because is target{target.GetName()} is not released. current owner is {target.GetTargetOwnerId()}");
             }
             else
             {
                 //update target owner
                 target.DoStop();
-                target.SetTargetOwnerId(req.new_owner_id);
+                if (req.request_type == (uint)ShareObjectOwnerRequestType.Acquire) {
+                    target.SetTargetOwnerId(req.new_owner_id);
+                }
+                else
+                {
+                    target.SetTargetOwnerId(owner_id);
+                }
                 target.DoFlushAsync(pduManager).GetAwaiter().GetResult();
                 target.DoStart();
                 Debug.Log("Updated owner: " + req.new_owner_id);

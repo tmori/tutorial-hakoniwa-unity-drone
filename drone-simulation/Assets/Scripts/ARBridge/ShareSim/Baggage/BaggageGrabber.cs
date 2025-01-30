@@ -187,7 +187,7 @@ public class BaggageGrabber : MonoBehaviour
         ShareObjectOwnerRequest req = new ShareObjectOwnerRequest(npdu.Pdu);
         req.object_name = currentBaggage.name;
         req.request_type = (uint)ShareObjectOwnerRequestType.Release;
-        req.new_owner_id = requestOwnerId;
+        req.new_owner_id = ShareSimServer.owner_id;
         req.request_time = (uint)(Time.time * 1000); // 正しいリクエスト時間を設定
 
         pduManager.WriteNamedPdu(npdu);
