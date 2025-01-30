@@ -439,6 +439,68 @@ MonoBehaviour:
   RestitutionCoefficient: 1
   rb: {fileID: 0}
   collider_obj: {fileID: 0}
+--- !u!1001 &335462934
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2116656260467872190}
+    m_Modifications:
+    - target: {fileID: 1780419210734924378, guid: ae546cca88c33450586a2c601adc7aff, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780419210734924378, guid: ae546cca88c33450586a2c601adc7aff, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.042
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780419210734924378, guid: ae546cca88c33450586a2c601adc7aff, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.024
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780419210734924378, guid: ae546cca88c33450586a2c601adc7aff, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780419210734924378, guid: ae546cca88c33450586a2c601adc7aff, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780419210734924378, guid: ae546cca88c33450586a2c601adc7aff, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780419210734924378, guid: ae546cca88c33450586a2c601adc7aff, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780419210734924378, guid: ae546cca88c33450586a2c601adc7aff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780419210734924378, guid: ae546cca88c33450586a2c601adc7aff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780419210734924378, guid: ae546cca88c33450586a2c601adc7aff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6707937220162321549, guid: ae546cca88c33450586a2c601adc7aff, type: 3}
+      propertyPath: m_Name
+      value: MagnetHolder
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ae546cca88c33450586a2c601adc7aff, type: 3}
+--- !u!4 &335462935 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1780419210734924378, guid: ae546cca88c33450586a2c601adc7aff, type: 3}
+  m_PrefabInstance: {fileID: 335462934}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &404593565
 GameObject:
   m_ObjectHideFlags: 0
@@ -9824,6 +9886,7 @@ Transform:
   - {fileID: 6572619517644267963}
   - {fileID: 1389227870335850761}
   - {fileID: 2399088291212033695}
+  - {fileID: 335462935}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2116656260659154539
@@ -32911,6 +32974,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target_object: {fileID: 8310912978819000939}
+  target_owner_id: 0
+  my_owner_id: 0
 --- !u!114 &8310912978819000941
 MonoBehaviour:
   m_ObjectHideFlags: 0

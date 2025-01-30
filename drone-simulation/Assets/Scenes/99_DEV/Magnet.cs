@@ -46,6 +46,16 @@ namespace hakoniwa.objects.core
         {
             on = true;
         }
+        public bool TurnOn(Baggage baggage)
+        {
+            if (currentBaggage)
+            {
+                return false;
+            }
+            currentBaggage = baggage;
+            on = true;
+            return true;
+        }
 
         /// <summary>
         /// MagnetをOffにする
@@ -65,6 +75,35 @@ namespace hakoniwa.objects.core
                 return true;
             }
             return false;
+        }
+        public Baggage FindNearestBaggage()
+        {
+            Baggage nearestBaggage = null; // 最も近いBaggageを保持する変数
+            float nearestDistance = detectionRange; // 検出範囲（初期値は設定された最大範囲）
+
+            // シーン内に存在するすべてのHakoBaggageオブジェクトを取得
+            Baggage[] baggages = FindObjectsByType<Baggage>(FindObjectsSortMode.None);
+
+            foreach (Baggage baggage in baggages)
+            {
+                // 掴まれていない状態かつ、自分より下に位置しているBaggageのみを対象とする
+                if (baggage.IsFree() && baggage.transform.position.y < this.transform.position.y)
+                {
+                    float distance = Vector3.Distance(transform.position, baggage.transform.position); // 自分とBaggage間の距離を計算
+                    if (distance < nearestDistance) // 距離が現在の最短距離よりも短い場合
+                    {
+                        nearestDistance = distance; // 最短距離を更新
+                        nearestBaggage = baggage; // 最も近いBaggageを更新
+                    }
+                }
+            }
+
+            // 最も近いBaggageが見つかった場合、掴む
+            if (nearestBaggage != null)
+            {
+                return nearestBaggage;
+            }
+            return null;
         }
 
         /// <summary>
