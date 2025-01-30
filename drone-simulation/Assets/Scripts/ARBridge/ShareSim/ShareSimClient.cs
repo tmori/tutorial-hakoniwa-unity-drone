@@ -50,7 +50,8 @@ namespace hakoniwa.ar.bridge.sharesim
                 {
                     throw new ArgumentException($"Can not declare pdu for write: {owner.GetName()} {ShareSimServer.pduOwner}");
                 }
-                owner.SetOwnerId(ShareSimServer.owner_id);
+                owner.SetOwnerId(my_owner_id);
+                owner.SetTargetOwnerId(ShareSimServer.owner_id);
                 owner.DoInitialize();
                 owner.DoStart();
             }

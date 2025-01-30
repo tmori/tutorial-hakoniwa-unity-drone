@@ -9,8 +9,8 @@ namespace hakoniwa.ar.bridge.sharesim
     public class ShareSimObject : MonoBehaviour
     {
         public GameObject target_object;
-        private uint target_owner_id = 0;
-        private uint my_owner_id = 0;
+        public uint target_owner_id = 0;
+        public uint my_owner_id = 0;
         private IShareSimPhysics physics;
         private IShareSimAvatar avatar;
 
