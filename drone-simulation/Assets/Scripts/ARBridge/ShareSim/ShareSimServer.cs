@@ -82,7 +82,7 @@ namespace hakoniwa.ar.bridge.sharesim
             ShareObjectOwnerRequest req = new ShareObjectOwnerRequest(pdu);
             if (req.request_type == (uint)ShareObjectOwnerRequestType.None)
             {
-                Debug.Log("no request");
+                //Debug.Log("no request");
                 return;
             }
             Debug.Log("request target name: " + req.object_name);
@@ -158,6 +158,7 @@ namespace hakoniwa.ar.bridge.sharesim
                 return false;
             }
             ulong sim_time = (ulong)HakoAsset.GetHakoControl().GetWorldTime();
+            //Debug.Log($"sim_time = {sim_time} updateTime = {lastUpdateTime}");
             return (sim_time - lastUpdateTime) > timeoutDuration;
         }
 
@@ -181,7 +182,7 @@ namespace hakoniwa.ar.bridge.sharesim
                     await owner.DoUpdate(pduManager, sim_time);
 
                     if (!owner.IsOwner(owner_id) && IsTimeout(owner.GetUpdateTime())) {
-                        Debug.Log("ShareSim object is timeout : " + owner.GetName());
+                        Debug.LogError("ShareSim object is timeout : " + owner.GetName());
                         owner.DoStop();
                         owner.SetCurrentOwnerId(owner_id);
                         owner.DoFlushAsync(pduManager).GetAwaiter().GetResult();

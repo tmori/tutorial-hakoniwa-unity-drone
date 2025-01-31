@@ -80,6 +80,8 @@ namespace hakoniwa.ar.bridge.sharesim
                 avatar.StartAvatarProc();
             }
         }
+        private Vector3 lastPos;
+        private Vector3 lastRot;
         public async Task<uint> DoUpdate(IPduManager pduManager, ulong sim_time)
         {
             IPdu pdu = pduManager.ReadPdu(target_object.name, ShareSimServer.pduOwner);
@@ -89,6 +91,8 @@ namespace hakoniwa.ar.bridge.sharesim
                 return uint.MaxValue;
             }
             ShareObjectOwner owner = new ShareObjectOwner(pdu);
+            lastPos = new Vector3((float)owner.pos.linear.x, (float)owner.pos.linear.y, (float)owner.pos.linear.z);
+            lastRot = new Vector3((float)owner.pos.angular.x, (float)owner.pos.angular.y, (float)owner.pos.angular.z);
             if (IsOwner(device_owner_id))
             {
                 owner.object_name = target_object.name;
@@ -101,7 +105,7 @@ namespace hakoniwa.ar.bridge.sharesim
             else
             {
                 this.updateTime = owner.last_update;
-                Debug.Log("update time: " + updateTime);
+                //Debug.Log("update time: " + updateTime);
                 avatar.UpdatePosition(owner);
             }
             return owner.owner_id;
@@ -112,15 +116,23 @@ namespace hakoniwa.ar.bridge.sharesim
         }
         public async Task DoFlushAsync(IPduManager pduManager)
         {
-            IPdu pdu = pduManager.ReadPdu(target_object.name, ShareSimServer.pduOwner);
-            if (pdu == null)
+            INamedPdu npdu = pduManager.CreateNamedPdu(target_object.name, ShareSimServer.pduOwner);
+            if (npdu == null)
             {
                 throw new Exception("Can not get pdu of owner on " + target_object.name);
             }
-            ShareObjectOwner owner = new ShareObjectOwner(pdu);
+            ShareObjectOwner owner = new ShareObjectOwner(npdu.Pdu);
+            owner.object_name = target_object.name;
             owner.owner_id = current_owner_id;
-            var key = pduManager.WritePdu(owner.object_name, pdu);
-            _ = await pduManager.FlushPdu(key);
+            owner.last_update = 0;
+            owner.pos.linear.x = lastPos.x;
+            owner.pos.linear.y = lastPos.y;
+            owner.pos.linear.z = lastPos.z;
+            owner.pos.angular.x = lastRot.x;
+            owner.pos.angular.y = lastRot.y;
+            owner.pos.angular.z = lastRot.z;
+            pduManager.WriteNamedPdu(npdu);
+            _ = await pduManager.FlushNamedPdu(npdu);
             return;
         }
 

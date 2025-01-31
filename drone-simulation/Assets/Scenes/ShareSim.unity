@@ -821,6 +821,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owners:
   - {fileID: 8048751298808637940}
+  timeoutDuration: 5000000
 --- !u!4 &687046579
 Transform:
   m_ObjectHideFlags: 0
