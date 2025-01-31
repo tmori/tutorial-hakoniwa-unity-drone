@@ -96,7 +96,8 @@ namespace hakoniwa.ar.bridge.sharesim
             if (IsOwner(device_owner_id))
             {
                 owner.object_name = target_object.name;
-                owner.owner_id = device_owner_id;
+                //CAUTION do not set owner id for race condition.... 
+                /****** owner.owner_id = device_owner_id; *******/
                 owner.last_update = (ulong)sim_time;
                 physics.UpdatePosition(owner);
                 var key = pduManager.WritePdu(target_object.name, pdu);
@@ -108,6 +109,7 @@ namespace hakoniwa.ar.bridge.sharesim
                 //Debug.Log("update time: " + updateTime);
                 avatar.UpdatePosition(owner);
             }
+            //Debug.Log("owner_id: " + owner.owner_id);
             return owner.owner_id;
         }
         public ulong GetUpdateTime()
