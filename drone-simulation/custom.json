@@ -14,7 +14,16 @@
                     "write_cycle": 1
                 }
             ],
-            "shm_pdu_writers": []
+            "shm_pdu_writers": [
+                {
+                    "type": "hako_msgs/ShareObjectOwner",
+                    "org_name": "owner",
+                    "name": "Baggage1_owner",
+                    "channel_id": 0,
+                    "pdu_size": 216,
+                    "write_cycle": 1
+                }
+            ]
         },
         {
             "name": "Drone1",
