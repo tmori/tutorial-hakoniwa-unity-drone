@@ -26,7 +26,6 @@ public class DronePlayer : MonoBehaviour, IHakoniwaArObject
     public string robotName = "DroneTransporter";
     public string pdu_name_propeller = "drone_motor";
     public string pdu_name_pos = "drone_pos";
-    public string pdu_name_magnet = "hako_status_magnet_holder";
 
     private void SetPosition(Twist pos, UnityEngine.Vector3 unity_pos, UnityEngine.Vector3 unity_rot)
     {
@@ -105,8 +104,6 @@ public class DronePlayer : MonoBehaviour, IHakoniwaArObject
         Debug.Log("declare pdu pos: " + ret);
         ret = await pdu_manager.DeclarePduForWrite(robotName, pdu_name_propeller);
         Debug.Log("declare pdu propeller: " + ret);
-        ret = await pdu_manager.DeclarePduForWrite(robotName, pdu_name_magnet);
-        Debug.Log("declare pdu magnet: " + ret);
     }
 
     void Start()
@@ -278,32 +275,6 @@ public class DronePlayer : MonoBehaviour, IHakoniwaArObject
             FlushPduPropeller((float)c1, (float)c2, (float)c3, (float)c4);
         }
         await GrabControlAsync();
-    }
-
-    private async Task FlushPduMagnetStatusAsync(bool v)
-    {
-        var pdu_manager = ARBridge.Instance.Get();
-        if (pdu_manager == null)
-        {
-            return;
-        }
-
-        /*
-         * Propeller
-         */
-        INamedPdu npdu = pdu_manager.CreateNamedPdu(robotName, pdu_name_magnet);
-        if (npdu == null || npdu.Pdu == null)
-        {
-            throw new Exception($"Can not find npdu: {robotName} {pdu_name_magnet}");
-        }
-
-        HakoStatusMagnetHolder magnet = new HakoStatusMagnetHolder(npdu.Pdu);
-        magnet.magnet_on = v;
-        magnet.contact_on = true;
-
-        pdu_manager.WriteNamedPdu(npdu);
-        var ret = await pdu_manager.FlushNamedPdu(npdu);
-        //Debug.Log("Flush result: " + ret);
     }
 
     private void OnApplicationQuit()
