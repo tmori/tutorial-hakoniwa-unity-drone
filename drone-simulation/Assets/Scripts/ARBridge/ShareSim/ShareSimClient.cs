@@ -127,7 +127,7 @@ namespace hakoniwa.ar.bridge.sharesim
                 // avatar, physics controls
                 foreach (var owner in owners)
                 {
-                    ulong sim_time = 0; //TODO
+                    ulong sim_time = this.hako_time;
                     var owner_id = await owner.DoUpdate(pduManager, sim_time);
                     //Debug.Log($"update owner_id= {owner_id} targetOwnerId: {owner.GetTargetOwnerId()}");
                     if (owner_id == uint.MaxValue)

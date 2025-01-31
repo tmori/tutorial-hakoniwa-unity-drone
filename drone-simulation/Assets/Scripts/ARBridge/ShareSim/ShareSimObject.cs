@@ -21,7 +21,7 @@ namespace hakoniwa.ar.bridge.sharesim
         public uint device_owner_id = 0;
         private IShareSimPhysics physics;
         private IShareSimAvatar avatar;
-
+        private ulong updateTime = 0;
         public string GetName()
         {
             return target_object.name;
@@ -30,6 +30,7 @@ namespace hakoniwa.ar.bridge.sharesim
         public void SetCurrentOwnerId(uint owner_id)
         {
             current_owner_id = owner_id;
+            updateTime = 0;
         }
         public uint GetCurrentOwnerId()
         {
@@ -99,9 +100,15 @@ namespace hakoniwa.ar.bridge.sharesim
             }
             else
             {
+                this.updateTime = owner.last_update;
+                Debug.Log("update time: " + updateTime);
                 avatar.UpdatePosition(owner);
             }
             return owner.owner_id;
+        }
+        public ulong GetUpdateTime()
+        {
+            return this.updateTime;
         }
         public async Task DoFlushAsync(IPduManager pduManager)
         {

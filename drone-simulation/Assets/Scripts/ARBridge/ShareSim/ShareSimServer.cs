@@ -25,6 +25,7 @@ namespace hakoniwa.ar.bridge.sharesim
         public const string pduTime = "core_time";
         public const string pduOwner = "owner";
         public List<ShareSimObject> owners;
+        public ulong timeoutDuration = 5000000; // usec
 
         public void EventInitialize()
         {
@@ -150,6 +151,16 @@ namespace hakoniwa.ar.bridge.sharesim
             }
 
         }
+        private bool IsTimeout(ulong lastUpdateTime)
+        {
+            if (lastUpdateTime == 0)
+            {
+                return false;
+            }
+            ulong sim_time = (ulong)HakoAsset.GetHakoControl().GetWorldTime();
+            return (sim_time - lastUpdateTime) > timeoutDuration;
+        }
+
         public async void EventTick()
         {
             var pduManager = hakoPdu.GetPduManager();
@@ -168,6 +179,14 @@ namespace hakoniwa.ar.bridge.sharesim
                 {
                     ulong sim_time = (ulong)HakoAsset.GetHakoControl().GetWorldTime();
                     await owner.DoUpdate(pduManager, sim_time);
+
+                    if (!owner.IsOwner(owner_id) && IsTimeout(owner.GetUpdateTime())) {
+                        Debug.Log("ShareSim object is timeout : " + owner.GetName());
+                        owner.DoStop();
+                        owner.SetCurrentOwnerId(owner_id);
+                        owner.DoFlushAsync(pduManager).GetAwaiter().GetResult();
+                        owner.DoStart();
+                    }
                 }
             }
             catch (Exception ex)
