@@ -96,7 +96,7 @@ public class DroneAvatarDevice : MonoBehaviour, IHakoniwaArObject
         {
             throw new Exception("Can not get Pdu Manager");
         }
-        this.robotName = robot_name;
+        //this.robotName = robot_name;
         var ret = await pdu_manager.DeclarePduForRead(robotName, pdu_name_pos);
         Debug.Log("declare pdu pos: " + ret);
         ret = await pdu_manager.DeclarePduForRead(robotName, pdu_name_propeller);

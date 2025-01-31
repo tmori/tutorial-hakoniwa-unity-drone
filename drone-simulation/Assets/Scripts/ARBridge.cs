@@ -191,19 +191,12 @@ public class ARBridge : MonoBehaviour, IHakoniwaArBridgePlayer, IHakoPduInstance
 
     public async Task InitializeAsync(PlayerData player, List<AvatarData> avatars)
     {
-        Debug.Log("Player: " + player.Name);
-        if (avatars.Count != ar_avatars.Count)
+        //Debug.Log("Player: " + player.Name);
+        await ar_player.DeclarePduAsync(null, null);
+        foreach (var avatar in ar_avatars)
         {
-            throw new System.Exception("Avatar size is invalid...");
-        }
-
-        await ar_player.DeclarePduAsync(player.Type, player.Name);
-        int index = 0;
-        foreach (var avatar in avatars)
-        {
-            Debug.Log("avatar: " + avatar.Name);
-            await this.ar_avatars[index].DeclarePduAsync(avatar.Type, avatar.Name);
-            index++;
+            //Debug.Log("avatar: " + avatar.Name);
+            await avatar.DeclarePduAsync(null, null);
         }
     }
 }

@@ -88,7 +88,7 @@ namespace hakoniwa.ar.bridge
                                 (float)latestHeartbeatData.SavedPosition.Orientation["y"],
                                 (float)latestHeartbeatData.SavedPosition.Orientation["z"]
                                 );
-                            await player.InitializeAsync(latestHeartbeatData.Player, latestHeartbeatData.Avatars);
+                            await player.InitializeAsync(null, null);
                             player.SetBasePosition(pos, rot);
                             player.setPositioningSpeed(latestHeartbeatData.PositioningSpeed.rotation, latestHeartbeatData.PositioningSpeed.move);
                         }

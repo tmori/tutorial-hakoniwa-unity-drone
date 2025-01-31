@@ -25,7 +25,7 @@ namespace hakoniwa.ar.bridge
             {
                 throw new System.Exception("Can not get Pdu Manager");
             }
-            this.robotName = robot_name;
+            //this.robotName = robot_name;
             var ret = await pdu_manager.DeclarePduForRead(robotName, pdu_name);
             Debug.Log($"declare for read pdu_name: {robotName}/{pdu_name} ret = {ret}");
         }
