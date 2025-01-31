@@ -1,0 +1,14 @@
+RobotName,package_name,type_name,pdu_name,channel_id,read_or_write,pdu_size,io_cycle
+Player1_head,geometry_msgs,Twist,pos,0,read,48,1
+Player1_left_hand,geometry_msgs,Twist,pos,0,read,48,1
+Player1_right_hand,geometry_msgs,Twist,pos,0,read,48,1
+Player2_head,geometry_msgs,Twist,pos,0,read,48,1
+Player2_left_hand,geometry_msgs,Twist,pos,0,read,48,1
+Player2_right_hand,geometry_msgs,Twist,pos,0,read,48,1
+Drone1,hako_mavlink_msgs,HakoHilActuatorControls,drone_motor,0,read,88,1
+Drone1,geometry_msgs,Twist,drone_pos,1,read,48,1
+Drone2,hako_mavlink_msgs,HakoHilActuatorControls,drone_motor,0,read,88,1
+Drone2,geometry_msgs,Twist,drone_pos,1,read,48,1
+Baggage1,hako_msgs,ShareObjectOwner,owner,0,read,192,1
+ShareSim,hako_msgs,ShareObjectOwnerRequest,req,0,read,144,1
+ShareSim,hako_msgs,SimTime,core_time,1,write,8,1

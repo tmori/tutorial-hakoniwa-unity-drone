@@ -1,21 +1,86 @@
 {
-  "robots": [
-    {
-              "name": "Player1_head",
-              "rpc_pdu_readers": [],
-              "rpc_pdu_writers": [],
-              "shm_pdu_readers": [
-                  {
-                      "type": "geometry_msgs/Twist",
-                      "org_name": "pos",
-                      "name": "Player1_head_pos",
-                      "channel_id": 0,
-                      "pdu_size": 72,
-                      "write_cycle": 1
-                  }
-              ]
-          },
-          {
+    "robots": [
+        {
+            "name": "Baggage1",
+            "rpc_pdu_readers": [],
+            "rpc_pdu_writers": [],
+            "shm_pdu_readers": [
+                {
+                    "type": "hako_msgs/ShareObjectOwner",
+                    "org_name": "owner",
+                    "name": "Baggage1_owner",
+                    "channel_id": 0,
+                    "pdu_size": 216,
+                    "write_cycle": 1
+                }
+            ],
+            "shm_pdu_writers": []
+        },
+        {
+            "name": "Drone1",
+            "rpc_pdu_readers": [],
+            "rpc_pdu_writers": [],
+            "shm_pdu_readers": [
+                {
+                    "type": "hako_mavlink_msgs/HakoHilActuatorControls",
+                    "org_name": "drone_motor",
+                    "name": "Drone1_drone_motor",
+                    "channel_id": 0,
+                    "pdu_size": 112,
+                    "write_cycle": 1
+                },
+                {
+                    "type": "geometry_msgs/Twist",
+                    "org_name": "drone_pos",
+                    "name": "Drone1_drone_pos",
+                    "channel_id": 1,
+                    "pdu_size": 72,
+                    "write_cycle": 1
+                }
+            ],
+            "shm_pdu_writers": []
+        },
+        {
+            "name": "Drone2",
+            "rpc_pdu_readers": [],
+            "rpc_pdu_writers": [],
+            "shm_pdu_readers": [
+                {
+                    "type": "hako_mavlink_msgs/HakoHilActuatorControls",
+                    "org_name": "drone_motor",
+                    "name": "Drone2_drone_motor",
+                    "channel_id": 0,
+                    "pdu_size": 112,
+                    "write_cycle": 1
+                },
+                {
+                    "type": "geometry_msgs/Twist",
+                    "org_name": "drone_pos",
+                    "name": "Drone2_drone_pos",
+                    "channel_id": 1,
+                    "pdu_size": 72,
+                    "write_cycle": 1
+                }
+            ],
+            "shm_pdu_writers": []
+        },
+        {
+            "name": "Player1_head",
+            "rpc_pdu_readers": [],
+            "rpc_pdu_writers": [],
+            "shm_pdu_readers": [
+                {
+                    "type": "geometry_msgs/Twist",
+                    "org_name": "pos",
+                    "name": "Player1_head_pos",
+                    "channel_id": 0,
+                    "pdu_size": 72,
+                    "write_cycle": 1
+                }
+            ],
+            "shm_pdu_writers": []
+        },
+        {
             "name": "Player1_left_hand",
             "rpc_pdu_readers": [],
             "rpc_pdu_writers": [],
@@ -28,196 +93,97 @@
                     "pdu_size": 72,
                     "write_cycle": 1
                 }
-            ]
-        },      
-        {
-          "name": "Player1_right_hand",
-          "rpc_pdu_readers": [],
-          "rpc_pdu_writers": [],
-          "shm_pdu_readers": [
-              {
-                  "type": "geometry_msgs/Twist",
-                  "org_name": "pos",
-                  "name": "Player1_right_hand_pos",
-                  "channel_id": 0,
-                  "pdu_size": 72,
-                  "write_cycle": 1
-              }
-          ]
-      },
-      {
-          "name": "Player2_head",
-          "rpc_pdu_readers": [],
-          "rpc_pdu_writers": [],
-          "shm_pdu_readers": [
-              {
-                  "type": "geometry_msgs/Twist",
-                  "org_name": "pos",
-                  "name": "Player2_head_pos",
-                  "channel_id": 0,
-                  "pdu_size": 72,
-                  "write_cycle": 1
-              }
-          ]
-      },
-      {
-          "name": "Player2_left_hand",
-          "rpc_pdu_readers": [],
-          "rpc_pdu_writers": [],
-          "shm_pdu_readers": [
-              {
-                  "type": "geometry_msgs/Twist",
-                  "org_name": "pos",
-                  "name": "Player2_left_hand_pos",
-                  "channel_id": 0,
-                  "pdu_size": 72,
-                  "write_cycle": 1
-              }
-          ]
-      },
-      {
-          "name": "Player2_right_hand",
-          "rpc_pdu_readers": [],
-          "rpc_pdu_writers": [],
-          "shm_pdu_readers": [
-              {
-                  "type": "geometry_msgs/Twist",
-                  "org_name": "pos",
-                  "name": "Player2_right_hand_pos",
-                  "channel_id": 0,
-                  "pdu_size": 72,
-                  "write_cycle": 1
-              }
-          ]
-      },
-      {
-          "name": "Drone1",
-          "rpc_pdu_readers": [],
-          "rpc_pdu_writers": [],
-          "shm_pdu_readers": [
-              {
-                  "type": "hako_mavlink_msgs/HakoHilActuatorControls",
-                  "org_name": "drone_motor",
-                  "name": "Drone1_drone_motor",
-                  "channel_id": 0,
-                  "pdu_size": 112,
-                  "write_cycle": 1
-              },
-              {
-                  "type": "geometry_msgs/Twist",
-                  "org_name": "drone_pos",
-                  "name": "Drone1_drone_pos",
-                  "channel_id": 1,
-                  "pdu_size": 72,
-                  "write_cycle": 1
-              },
-              {
-                "type": "hako_msgs/HakoStatusMagnetHolder",
-                "org_name": "hako_status_magnet_holder",
-                "name": "Drone1_hako_status_magnet_holder",
-                "channel_id": 2,
-                "pdu_size": 32,
-                "write_cycle": 1,
-                "method_type": "SHM"
-              }
-          ]
-      },
-      {
-          "name": "Drone2",
-          "rpc_pdu_readers": [],
-          "rpc_pdu_writers": [],
-          "shm_pdu_readers": [
-              {
-                  "type": "hako_mavlink_msgs/HakoHilActuatorControls",
-                  "org_name": "drone_motor",
-                  "name": "Drone2_drone_motor",
-                  "channel_id": 0,
-                  "pdu_size": 112,
-                  "write_cycle": 1
-              },
-              {
-                  "type": "geometry_msgs/Twist",
-                  "org_name": "drone_pos",
-                  "name": "Drone2_drone_pos",
-                  "channel_id": 1,
-                  "pdu_size": 72,
-                  "write_cycle": 1
-              },
-              {
-                "type": "hako_msgs/HakoStatusMagnetHolder",
-                "org_name": "hako_status_magnet_holder",
-                "name": "Drone2_hako_status_magnet_holder",
-                "channel_id": 2,
-                "pdu_size": 32,
-                "write_cycle": 1,
-                "method_type": "SHM"
-              }
-          ]
-      },
-      {
-        "name": "Baggage1",
-        "rpc_pdu_readers": [],
-        "rpc_pdu_writers": [],
-        "shm_pdu_readers": [
-            {
-                "type": "hako_msgs/ShareObjectOwner",
-                "org_name": "owner",
-                "name": "Baggage1_owner",
-                "channel_id": 0,
-                "pdu_size": 216,
-                "write_cycle": 1,
-                "method_type": "SHM"
-              }
-    
-        ],
-        "shm_pdu_writers": [
-            {
-                "type": "hako_msgs/ShareObjectOwner",
-                "org_name": "owner",
-                "name": "Baggage1_owner",
-                "channel_id": 0,
-                "pdu_size": 216,
-                "write_cycle": 1,
-                "method_type": "SHM"
-              }
-            ]
-      },
-      {
-        "name": "ShareSim",
-        "rpc_pdu_readers": [],
-        "rpc_pdu_writers": [],
-        "shm_pdu_readers": [
-            {
-                "type": "hako_msgs/ShareObjectOwnerRequest",
-                "org_name": "req",
-                "name": "ShareSim_req",
-                "channel_id": 0,
-                "pdu_size": 168,
-                "write_cycle": 1,
-                "method_type": "SHM"
-              }
             ],
-        "shm_pdu_writers": [
-            {
-                "type": "hako_msgs/ShareObjectOwnerRequest",
-                "org_name": "req",
-                "name": "ShareSim_req",
-                "channel_id": 0,
-                "pdu_size": 168,
-                "write_cycle": 1,
-                "method_type": "SHM"
-            },
-            {
-                "type": "hako_msgs/SimTime",
-                "org_name": "core_time",
-                "name": "ShareSim_core_time",
-                "channel_id": 1,
-                "pdu_size": 32,
-                "write_cycle": 1,
-                "method_type": "SHM"
-              }
+            "shm_pdu_writers": []
+        },
+        {
+            "name": "Player1_right_hand",
+            "rpc_pdu_readers": [],
+            "rpc_pdu_writers": [],
+            "shm_pdu_readers": [
+                {
+                    "type": "geometry_msgs/Twist",
+                    "org_name": "pos",
+                    "name": "Player1_right_hand_pos",
+                    "channel_id": 0,
+                    "pdu_size": 72,
+                    "write_cycle": 1
+                }
+            ],
+            "shm_pdu_writers": []
+        },
+        {
+            "name": "Player2_head",
+            "rpc_pdu_readers": [],
+            "rpc_pdu_writers": [],
+            "shm_pdu_readers": [
+                {
+                    "type": "geometry_msgs/Twist",
+                    "org_name": "pos",
+                    "name": "Player2_head_pos",
+                    "channel_id": 0,
+                    "pdu_size": 72,
+                    "write_cycle": 1
+                }
+            ],
+            "shm_pdu_writers": []
+        },
+        {
+            "name": "Player2_left_hand",
+            "rpc_pdu_readers": [],
+            "rpc_pdu_writers": [],
+            "shm_pdu_readers": [
+                {
+                    "type": "geometry_msgs/Twist",
+                    "org_name": "pos",
+                    "name": "Player2_left_hand_pos",
+                    "channel_id": 0,
+                    "pdu_size": 72,
+                    "write_cycle": 1
+                }
+            ],
+            "shm_pdu_writers": []
+        },
+        {
+            "name": "Player2_right_hand",
+            "rpc_pdu_readers": [],
+            "rpc_pdu_writers": [],
+            "shm_pdu_readers": [
+                {
+                    "type": "geometry_msgs/Twist",
+                    "org_name": "pos",
+                    "name": "Player2_right_hand_pos",
+                    "channel_id": 0,
+                    "pdu_size": 72,
+                    "write_cycle": 1
+                }
+            ],
+            "shm_pdu_writers": []
+        },
+        {
+            "name": "ShareSim",
+            "rpc_pdu_readers": [],
+            "rpc_pdu_writers": [],
+            "shm_pdu_readers": [
+                {
+                    "type": "hako_msgs/ShareObjectOwnerRequest",
+                    "org_name": "req",
+                    "name": "ShareSim_req",
+                    "channel_id": 0,
+                    "pdu_size": 168,
+                    "write_cycle": 1
+                }
+            ],
+            "shm_pdu_writers": [
+                {
+                    "type": "hako_msgs/SimTime",
+                    "org_name": "core_time",
+                    "name": "ShareSim_core_time",
+                    "channel_id": 1,
+                    "pdu_size": 32,
+                    "write_cycle": 1
+                }
             ]
-      }
-  
-  ]
+        }
+    ]
 }
