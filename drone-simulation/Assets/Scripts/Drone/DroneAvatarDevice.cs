@@ -42,7 +42,7 @@ public class DroneAvatarDevice : MonoBehaviour, IHakoniwaArObject
         IPdu pdu_pos = pduManager.ReadPdu(robotName, pdu_name_pos);
         if (pdu_pos == null)
         {
-            Debug.Log("Can not get pdu of pos");
+            //Debug.Log("Can not get pdu of pos");
         }
         else
         {

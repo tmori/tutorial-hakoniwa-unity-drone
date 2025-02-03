@@ -107,8 +107,18 @@ public class DroneCollision : MonoBehaviour
             info.Mass,
             info.RestitutionCoefficient
         );
+        Debug.Log($"Impulse collision handled with {other.name}\n" +
+          $"Index: {this.index}, IsStatic: {info.IsStatic}\n" +
+          $"TargetVelocity: {ConvertToRosVector(targetVelocity)}\n" +
+          $"TargetAngularVelocity: {ConvertToRosAngular(targetAngularVelocity)}\n" +
+          $"TargetEuler: {ConvertToRosAngular(targetEuler)}\n" +
+          $"SelfContactVector: {ConvertToRosVector(selfContactVector)}\n" +
+          $"TargetContactVector: {ConvertToRosVector(targetContactVector)}\n" +
+          $"Inertia: {info.Inertia}\n" +
+          $"Normal: {ConvertToRosVector(normal)}\n" +
+          $"Mass: {info.Mass}, RestitutionCoefficient: {info.RestitutionCoefficient}");
 
-        Debug.Log($"Impulse collision handled with {other.name}");
+        //Debug.Log($"Impulse collision handled with {other.name}");
     }
 
     private void HandleTriggerCollision(Collider other)

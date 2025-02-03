@@ -62,7 +62,7 @@ namespace hakoniwa.ar.bridge
             IPdu pdu_pos = pduManager.ReadPdu(robotName, pdu_name);
             if (pdu_pos == null)
             {
-                Debug.Log("Can not get pdu of pos");
+               // Debug.Log("Can not get pdu of pos");
             }
             else
             {

@@ -87,7 +87,7 @@ namespace hakoniwa.ar.bridge.sharesim
             IPdu pdu = pduManager.ReadPdu(target_object.name, ShareSimServer.pduOwner);
             if (pdu == null)
             {
-                Debug.Log("Can not get pdu of owner on " + target_object.name);
+                //Debug.Log("Can not get pdu of owner on " + target_object.name);
                 return uint.MaxValue;
             }
             ShareObjectOwner owner = new ShareObjectOwner(pdu);

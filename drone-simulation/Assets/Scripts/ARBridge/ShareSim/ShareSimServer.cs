@@ -76,7 +76,7 @@ namespace hakoniwa.ar.bridge.sharesim
             IPdu pdu = pduManager.ReadPdu(robotName, pduRequest);
             if (pdu == null)
             {
-                Debug.Log("Can not get pdu of req");
+                //Debug.Log("Can not get pdu of req");
                 return;
             }
             ShareObjectOwnerRequest req = new ShareObjectOwnerRequest(pdu);

@@ -85,7 +85,7 @@ public class DroneAvatar : MonoBehaviour, IHakoObject
         IPdu pdu_pos = pduManager.ReadPdu(robotName, pdu_name_pos);
         if (pdu_pos == null)
         {
-            Debug.Log("Can not get pdu of pos");
+            //Debug.Log("Can not get pdu of pos");
         }
         else
         {
@@ -100,7 +100,7 @@ public class DroneAvatar : MonoBehaviour, IHakoObject
         IPdu pdu_propeller = pduManager.ReadPdu(robotName, pdu_name_propeller);
         if (pdu_propeller == null)
         {
-            Debug.Log("Can not get pdu of propeller");
+            //Debug.Log("Can not get pdu of propeller");
         }
         else
         {
