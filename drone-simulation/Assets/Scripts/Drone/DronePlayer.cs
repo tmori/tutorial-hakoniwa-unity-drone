@@ -19,6 +19,7 @@ public class DronePlayer : MonoBehaviour, IHakoniwaArObject
     private IHakoniwaArBridge ibridge;
     private BaggageGrabber baggage_grabber;
     private ShareSimClient sharesim_client;
+    public bool enable_debuff = false;
 
     public bool enable_data_logger = false;
     public string debug_logpath = null;
@@ -154,12 +155,15 @@ public class DronePlayer : MonoBehaviour, IHakoniwaArObject
             ret = DroneServiceRC.InitSingle(droneConfigText, controllerConfigText, enable_data_logger, debug_logpath);
 
         }
-        DroneServiceRC.SetDebuffOnCollision(0, debuff_duration_msec);
-        Debug.Log("InitSingle: ret = " + ret);
-
-        if (ret != 0)
+        if (enable_debuff)
         {
-            throw new Exception("Can not Initialize DroneService RC with InitSingle: debug_logpath= " + debug_logpath);
+            DroneServiceRC.SetDebuffOnCollision(0, debuff_duration_msec);
+            Debug.Log("InitSingle: ret = " + ret);
+
+            if (ret != 0)
+            {
+                throw new Exception("Can not Initialize DroneService RC with InitSingle: debug_logpath= " + debug_logpath);
+            }
         }
 
         // DroneServiceRC.Startの呼び出し

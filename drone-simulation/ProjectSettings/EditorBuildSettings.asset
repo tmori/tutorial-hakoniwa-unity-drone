@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/ShareSim.unity
-    guid: 81ce7cd7ea0b5439eac32c285ad85cfe
+    path: Assets/Scenes/DronePlayer1.unity
+    guid: 1055d66e1ff7294469fd399559bd6436
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: d08c25a2ee1bb204490d8b65e926df8e, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: aba70e4fd302ae24eb244a15c2e59e31, type: 2}
