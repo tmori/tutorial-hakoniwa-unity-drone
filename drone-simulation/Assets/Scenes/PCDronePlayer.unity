@@ -1672,7 +1672,7 @@ MonoBehaviour:
   Euler: {x: 0, y: 0, z: 0}
   Inertia: {x: 0.0061, y: 0.00653, z: 0.0116}
   Mass: 0.71
-  RestitutionCoefficient: 1
+  RestitutionCoefficient: 0.7
   rb: {fileID: 3643127369457816875}
   collider_obj: {fileID: 6160882570184278476}
 --- !u!23 &11291055289960876
@@ -16732,7 +16732,7 @@ MonoBehaviour:
   Euler: {x: 0, y: 0, z: 0}
   Inertia: {x: 0.0061, y: 0.00653, z: 0.0116}
   Mass: 0.71
-  RestitutionCoefficient: 1
+  RestitutionCoefficient: 0.7
   rb: {fileID: 3643127369271610110}
   collider_obj: {fileID: 6160882570512014873}
 --- !u!54 &3643127369457816875
