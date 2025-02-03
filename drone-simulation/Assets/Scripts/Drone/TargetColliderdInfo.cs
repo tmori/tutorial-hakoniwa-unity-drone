@@ -37,8 +37,17 @@ public class TargetColliderdInfo : MonoBehaviour
 
     public Rigidbody rb = null;
     public Collider collider_obj = null;
+
+
+    private Vector3 lastValidVelocity = Vector3.zero; // 前回の有効な速度
     private Vector3 previousPosition;
+    private float velocity_lastUpdateTime = 0f;
+
+    private Vector3 lastValidAngularVelocity = Vector3.zero; // 前回の有効な角速度
     private Quaternion previousRotation;
+    private float rotation_lastUpdateTime = 0f;
+
+    private float currentTime = 0f;
 
     public string GetName()
     {
@@ -135,6 +144,7 @@ public class TargetColliderdInfo : MonoBehaviour
             IsStatic = true;
         }
         PutInfo(collider_obj, this);
+        currentTime = 0f;
     }
     private void OnDestroy()
     {
@@ -150,6 +160,7 @@ public class TargetColliderdInfo : MonoBehaviour
         UpdatePosition();
         UpdateVelocity();
         UpdateAngularVelocity();
+        currentTime += Time.fixedDeltaTime;
     }
     private void UpdatePosition()
     {
@@ -170,7 +181,6 @@ public class TargetColliderdInfo : MonoBehaviour
         this.AngularVelocity = GetAngularVelocity();
     }
 
-
     private Vector3 GetVelocity()
     {
         if (rb != null)
@@ -182,15 +192,34 @@ public class TargetColliderdInfo : MonoBehaviour
             else
             {
                 Vector3 currentPosition = rb.position;
-                Vector3 velocity = (currentPosition - previousPosition) / Time.fixedDeltaTime;
+
+                // 位置が変わっていないなら前回の速度を維持
+                if (currentPosition == previousPosition)
+                {
+                    return lastValidVelocity;
+                }
+
+                // 時間補正
+                float deltaTime = currentTime - velocity_lastUpdateTime;
+                velocity_lastUpdateTime = currentTime;
+
+                // 速度計算（微小な変化を無視）
+                Vector3 velocity = (currentPosition - previousPosition) / (deltaTime > 0 ? deltaTime : Time.fixedDeltaTime);
+                if (velocity.magnitude < 0.0001f) // しきい値調整
+                {
+                    return lastValidVelocity;
+                }
+
+                // 位置更新 & 速度更新
                 previousPosition = currentPosition;
+                lastValidVelocity = velocity;
                 return velocity;
             }
         }
         return Vector3.zero;
     }
 
-    public Vector3 GetAngularVelocity()
+    private Vector3 GetAngularVelocity()
     {
         if (rb != null)
         {
@@ -201,13 +230,34 @@ public class TargetColliderdInfo : MonoBehaviour
             else
             {
                 Quaternion currentRotation = rb.rotation;
+
+                // 回転が変化していないなら前回の角速度を維持
+                if (currentRotation == previousRotation)
+                {
+                    return lastValidAngularVelocity;
+                }
+
+                // 時間補正
+                float deltaTime = currentTime - rotation_lastUpdateTime;
+                rotation_lastUpdateTime = currentTime;
+
+                // 角速度計算
                 Quaternion deltaRotation = currentRotation * Quaternion.Inverse(previousRotation);
                 previousRotation = currentRotation;
 
                 float angle;
                 Vector3 axis;
                 deltaRotation.ToAngleAxis(out angle, out axis);
-                return (axis * angle * Mathf.Deg2Rad) / Time.fixedDeltaTime;
+                Vector3 angularVelocity = (axis * angle * Mathf.Deg2Rad) / (deltaTime > 0 ? deltaTime : Time.fixedDeltaTime);
+
+                // 角速度の微小変化を無視
+                if (angularVelocity.magnitude < 0.0001f)
+                {
+                    return lastValidAngularVelocity;
+                }
+
+                lastValidAngularVelocity = angularVelocity;
+                return angularVelocity;
             }
         }
         return Vector3.zero;
