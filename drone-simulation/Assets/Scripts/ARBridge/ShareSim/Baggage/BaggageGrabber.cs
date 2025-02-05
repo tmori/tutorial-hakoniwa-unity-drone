@@ -20,6 +20,7 @@ public class BaggageGrabber : MonoBehaviour
     {
         Success,         // リリース成功
         NoBaggage,       // リリースする荷物がない
+        ShareSimClientStopped,
         FlushFailed      // FlushNamedPdu 失敗
     }
 
@@ -204,24 +205,20 @@ public class BaggageGrabber : MonoBehaviour
 
         while (true)
         {
-            IPdu pdu = pduManager.ReadPdu(req.object_name, ShareSimServer.pduOwner);
-            if (pdu != null)
+            if (ShareSimClient.Instance == null)
             {
-                ShareObjectOwner owner = new ShareObjectOwner(pdu);
-                if (owner.owner_id != ShareSimClient.Instance.my_owner_id)
-                {
-                    Debug.Log($"Released: current owner is {owner.owner_id}");
-                    ShareSimClient.Instance.SetTargetOwnerId(req.object_name, owner.owner_id);
-                    break;
-                }
-                else
-                {
-                    Debug.Log($"wait for Released: current owner is {owner.owner_id}");
-                }
+                Debug.LogWarning("Already ShareSimClient is released....");
+                return ReleaseResult.ShareSimClientStopped;
+            }
+            var current_owner_id = ShareSimClient.Instance.GetTargetOwnerId(req.object_name);
+            if (current_owner_id != ShareSimClient.Instance.my_owner_id)
+            {
+                Debug.Log($"Released: current owner is {current_owner_id}");
+                break;
             }
             else
             {
-                Debug.Log("Can not read pdu of pduOwner");
+                Debug.Log($"wait for Released: current owner is {current_owner_id}");
             }
             Debug.Log("wait for a while... for release.");
             await Task.Delay(100); // 次のチェックまで少し待機
