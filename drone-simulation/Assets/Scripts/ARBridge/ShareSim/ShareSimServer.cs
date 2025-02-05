@@ -179,7 +179,11 @@ namespace hakoniwa.ar.bridge.sharesim
                 foreach (var owner in owners)
                 {
                     ulong sim_time = (ulong)HakoAsset.GetHakoControl().GetWorldTime();
-                    await owner.DoUpdate(pduManager, sim_time);
+                    var id = await owner.DoUpdate(pduManager, sim_time);
+                    if (id == uint.MaxValue)
+                    {
+                        //Debug.LogWarning("Why?? can not read baggage pdu...");
+                    }
 
                     if (!owner.IsOwner(owner_id) && IsTimeout(owner.GetUpdateTime())) {
                         Debug.LogError("ShareSim object is timeout : " + owner.GetName());
